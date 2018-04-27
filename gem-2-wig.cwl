@@ -32,4 +32,4 @@ outputs:
   - id: outfile_out
     type: File
     outputBinding:
-      glob: $(inputs.outfile) + '.*'
+      glob: $(inputs.outfile + '.*')

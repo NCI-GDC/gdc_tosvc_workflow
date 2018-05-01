@@ -21,13 +21,14 @@ inputs:
     inputBinding:
       position: 2
       prefix: --gcgene
+  - id: outdir
+    type: string
+    inputBinding:
+      position: 3
+      prefix: --outdir
 
 outputs:
   - id: outfiles
-    type: File
+    type: Directory
     outputBinding:
-      glob: "*"
-
-arguments:
-  - valueFrom: $(runtime.outdir)
-    prefix: --outdir
+      glob: "./"

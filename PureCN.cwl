@@ -8,6 +8,7 @@ requirements:
     dockerPull: namsyvo/purecn
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
+    listing:
     listing: |
       ${
          return inputs.normaldir.listing

@@ -1,6 +1,0 @@
-thread: 40
-content: dna
-infile:
-  class: File
-  path: /mnt/data/refs/GRCh38.d1.vd1.fa
-outfile: GRCh38.d1.vd1.index

@@ -1,0 +1,8 @@
+bam:
+  class: File
+  #path: /mnt/data/DLBC37/BAMs/normal/test/TCGA-FA-8693-10A-01D-2397-10_Illumina_gdc_realn_chr1_1m_2m.bam
+  path: /mnt/data/DLBC37/BAMs/normal/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn.bam
+gcgene:
+  class: File
+  path: /mnt/data/refs/capture_baits_hg38_gcgene.txt
+outdir: .

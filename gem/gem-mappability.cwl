@@ -44,7 +44,7 @@ inputs:
       prefix: -o
 
 outputs:
-  - id: outfile_out
+  - id: mapfile
     type: File
     outputBinding:
       glob: $(inputs.outfile + '.*')

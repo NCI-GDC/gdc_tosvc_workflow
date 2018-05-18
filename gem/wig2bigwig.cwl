@@ -21,7 +21,7 @@ inputs:
     type: File
     inputBinding:
       position: 2
-  - id: bigwig
+  - id: outfile
     type: string
     inputBinding:
       position: 3
@@ -30,4 +30,4 @@ outputs:
   - id: bigwigfile
     type: File
     outputBinding:
-      glob: $(inputs.bigwig)
+      glob: $(inputs.outfile)

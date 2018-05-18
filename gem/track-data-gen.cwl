@@ -8,9 +8,12 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      $(inputs.gem_index)
 
 inputs:
-  ref_name:
+  ref_prefix:
     type: string
   tumor_bam:
     type: File
@@ -18,6 +21,8 @@ inputs:
       - '^.bai'
   gem_index:
     type: File
+    inputBinding:
+      valueFrom: $(self.basename)
   gem_thread:
     type: int
   gem_len:
@@ -42,28 +47,26 @@ steps:
       max_edit: gem_max_edit
       indexfile: gem_index
       outfile:
-        source: ref_name
+        source: ref_prefix
         valueFrom: $(self + '.100')
-    out: [outfile_out]
+    out: [mapfile]
 
   gem2wig:
-    run: gem-2-wig.cwl
+    run: gem2wig.cwl
     in:
       index: gem_index
-      infile: gem_mappability/outfile_out
+      infile: gem_mappability/mapfile
       outfile:
-        source: ref_name
-        valueFrom: $(self + '.100.mappability')
-    out: [outfile_out]
+        source: ref_prefix
+        valueFrom: $(self + '.100')
+    out: [wigfile, sizefile]
 
   wig2bigwig:
     run: wig2bigwig.cwl
     in:
-      wig: gem2wig/outfile_out
-      size:
-        source: ref_name
-        valueFrom: $(self + '.sizes')
-      bigwig:
-        source: ref_name
+      wig: gem2wig/wigfile
+      size: gem2wig/sizefile
+      outfile:
+        source: ref_prefix
         valueFrom: $(self + '.100.bigwig')
     out: [bigwigfile]

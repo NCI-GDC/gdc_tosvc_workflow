@@ -4,5 +4,5 @@ max_mismatch: 2
 max_edit: 2
 indexfile:
   class: File
-  path: /mnt/data/refs/GRCh38.d1.vd1.index.gem
+  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.index.gem
 outfile: GRCh38.d1.vd1.100

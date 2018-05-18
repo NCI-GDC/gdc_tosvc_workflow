@@ -29,7 +29,11 @@ inputs:
       prefix: -o
 
 outputs:
-  - id: outfile_out
+  - id: wigfile
     type: File
     outputBinding:
-      glob: $(inputs.outfile + '.*')
+      glob: $(inputs.outfile + '.wig')
+  - id: sizefile
+    type: File
+    outputBinding:
+      glob: $(inputs.outfile + '.sizes')

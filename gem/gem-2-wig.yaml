@@ -1,7 +1,0 @@
-index:
-  class: File
-  path: /mnt/data/refs/GRCh38.d1.vd1.index.gem
-infile:
-  class: File
-  path: /mnt/data/refs/GRCh38.d1.vd1.100.mappability
-outfile: GRCh38.d1.vd1.100.test

@@ -8,34 +8,37 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/gem-indexer:latest
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - $(inputs.infile)
 
 inputs:
-  - id: thread
+  - id: thread_num
     type: int
+    default: 40
     inputBinding:
       position: 1
       prefix: -T
-  - id: content
+  - id: content?
     type: string
+    default: dna
     inputBinding:
       position: 2
       prefix: -c
-  - id: infile
+  - id: reffile
     type: File
     inputBinding:
       position: 3
       prefix: -i
-  - id: outfile
+  - id: outfile?
     type: string
     inputBinding:
       position: 4
       prefix: -o
 
 outputs:
-  - id: outfile_out
+  - id: gem_index
     type: File
     outputBinding:
-      glob: $(inputs.outfile)
+      glob: $(inputs.outfile + ".gem")
+  - id: gem_index_log
+    type: File
+    outputBinding:
+      glob: $(inputs.outfile + ".log")

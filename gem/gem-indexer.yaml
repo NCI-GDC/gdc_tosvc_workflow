@@ -1,6 +1,4 @@
-thread: 40
-content: dna
-infile:
+reffile:
   class: File
-  path: /mnt/data/refs/GRCh38.d1.vd1.fa
-outfile: GRCh38.d1.vd1.index
+  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr22.fa
+outfile: GRCh38.d1.vd1.chr22.index

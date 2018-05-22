@@ -12,14 +12,10 @@ requirements:
 inputs:
   tumor_bam:
     type: File
-    inputBinding:
-      valueFrom: $(self.basename)
     secondaryFiles:
       - '^.bai'
   gem_index:
     type: File
-    inputBinding:
-      valueFrom: $(self.basename)
   gem_thread_num:
     type: int
     default: 40

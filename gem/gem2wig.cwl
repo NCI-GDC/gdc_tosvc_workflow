@@ -7,9 +7,6 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/gem2wig:latest
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - $(inputs.mapfile)
 
 inputs:
   - id: indexfile

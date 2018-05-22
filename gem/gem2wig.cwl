@@ -9,31 +9,31 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - $(inputs.infile)
+      - $(inputs.mapfile)
 
 inputs:
-  - id: index
+  - id: indexfile
     type: File
     inputBinding:
       position: 1
       prefix: -I
-  - id: infile
+  - id: mapfile
     type: File
     inputBinding:
       position: 2
       prefix: -i
-  - id: outfile
-    type: string
-    inputBinding:
-      position: 3
-      prefix: -o
 
 outputs:
   - id: wigfile
     type: File
     outputBinding:
-      glob: $(inputs.outfile + '.wig')
+      glob: $(inputs.mapfile.basename.split(".").slice(0, -1).join(".") + '.wig')
   - id: sizefile
     type: File
     outputBinding:
-      glob: $(inputs.outfile + '.sizes')
+      glob: $(inputs.mapfile.basename.split(".").slice(0, -1).join(".") + '.sizes')
+
+arguments:
+  - valueFrom: $(inputs.mapfile.basename.split(".").slice(0, -1).join("."))
+    position: 3
+    prefix: -o

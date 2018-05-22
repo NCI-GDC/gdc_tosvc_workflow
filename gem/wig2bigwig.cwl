@@ -9,25 +9,25 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - $(inputs.wig)
-      - $(inputs.size)
+      - $(inputs.wigfile)
+      - $(inputs.sizefile)
 
 inputs:
-  - id: wig
+  - id: wigfile
     type: File
     inputBinding:
       position: 1
-  - id: size
+  - id: sizefile
     type: File
     inputBinding:
       position: 2
-  - id: outfile
-    type: string
-    inputBinding:
-      position: 3
 
 outputs:
   - id: bigwigfile
     type: File
     outputBinding:
-      glob: $(inputs.outfile)
+      glob: $(inputs.wigfile.basename.split(".").slice(0, -1).join(".") + ".bigwig")
+
+arguments:
+  - valueFrom: $(inputs.wigfile.basename.split(".").slice(0, -1).join(".") + ".bigwig")
+    position: 3

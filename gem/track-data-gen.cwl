@@ -13,8 +13,8 @@ requirements:
       $(inputs.gem_index)
 
 inputs:
-  ref_prefix:
-    type: string
+  #ref_prefix:
+  #  type: string
   tumor_bam:
     type: File
     secondaryFiles:
@@ -23,14 +23,15 @@ inputs:
     type: File
     inputBinding:
       valueFrom: $(self.basename)
-  gem_thread:
+  gem_thread_num:
     type: int
-  gem_len:
-    type: int
+    default: 40
   gem_max_mismatch:
     type: int
+    default: 2
   gem_max_edit:
     type: int
+    default: 2
 
 outputs:
   track_data:
@@ -38,35 +39,41 @@ outputs:
     outputSource: wig2bigwig/bigwigfile
 
 steps:
+  get_readlen:
+    run: get_readlen.cwl
+    in:
+      bam: tumor_bam
+    out: [readlen]
+      
   gem_mappability:
     run: gem-mappability.cwl
     in:
-      thread: gem_thread
-      length: gem_len
+      readlen: get_readlen/readlen
+      thread_num: gem_thread_num
       max_mismatch: gem_max_mismatch
       max_edit: gem_max_edit
       indexfile: gem_index
-      outfile:
-        source: ref_prefix
-        valueFrom: $(self + '.100')
+      #outfile:
+      #  source: ref_prefix
+      #  valueFrom: $(self + '.100')
     out: [mapfile]
 
   gem2wig:
     run: gem2wig.cwl
     in:
-      index: gem_index
-      infile: gem_mappability/mapfile
-      outfile:
-        source: ref_prefix
-        valueFrom: $(self + '.100')
+      indexfile: gem_index
+      mapfile: gem_mappability/mapfile
+      #outfile:
+      #  source: ref_prefix
+      #  valueFrom: $(self + '.100')
     out: [wigfile, sizefile]
 
   wig2bigwig:
     run: wig2bigwig.cwl
     in:
-      wig: gem2wig/wigfile
-      size: gem2wig/sizefile
-      outfile:
-        source: ref_prefix
-        valueFrom: $(self + '.100.bigwig')
+      wigfile: gem2wig/wigfile
+      sizefile: gem2wig/sizefile
+      #outfile:
+      #  source: ref_prefix
+      #  valueFrom: $(self + '.100.bigwig')
     out: [bigwigfile]

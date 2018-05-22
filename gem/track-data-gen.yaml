@@ -8,7 +8,3 @@ gem_index:
   class: File
   #path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.index.gem
   path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr1.index.gem
-gem_thread: 40
-gem_len: 100
-gem_max_mismatch: 2
-gem_max_edit: 2

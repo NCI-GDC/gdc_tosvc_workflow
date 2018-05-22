@@ -1,8 +1,10 @@
 thread: 40
-length: 100
+length:
+  class: File
+  path: /mnt/scripts/tosvc_workflow/gem/d3c177de45a89f71732abac9bdc6cf3b88cc02a9
 max_mismatch: 2
 max_edit: 2
 indexfile:
   class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.index.gem
-outfile: GRCh38.d1.vd1.100
+  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr1.index.gem
+#outfile: GRCh38.d1.vd1.100

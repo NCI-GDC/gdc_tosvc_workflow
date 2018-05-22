@@ -12,11 +12,6 @@ requirements:
       - $(inputs.indexfile)
 
 inputs:
-  - id: thread_num
-    type: int
-    inputBinding:
-      position: 1
-      prefix: -T
   - id: indexfile
     type: File
     inputBinding:
@@ -27,12 +22,17 @@ inputs:
     inputBinding:
       loadContents: true
       valueFrom: $(null)
-  - id: max_mismatch
+  - id: thread_num?
+    type: int
+    inputBinding:
+      position: 1
+      prefix: -T
+  - id: max_mismatch?
     type: int
     inputBinding:
       position: 5
       prefix: -m
-  - id: max_edit
+  - id: max_edit?
     type: int
     inputBinding:
       position: 6
@@ -42,12 +42,12 @@ outputs:
   - id: mapfile
     type: File
     outputBinding:
-      glob: $(inputs.readlen.contents.replace(/\n/g, ''))
+      glob: $(inputs.indexfile.basename + '.' + Math.ceil(inputs.readlen.contents.replace(/\n/g, '')))
 
 arguments:
-  - valueFrom: $(inputs.readlen.contents.replace(/\n/g, ''))
+  - valueFrom: $(Math.ceil(inputs.readlen.contents.replace(/\n/g, '')))
     position: 3
     prefix: -l
-  - valueFrom: $(inputs.indexfile.basename + '.' + inputs.readlen.contents.replace(/\n/g, ''))
+  - valueFrom: $(inputs.indexfile.basename + '.' + Math.ceil(inputs.readlen.contents.replace(/\n/g, '')))
     position: 4
     prefix: -o

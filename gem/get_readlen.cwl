@@ -14,7 +14,7 @@ inputs:
   - id: bam
     type: File
     secondaryFiles:
-      - '.bai'
+      - '^.bai'
     inputBinding:
       position: 0
 

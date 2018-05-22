@@ -10,13 +10,14 @@ requirements:
   - class: MultipleInputFeatureRequirement
   - class: InitialWorkDirRequirement
     listing:
+      $(inputs.tumor_bam)
       $(inputs.gem_index)
 
 inputs:
-  #ref_prefix:
-  #  type: string
   tumor_bam:
     type: File
+    inputBinding:
+      valueFrom: $(self.basename)
     secondaryFiles:
       - '^.bai'
   gem_index:
@@ -48,14 +49,11 @@ steps:
   gem_mappability:
     run: gem-mappability.cwl
     in:
+      indexfile: gem_index
       readlen: get_readlen/readlen
       thread_num: gem_thread_num
       max_mismatch: gem_max_mismatch
       max_edit: gem_max_edit
-      indexfile: gem_index
-      #outfile:
-      #  source: ref_prefix
-      #  valueFrom: $(self + '.100')
     out: [mapfile]
 
   gem2wig:
@@ -63,9 +61,6 @@ steps:
     in:
       indexfile: gem_index
       mapfile: gem_mappability/mapfile
-      #outfile:
-      #  source: ref_prefix
-      #  valueFrom: $(self + '.100')
     out: [wigfile, sizefile]
 
   wig2bigwig:
@@ -73,7 +68,4 @@ steps:
     in:
       wigfile: gem2wig/wigfile
       sizefile: gem2wig/sizefile
-      #outfile:
-      #  source: ref_prefix
-      #  valueFrom: $(self + '.100.bigwig')
     out: [bigwigfile]

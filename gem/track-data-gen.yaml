@@ -3,4 +3,4 @@ tumor_bam:
   path: /mnt/data/DLBC37/BAMs/test/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn_chr1_1m_2m.bam
 gem_index:
   class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr1.index.gem
+  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr22.index.gem

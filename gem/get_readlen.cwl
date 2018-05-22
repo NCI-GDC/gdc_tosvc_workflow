@@ -22,6 +22,8 @@ outputs:
   - id: readlen
     type: stdout
 
+stdout: readlen.txt
+
 baseCommand: ["samtools", "view"]
 
 arguments:

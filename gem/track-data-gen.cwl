@@ -8,10 +8,6 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      $(inputs.tumor_bam)
-      $(inputs.gem_index)
 
 inputs:
   tumor_bam:

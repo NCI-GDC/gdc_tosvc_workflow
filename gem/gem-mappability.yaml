@@ -1,10 +1,6 @@
 indexfile:
   class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr1.index.gem
+  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr22.index.gem
 readlen:
   class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/058fe73e1b0a0e4ed8f0a469bfdd2f3318a05d79
-#thread_num: 40
-#max_mismatch: 2
-#max_edit: 2
-#outfile: GRCh38.d1.vd1.100
+  path: /mnt/data/DLBC37/PureCN_cwl/readlen.txt

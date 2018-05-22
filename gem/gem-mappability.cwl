@@ -7,9 +7,6 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/gem-mappability:latest
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - $(inputs.indexfile)
 
 inputs:
   - id: indexfile
@@ -45,12 +42,12 @@ outputs:
   - id: mapfile
     type: File
     outputBinding:
-      glob: $(inputs.indexfile.basename + '.' + Math.ceil(inputs.readlen.contents.replace(/\n/g, '')))
+      glob: $(inputs.indexfile.basename + "." + Math.ceil(inputs.readlen.contents.replace(/\n/g, "")) + ".mappability")
 
 arguments:
-  - valueFrom: $(Math.ceil(inputs.readlen.contents.replace(/\n/g, '')))
+  - valueFrom: $(Math.ceil(inputs.readlen.contents.replace(/\n/g, "")))
     position: 3
     prefix: -l
-  - valueFrom: $(inputs.indexfile.basename + '.' + Math.ceil(inputs.readlen.contents.replace(/\n/g, '')))
+  - valueFrom: $(inputs.indexfile.basename + "." + Math.ceil(inputs.readlen.contents.replace(/\n/g, "")))
     position: 4
     prefix: -o

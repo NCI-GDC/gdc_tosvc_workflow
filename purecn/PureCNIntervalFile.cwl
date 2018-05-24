@@ -8,23 +8,21 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/interval
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - $(inputs.fasta)
-      - $(inputs.infile)
 
 inputs:
-  - id: infile
+  - id: ref_file
     type: File
     inputBinding:
       position: 1
-      prefix: --infile
-  - id: fasta
+      prefix: --fasta
+    secondaryFiles:
+      - ".fai"
+  - id: interval_file
     type: File
     inputBinding:
       position: 2
-      prefix: --fasta
-  - id: mappability
+      prefix: --infile
+  - id: map_file
     type: File
     inputBinding:
       position: 3
@@ -34,25 +32,25 @@ inputs:
     inputBinding:
       position: 4
       prefix: --genome
-  - id: outfile
+  - id: out_file
     type: string
     inputBinding:
       position: 5
       prefix: --outfile
-  - id: export
+  - id: export_file
     type: string
     inputBinding:
       position: 6
       prefix: --export
 
 outputs:
-  - id: outfile_out
+  - id: gcgene_file
     type: File
     outputBinding:
-      glob: $(inputs.outfile)
-  - id: export_out
+      glob: $(inputs.out_file)
+  - id: capture_file
     type: File
     outputBinding:
-      glob: $(inputs.export)
+      glob: $(inputs.export_file)
 
 arguments: ["--offtarget"]

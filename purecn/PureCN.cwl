@@ -8,39 +8,36 @@ requirements:
     dockerPull: namsyvo/purecn
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
-    listing:
     listing: |
       ${
          return inputs.normaldir.listing
        }
 
-arguments: ["--outvcf", "--force", "--postoptimize"]
-
 inputs:
-  - id: normaldir
-    type: Directory
-  - id: tumor
-    type: File
-    inputBinding:
-      position: 1
-      prefix: --tumor
-  - id: normaldb
-    type: File
-    inputBinding:
-      position: 2
-      prefix: --normaldb
-      valueFrom: $(self.basename)
   - id: sampleid
     type: string
     inputBinding:
-      position: 3
+      position: 1
       prefix: --sampleid
-  - id: vcf
+  - id: tumor_file
     type: File
     inputBinding:
-      position: 4
+      position: 2
+      prefix: --tumor
+  - id: input_vcf_file
+    type: File
+    inputBinding:
+      position: 3
       prefix: --vcf
-  - id: statsfile
+  - id: normaldir
+    type: Directory
+
+  - id: normaldb_file
+    type: File?
+    inputBinding:
+      position: 4
+      prefix: --normaldb
+  - id: stats_file
     type: File?
     inputBinding:
       position: 5
@@ -50,24 +47,72 @@ inputs:
     inputBinding:
       position: 6
       prefix: --genome
-  - id: gcgene
+  - id: interval_file
     type: File
     inputBinding:
       position: 7
-      prefix: --gcgene
-  - id: targetweightfile
+      prefix: --interval
+  - id: target_weight_file?
     type: File
     inputBinding:
       position: 8
       prefix: --targetweightfile
+  - id: thread_num?
+    type: int
+    default: 40
+    inputBinding:
+      position: 9
+      prefix: --parallel
   - id: outdir
     type: string
     inputBinding:
-      position: 9
+      position: 10
       prefix: --out
 
 outputs:
-  - id: outdir_out
-    type: Directory
+  - id: sample_info_file
+    type: File
     outputBinding:
-      glob: "./"
+      glob: "*.csv"
+  - id: dnacopy_file
+    type: File
+    outputBinding:
+      glob: "*_dnacopy.seg"
+  - id: genes_file
+    type: File
+    outputBinding:
+      glob: "*_genes.csv"
+  - id: local_optima_file
+    type: File
+    outputBinding:
+      glob: "*_local_optima.pdf"
+  - id: log_file
+    type: File
+    outputBinding:
+      glob: "*.log"
+  - id: loh_file
+    type: File
+    outputBinding:
+      glob: "*_loh.csv"
+  - id: info_pdf_file
+    type: File
+    outputBinding:
+      glob: "*.pdf"
+  - id: rds_file
+    type: File
+    outputBinding:
+      glob: "*.rds"
+  - id: segmentation_file
+    type: File
+    outputBinding:
+      glob: "*_segmentation.pdf"
+  - id: var_csv_file
+    type: File
+    outputBinding:
+      glob: "*_variants.csv"
+  - id: var_vcf_file
+    type: File
+    outputBinding:
+      glob: "*.vcf"
+
+arguments: ["--outvcf", "--force", "--postoptimize"]

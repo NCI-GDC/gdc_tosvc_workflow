@@ -7,28 +7,55 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/coverage
   - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - $(inputs.bam_file)
+      - $(inputs.bai_file)
 
 inputs:
-  - id: bam
+  - id: bam_file
     type: File
-    secondaryFiles:
-      - '^.bai'
     inputBinding:
       position: 1
       prefix: --bam
-  - id: gcgene
+      valueFrom: $(self.basename)
+  - id: bai_file
     type: File
     inputBinding:
       position: 2
-      prefix: --gcgene
+      prefix: --bai
+      valueFrom: $(self.basename)
+  - id: interval_file
+    type: File
+    inputBinding:
+      position: 3
+      prefix: --interval
+  - id: thread_num
+    type: int?
+    default: 40
+    inputBinding:
+      position: 4
+      prefix: --cpu
   - id: outdir
     type: string
     inputBinding:
-      position: 3
+      position: 5
       prefix: --outdir
 
 outputs:
-  - id: outfiles
-    type: Directory
+  - id: cov_file
+    type: File
     outputBinding:
-      glob: "./"
+      glob: "*coverage.txt"
+  - id: loess_file
+    type: File
+    outputBinding:
+      glob: "*coverage_loess.txt"
+  - id: loess_png_file
+    type: File
+    outputBinding:
+      glob: "*coverage_loess.png"
+  - id: loess_qc_file
+    type: File
+    outputBinding:
+      glob: "*coverage_loess_qc.txt"

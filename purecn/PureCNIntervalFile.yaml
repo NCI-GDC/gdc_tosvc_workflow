@@ -1,12 +1,12 @@
-infile:
-  class: File
-  path: /mnt/data/refs/gaf_20111020+broad_wex_1.1_hg38.bed
-fasta:
+ref_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.fa
-mappability:
+interval_file:
+  class: File
+  path: /mnt/data/refs/gaf_20111020+broad_wex_1.1_hg38.bed
+map_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.100.bigWig
 genome: hg38
-outfile: capture_baits_hg38_gcgene_cwltest.txt
-export: capture_baits_optimized_hg38_cwltest.bed
+out_file: capture_baits_hg38_gcgene_cwltest.txt
+export_file: capture_baits_optimized_hg38_cwltest.bed

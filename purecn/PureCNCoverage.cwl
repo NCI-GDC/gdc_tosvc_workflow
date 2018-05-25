@@ -59,3 +59,5 @@ outputs:
     type: File
     outputBinding:
       glob: "*coverage_loess_qc.txt"
+
+arguments: ["--force"]

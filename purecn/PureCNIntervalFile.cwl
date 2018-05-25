@@ -44,7 +44,7 @@ inputs:
       prefix: --export
 
 outputs:
-  - id: gcgene_file
+  - id: interval_file
     type: File
     outputBinding:
       glob: $(inputs.out_file)
@@ -53,4 +53,4 @@ outputs:
     outputBinding:
       glob: $(inputs.export_file)
 
-arguments: ["--offtarget"]
+arguments: ["--offtarget", "--force"]

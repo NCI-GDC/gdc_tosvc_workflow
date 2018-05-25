@@ -7,11 +7,6 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/purecn
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing: |
-      ${
-         return inputs.normaldir.listing
-       }
 
 inputs:
   - id: sampleid
@@ -29,9 +24,6 @@ inputs:
     inputBinding:
       position: 3
       prefix: --vcf
-  - id: normaldir
-    type: Directory
-
   - id: normaldb_file
     type: File?
     inputBinding:
@@ -52,21 +44,15 @@ inputs:
     inputBinding:
       position: 7
       prefix: --interval
-  - id: target_weight_file?
+  - id: target_weight_file
     type: File
     inputBinding:
       position: 8
       prefix: --targetweightfile
-  - id: thread_num?
-    type: int
-    default: 40
-    inputBinding:
-      position: 9
-      prefix: --parallel
-  - id: outdir
+  - id: outinfo
     type: string
     inputBinding:
-      position: 10
+      position: 9
       prefix: --out
 
 outputs:
@@ -115,4 +101,4 @@ outputs:
     outputBinding:
       glob: "*.vcf"
 
-arguments: ["--outvcf", "--force", "--postoptimize"]
+arguments: ["--outvcf", "--parallel", "--force", "--postoptimize"]

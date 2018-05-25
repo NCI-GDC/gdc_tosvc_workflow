@@ -59,46 +59,46 @@ outputs:
   - id: sample_info_file
     type: File
     outputBinding:
-      glob: "*.csv"
+      glob: $(inputs.sampleid + ".csv")
   - id: dnacopy_file
     type: File
     outputBinding:
-      glob: "*_dnacopy.seg"
+      glob: $(inputs.sampleid + "_dnacopy.seg")
   - id: genes_file
     type: File
     outputBinding:
-      glob: "*_genes.csv"
+      glob: $(inputs.sampleid + "_genes.csv")
   - id: local_optima_file
     type: File
     outputBinding:
-      glob: "*_local_optima.pdf"
+      glob: $(inputs.sampleid + "_local_optima.pdf")
   - id: log_file
     type: File
     outputBinding:
-      glob: "*.log"
+      glob: $(inputs.sampleid + ".log")
   - id: loh_file
     type: File
     outputBinding:
-      glob: "*_loh.csv"
+      glob: $(inputs.sampleid + "_loh.csv")
   - id: info_pdf_file
     type: File
     outputBinding:
-      glob: "*.pdf"
+      glob: $(inputs.sampleid + ".pdf")
   - id: rds_file
     type: File
     outputBinding:
-      glob: "*.rds"
+      glob: $(inputs.sampleid + ".rds")
   - id: segmentation_file
     type: File
     outputBinding:
-      glob: "*_segmentation.pdf"
+      glob: $(inputs.sampleid + "_segmentation.pdf")
   - id: var_csv_file
     type: File
     outputBinding:
-      glob: "*_variants.csv"
+      glob: $(inputs.sampleid + "_variants.csv")
   - id: var_vcf_file
     type: File
     outputBinding:
-      glob: "*.vcf"
+      glob: $(inputs.sampleid + ".vcf")
 
 arguments: ["--outvcf", "--parallel", "--force", "--postoptimize"]

@@ -13,10 +13,10 @@ class: CommandLineTool
 inputs:
   - id: bam
     type: File
-    secondaryFiles:
-      - '^.bai'
     inputBinding:
       position: 0
+    secondaryFiles:
+      - '.bai'
 
 outputs:
   - id: readlen

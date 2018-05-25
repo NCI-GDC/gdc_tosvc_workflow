@@ -13,7 +13,7 @@ inputs:
   tumor_bam:
     type: File
     secondaryFiles:
-      - '^.bai'
+      - '.bai'
   gem_index:
     type: File
   gem_thread_num:

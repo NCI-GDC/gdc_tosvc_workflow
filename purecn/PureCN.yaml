@@ -5,12 +5,12 @@ tumor_file:
 input_vcf_file:
   class: File
   path: /mnt/data/DLBC37/MuTect2_gatk4/TCGA-FA-8693-01A-11D-2397-10.gatk4_mutect2.tumor_only.vcf.gz
-normaldb_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/normalDB_hg38.rds
 interval_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/capture_baits_hg38_gcgene.txt
+normaldb_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/normalDB_hg38.rds
 target_weight_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/target_weights_hg38.txt

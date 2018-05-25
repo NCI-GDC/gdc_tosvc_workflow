@@ -25,7 +25,7 @@ inputs:
       position: 3
       prefix: --vcf
   - id: normaldb_file
-    type: File?
+    type: File
     inputBinding:
       position: 4
       prefix: --normaldb

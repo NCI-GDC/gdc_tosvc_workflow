@@ -17,7 +17,7 @@ inputs:
       prefix: --fasta
     secondaryFiles:
       - ".fai"
-  - id: interval_file
+  - id: capture_file
     type: File
     inputBinding:
       position: 2
@@ -48,7 +48,7 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.out_file)
-  - id: capture_file
+  - id: interval_bed_file
     type: File
     outputBinding:
       glob: $(inputs.export_file)

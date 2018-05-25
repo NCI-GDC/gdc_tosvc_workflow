@@ -32,7 +32,6 @@ inputs:
       prefix: --interval
   - id: thread_num
     type: int?
-    default: 40
     inputBinding:
       position: 4
       prefix: --cpu

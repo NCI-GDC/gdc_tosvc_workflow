@@ -9,4 +9,5 @@ bai_file:
 interval_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/capture_baits_hg38_gcgene.txt
+thread_num: 40
 outdir: .

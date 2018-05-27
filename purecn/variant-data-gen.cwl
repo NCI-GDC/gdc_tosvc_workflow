@@ -58,6 +58,12 @@ outputs:
   segmentation_file:
     type: File
     outputSource: var_call/segmentation_file
+  chrome_file:
+    type: File
+    outputSource: var_call/chrome_file
+  local_optima_file:
+    type: File
+    outputSource: var_call/local_optima_file
   var_csv_file:
     type: File
     outputSource: var_call/var_csv_file
@@ -76,7 +82,7 @@ steps:
       map_file:
         source: map_file
       genome:
-        valueFrom: genome
+        source: genome
       out_file:
         source: ref_file
         valueFrom: $(self.nameroot + ".capture_baits_hg38_gcgene.txt")
@@ -105,7 +111,7 @@ steps:
     in:
       sampleid:
         source: tumor_bam_file
-        valueFrom: $(self.nameroot.split("_").slice(0))
+        valueFrom: $(self.nameroot.split("_")[0])
       tumor_file:
         source: coverage/cov_file
       input_vcf_file:
@@ -117,7 +123,7 @@ steps:
       target_weight_file:
         source: target_weight_file
       genome:
-        valueFrom: genome
+        source: genome
       outinfo:
         valueFrom: "."
-    out: [sample_info_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file]
+    out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file]

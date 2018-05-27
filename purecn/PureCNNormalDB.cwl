@@ -27,8 +27,6 @@ arguments: ["--force"]
 inputs:
   - id: normaldir
     type: Directory
-#    inputBinding:
-#      valueFrom: $(self.basename)
   - id: genome
     type: string
     inputBinding:

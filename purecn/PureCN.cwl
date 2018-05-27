@@ -10,10 +10,11 @@ requirements:
 
 inputs:
   - id: sampleid
-    type: string
+    type: string?
     inputBinding:
       position: 1
       prefix: --sampleid
+      valueFrom: $(inputs.tumor_file.nameroot.split("_")[0])
   - id: tumor_file
     type: File
     inputBinding:
@@ -60,6 +61,10 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.sampleid + ".csv")
+  - id: chrome_file
+    type: File
+    outputBinding:
+      glob: $(inputs.sampleid + "_chromosomes.pdf")
   - id: dnacopy_file
     type: File
     outputBinding:

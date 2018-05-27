@@ -1,4 +1,4 @@
-sampleid: TCGA-FA-8693-01A-11D-2397-10
+#sampleid: TCGA-FA-8693-01A-11D-2397-10
 tumor_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn_coverage_loess.txt

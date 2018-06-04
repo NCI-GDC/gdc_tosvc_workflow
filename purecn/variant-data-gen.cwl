@@ -113,7 +113,7 @@ steps:
         source: tumor_bam_file
         valueFrom: $(self.nameroot.split("_")[0])
       tumor_file:
-        source: coverage/cov_file
+        source: coverage/loess_file
       input_vcf_file:
         source: input_vcf_file
       interval_file:

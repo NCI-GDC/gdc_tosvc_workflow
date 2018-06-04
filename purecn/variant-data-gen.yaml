@@ -1,6 +1,9 @@
 ref_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.fa
+map_file:
+  class: File
+  path: /mnt/data/refs/GRCh38.d1.vd1.100.bigWig
 tumor_bam_file:
   class: File
   path: /mnt/data/DLBC37/BAMs/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn.bam
@@ -13,9 +16,6 @@ input_vcf_file:
 capture_file:
   class: File
   path: /mnt/data/refs/gaf_20111020+broad_wex_1.1_hg38.bed
-map_file:
-  class: File
-  path: /mnt/data/refs/GRCh38.d1.vd1.100.bigWig
 normaldb_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/normalDB_hg38.rds

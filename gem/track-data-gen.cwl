@@ -55,9 +55,16 @@ steps:
       mapfile: gem_mappability/mapfile
     out: [wigfile, sizefile]
 
+  extract_wig_size:
+    run: extract_wig_size.cwl
+    in:
+      wig_file: gem2wig/wigfile
+      size_file: gem2wig/sizefile
+    out: [extracted_wig_file, extracted_size_file]
+
   wig2bigwig:
     run: wig2bigwig.cwl
     in:
-      wigfile: gem2wig/wigfile
-      sizefile: gem2wig/sizefile
+      wigfile: extract_wig_size/extracted_wig_file
+      sizefile: extract_wig_size/extracted_size_file
     out: [bigwigfile]

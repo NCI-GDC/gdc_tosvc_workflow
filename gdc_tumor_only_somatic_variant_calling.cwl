@@ -43,9 +43,6 @@ inputs:
     type: File
 
 outputs:
-  track_data_file:
-    type: File
-    outputSource: gen_track_data/track_data
   sample_info_file:
     type: File
     outputSource: call_variants/sample_info_file
@@ -83,6 +80,44 @@ outputs:
     type: File
     outputSource: call_variants/var_vcf_file
 
+  interval_file:
+    type: File
+    outputSource: call_variants/interval_file
+  interval_bed_file:
+    type: File
+    outputSource: call_variants/interval_bed_file
+  cov_file:
+    type: File
+    outputSource: call_variants/cov_file
+  loess_file:
+    type: File
+    outputSource: call_variants/loess_file
+  loess_png_file:
+    type: File
+    outputSource: call_variants/loess_png_file
+  loess_qc_file:
+    type: File
+    outputSource: call_variants/loess_qc_file
+
+  bigwig_file:
+    type: File
+    outputSource: gen_track_data/bigwig_file
+  extracted_wig_file:
+    type: File
+    outputSource: gen_track_data/extracted_wig_file
+  extracted_size_file:
+    type: File
+    outputSource: gen_track_data/extracted_size_file
+  wig_file:
+    type: File
+    outputSource: gen_track_data/wig_file
+  size_file:
+    type: File
+    outputSource: gen_track_data/size_file
+  map_file:
+    type: File
+    outputSource: gen_track_data/map_file
+
 steps:
   gen_track_data:
     run: gem/track-data-gen.cwl
@@ -97,7 +132,7 @@ steps:
         source: gem_max_mismatch
       gem_max_edit:
         source: gem_max_edit
-    out: [track_data]
+    out: [bigwig_file, extracted_wig_file, extracted_size_file, wig_file, size_file, map_file]
 
   call_variants:
     run: purecn/variant-data-gen.cwl
@@ -107,7 +142,7 @@ steps:
       genome:
         source: ref_version
       map_file:
-        source: gen_track_data/track_data
+        source: gen_track_data/bigwig_file
       tumor_bam_file:
         source: tumor_bam_file
       tumor_bai_file:
@@ -124,4 +159,4 @@ steps:
         source: thread_num
       outinfo:
         valueFrom: "."
-    out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file]
+    out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]

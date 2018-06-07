@@ -27,9 +27,24 @@ inputs:
     default: 2
 
 outputs:
-  track_data:
+  bigwig_file:
     type: File
     outputSource: wig2bigwig/bigwigfile
+  extracted_wig_file:
+    type: File
+    outputSource: extract_wig_size/extracted_wig_file
+  extracted_size_file:
+    type: File
+    outputSource: extract_wig_size/extracted_size_file
+  wig_file:
+    type: File
+    outputSource: gem2wig/wigfile
+  size_file:
+    type: File
+    outputSource: gem2wig/sizefile
+  map_file:
+    type: File
+    outputSource: gem_mappability/mapfile
 
 steps:
   get_readlen:

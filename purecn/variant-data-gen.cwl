@@ -71,6 +71,25 @@ outputs:
     type: File
     outputSource: var_call/var_vcf_file
 
+  interval_file:
+    type: File
+    outputSource: interval/interval_file
+  interval_bed_file:
+    type: File
+    outputSource: interval/interval_bed_file
+  cov_file:
+    type: File
+    outputSource: coverage/cov_file
+  loess_file:
+    type: File
+    outputSource: coverage/loess_file
+  loess_png_file:
+    type: File
+    outputSource: coverage/loess_png_file
+  loess_qc_file:
+    type: File
+    outputSource: coverage/loess_qc_file
+
 steps:
   interval:
     run: PureCNIntervalFile.cwl

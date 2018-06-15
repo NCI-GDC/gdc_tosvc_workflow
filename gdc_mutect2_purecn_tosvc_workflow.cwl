@@ -11,142 +11,126 @@ requirements:
   - class: SubworkflowFeatureRequirement
 
 inputs:
-  ref_file:
+  #input ref data
+  - id: bioclient_config
     type: File
-    secondaryFiles:
-      ".fai"
-  ref_version:
+  - id: bioclient_upload_bucket
     type: string
-  thread_num:
+  - id: job_uuid
+    type: string
+  - id: fa_uuid
+    type: string
+  - id: fa_filesize
+    type: long
+  - id: fai_uuid
+    type: string
+  - id: fai_filesize
+    type: long
+  - id: bigwig_uuid
+    type: string
+  - id: bigwig_filesize
+    type: long
+  - id: gemindex_uuid
+    type: string
+  - id: gemindex_filesize
+    type: long
+
+  #input parameters
+  - id: fa_version
+    type: string
+  - id: thread_num
     type: int
-  gem_index_file:
-      type: File
-  gem_max_mismatch:
+  - id: gem_max_mismatch
     type: int
     default: 2
-  gem_max_edit:
+  - id: gem_max_edit
     type: int
     default: 2
-  tumor_bam_file:
+
+  #input data for pipeline
+  - id: sample_id
+    type: string
+  - id: bam_uuid
+    type: string
+  - id: bam_filesize
+    type: long
+  - id: bai_uuid
+    type: string
+  - id: bai_filesize
+    type: long
+  - id: input_vcf_file
     type: File
-    secondaryFiles:
-      - '.bai'
-  tumor_bai_file:
-    type: File
-  input_vcf_file:
-    type: File
-  capture_file:
-    type: File
-  normaldb_file:
-    type: File
-  target_weight_file:
-    type: File
+  - id: capture_file
+    type: File?
+  - id: normaldb_file
+    type: File?
+  - id: target_weight_file
+    type: File?
 
 outputs:
-  sample_info_file:
-    type: File
-    outputSource: call_variants/sample_info_file
-  dnacopy_file:
-    type: File
-    outputSource: call_variants/dnacopy_file
-  genes_file:
-    type: File
-    outputSource: call_variants/genes_file
-  log_file:
-    type: File
-    outputSource: call_variants/log_file
-  loh_file:
-    type: File
-    outputSource: call_variants/loh_file
-  info_pdf_file:
-    type: File
-    outputSource: call_variants/info_pdf_file
-  rds_file:
-    type: File
-    outputSource: call_variants/rds_file
-  segmentation_file:
-    type: File
-    outputSource: call_variants/segmentation_file
-  chrome_file:
-    type: File
-    outputSource: call_variants/chrome_file
-  local_optima_file:
-    type: File
-    outputSource: call_variants/local_optima_file
-  var_csv_file:
-    type: File
-    outputSource: call_variants/var_csv_file
-  var_vcf_file:
-    type: File
-    outputSource: call_variants/var_vcf_file
-
-  interval_file:
-    type: File
-    outputSource: call_variants/interval_file
-  interval_bed_file:
-    type: File
-    outputSource: call_variants/interval_bed_file
-  cov_file:
-    type: File
-    outputSource: call_variants/cov_file
-  loess_file:
-    type: File
-    outputSource: call_variants/loess_file
-  loess_png_file:
-    type: File
-    outputSource: call_variants/loess_png_file
-  loess_qc_file:
-    type: File
-    outputSource: call_variants/loess_qc_file
-
-  bigwig_file:
-    type: File
-    outputSource: gen_track_data/bigwig_file
-  extracted_wig_file:
-    type: File
-    outputSource: gen_track_data/extracted_wig_file
-  extracted_size_file:
-    type: File
-    outputSource: gen_track_data/extracted_size_file
-  wig_file:
-    type: File
-    outputSource: gen_track_data/wig_file
-  size_file:
-    type: File
-    outputSource: gen_track_data/size_file
-  map_file:
-    type: File
-    outputSource: gen_track_data/map_file
+  - id: var_vcf_file_uuid
+    type: string
+    outputSource: upload_outputs/var_vcf_file_uuid
+  - id: sample_info_file_uuid
+    type: string
+    outputSource: upload_outputs/sample_info_file_uuid
+  - id: dnacopy_file_uuid
+    type: string
+    outputSource: upload_outputs/dnacopy_seg_file_uuid
+  - id: loh_file_uuid
+    type: string
+    outputSource: upload_outputs/loh_file_uuid
+  - id: other_files_uuid
+    type: string
+    outputSource: upload_outputs/other_files_uuid
 
 steps:
-  gen_track_data:
-    run: gem/track-data-gen.cwl
+  - id: get_inputs
+    run: inout/get_inputs.cwl
     in:
-      tumor_bam:
-        source: tumor_bam_file
-      gem_index:
-        source: gem_index_file
-      gem_thread_num:
-        source: thread_num
-      gem_max_mismatch:
-        source: gem_max_mismatch
-      gem_max_edit:
-        source: gem_max_edit
-    out: [bigwig_file, extracted_wig_file, extracted_size_file, wig_file, size_file, map_file]
-
-  call_variants:
+      - id: bioclient_config
+        source: bioclient_config
+      - id: bam_uuid
+        source: bam_uuid
+      - id: bam_filesize
+        source: bam_filesize
+      - id: bai_uuid
+        source: bai_uuid
+      - id: bai_filesize
+        source: bai_filesize
+      - id: fa_uuid
+        source: fa_uuid
+      - id: fa_filesize
+        source: fa_filesize
+      - id: fai_uuid
+        source: fai_uuid
+      - id: fai_filesize
+        source: fai_filesize
+      - id: bigwig_uuid
+        source: bigwig_uuid
+      - id: bigwig_filesize
+        source: bigwig_filesize
+      - id: gemindex_uuid
+        source: gemindex_uuid
+      - id: gemindex_filesize
+        source: gemindex_filesize
+    out: [fa_file, fai_file, bam_file, bai_file, bigwig_file, gemindex_file]
+  
+  - id: call_variants
     run: purecn/variant-data-gen.cwl
     in:
-      ref_file:
-        source: ref_file
+      fa_file:
+        source: get_inputs/fa_file
+      fai_file:
+        source: get_inputs/fai_file
       genome:
-        source: ref_version
+        source: fa_version
       map_file:
-        source: gen_track_data/bigwig_file
+        source: get_inputs/bigwig_file
       tumor_bam_file:
-        source: tumor_bam_file
+        source: get_inputs/bam_file
       tumor_bai_file:
-        source: tumor_bai_file
+        source: get_inputs/bai_file
       capture_file:
         source: capture_file
       input_vcf_file:
@@ -160,3 +144,65 @@ steps:
       outinfo:
         valueFrom: "."
     out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]
+
+  - id: modify_outputs
+    run: inout/modify_outputs.cwl
+    in:
+      sample_info_file:
+        source: call_variants/sample_info_file
+      dnacopy_seg_file:
+        source: call_variants/dnacopy_file
+    out: [gdc_sample_info_file, gdc_dnacopy_seg_file]
+
+  - id: tar_outputs
+    run: inout/tar_outputs.cwl
+    in:
+      genes_file:
+        source: call_variants/genes_file
+      log_file:
+        source: call_variants/log_file
+      info_pdf_file:
+        source: call_variants/info_pdf_file
+      segmentation_file:
+        source: call_variants/segmentation_file
+      chrome_file:
+        source: call_variants/chrome_file
+      local_optima_file:
+        source: call_variants/local_optima_file
+      interval_file:
+        source: call_variants/interval_file
+      interval_bed_file:
+        source: call_variants/interval_bed_file
+      cov_file:
+        source: call_variants/cov_file
+      loess_file:
+        source: call_variants/loess_file
+      loess_png_file:
+        source: call_variants/loess_png_file
+      loess_qc_file:
+        source: call_variants/loess_qc_file
+      compress_file_name:
+        source: sample_id
+        valueFrom: $(self + ".gdc.tar.gz")
+    out: [outfile]
+
+  - id: upload_outputs
+    run: inout/upload_outputs.cwl
+    in:
+      bioclient_config:
+        source: bioclient_config
+      bioclient_upload_bucket:
+        source: bioclient_upload_bucket
+      job_uuid:
+        source: job_uuid
+      var_vcf_file:
+        source: call_variants/var_vcf_file
+      loh_file:
+        source: call_variants/loh_file
+      sample_info_file:
+        source: modify_outputs/gdc_sample_info_file
+      dnacopy_seg_file:
+        source: modify_outputs/gdc_dnacopy_seg_file
+      other_files:
+        source: tar_outputs/outfile
+    out: [var_vcf_file_uuid, loh_file_uuid, sample_info_file_uuid, dnacopy_seg_file_uuid, other_files_uuid]

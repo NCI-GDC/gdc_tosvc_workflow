@@ -1,6 +1,9 @@
-ref_file:
+fa_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.fa
+fai_file:
+  class: File
+  path: /mnt/data/refs/GRCh38.d1.vd1.fa.fai
 capture_file:
   class: File
   path: /mnt/data/refs/gaf_20111020+broad_wex_1.1_hg38.bed

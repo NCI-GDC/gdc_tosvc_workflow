@@ -10,10 +10,10 @@ requirements:
   - class: MultipleInputFeatureRequirement
 
 inputs:
-  ref_file:
+  fa_file:
     type: File
-    secondaryFiles:
-      ".fai"
+  fai_file:
+    type: File
   tumor_bam_file:
     type: File
   tumor_bai_file:
@@ -94,8 +94,10 @@ steps:
   interval:
     run: PureCNIntervalFile.cwl
     in:
-      ref_file:
-        source: ref_file
+      fa_file:
+        source: fa_file
+      fai_file:
+        source: fai_file
       capture_file:
         source: capture_file
       map_file:
@@ -103,10 +105,10 @@ steps:
       genome:
         source: genome
       out_file:
-        source: ref_file
+        source: fa_file
         valueFrom: $(self.nameroot + ".capture_baits_hg38_gcgene.txt")
       export_file:
-        source: ref_file
+        source: fa_file
         valueFrom: $(self.nameroot + ".capture_baits_optimized_hg38.bed")
     out: [interval_file, interval_bed_file]
 

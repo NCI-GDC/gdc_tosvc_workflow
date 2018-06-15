@@ -8,15 +8,20 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/interval
   - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - $(inputs.fa_file)
+      - $(inputs.fai_file)
 
 inputs:
-  - id: ref_file
+  - id: fa_file
     type: File
     inputBinding:
       position: 1
       prefix: --fasta
-    secondaryFiles:
-      - ".fai"
+      valueFrom: $(self.basename)
+  - id: fai_file
+    type: File
   - id: capture_file
     type: File
     inputBinding:

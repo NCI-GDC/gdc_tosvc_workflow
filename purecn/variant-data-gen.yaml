@@ -1,6 +1,9 @@
-ref_file:
+fa_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.fa
+fai_file:
+  class: File
+  path: /mnt/data/refs/GRCh38.d1.vd1.fa.fai
 map_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.100.bigWig

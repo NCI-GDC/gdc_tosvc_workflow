@@ -58,7 +58,7 @@ outputs:
 
 steps:
   - id: get_bam
-    run: bio_client_download.cwl
+    run: bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -69,7 +69,7 @@ steps:
     out:
       - id: output
   - id: get_bai
-    run: bio_client_download.cwl
+    run: bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -80,7 +80,7 @@ steps:
     out:
       - id: output
   - id: get_fa
-    run: bio_client_download.cwl
+    run: bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -91,7 +91,7 @@ steps:
     out:
       - id: output
   - id: get_fai
-    run: bio_client_download.cwl
+    run: bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -102,7 +102,7 @@ steps:
     out:
       - id: output
   - id: get_bigwig
-    run: bio_client_download.cwl
+    run: bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -113,7 +113,7 @@ steps:
     out:
       - id: output
   - id: get_gemindex
-    run: bio_client_download.cwl
+    run: bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config

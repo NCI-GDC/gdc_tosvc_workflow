@@ -18,8 +18,6 @@ inputs:
     type: string
   - id: var_vcf_file
     type: File
-  - id: loh_file
-    type: File
   - id: sample_info_file
     type: File
   - id: dnacopy_seg_file
@@ -31,9 +29,6 @@ outputs:
   - id: var_vcf_file_uuid
     type: string
     outputSource: upload_var_vcf_file/output_file_uuid
-  - id: loh_file_uuid
-    type: string
-    outputSource: upload_loh_file/output_file_uuid
   - id: sample_info_file_uuid
     type: string
     outputSource: upload_sample_info_file/output_file_uuid
@@ -57,19 +52,6 @@ steps:
         valueFrom: $(self[0] + '/' + self[1].basename)
       - id: input_file
         source: var_vcf_file
-    out: [output_file, output_file_uuid]
-  - id: upload_loh_file
-    run: bioclient_upload.cwl
-    in:
-      - id: config_file
-        source: bioclient_config
-      - id: upload_bucket
-        source: bioclient_upload_bucket
-      - id: upload_key
-        source: [job_uuid, loh_file]
-        valueFrom: $(self[0] + '/' + self[1].basename)
-      - id: input_file
-        source: loh_file
     out: [output_file, output_file_uuid]
   - id: upload_sample_info_file
     run: bioclient_upload.cwl

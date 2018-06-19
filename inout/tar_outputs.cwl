@@ -12,6 +12,7 @@ requirements:
     listing:
       - $(inputs.genes_file)
       - $(inputs.log_file)
+      - $(inputs.loh_file)
       - $(inputs.info_pdf_file)
       - $(inputs.segmentation_file)
       - $(inputs.chrome_file)
@@ -35,6 +36,11 @@ inputs:
     type: File
     inputBinding:
       position: 4
+      valueFrom: $(self.basename)
+  loh_file:
+    type: File
+    inputBinding:
+      position: 5
       valueFrom: $(self.basename)
   info_pdf_file:
     type: File

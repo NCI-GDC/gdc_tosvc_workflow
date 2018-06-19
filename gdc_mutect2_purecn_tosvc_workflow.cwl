@@ -77,9 +77,6 @@ outputs:
   - id: dnacopy_file_uuid
     type: string
     outputSource: upload_outputs/dnacopy_seg_file_uuid
-  - id: loh_file_uuid
-    type: string
-    outputSource: upload_outputs/loh_file_uuid
   - id: other_files_uuid
     type: string
     outputSource: upload_outputs/other_files_uuid
@@ -157,10 +154,14 @@ steps:
   - id: tar_outputs
     run: inout/tar_outputs.cwl
     in:
+      var_vcf_file:
+        source: call_variants/var_vcf_file
       genes_file:
         source: call_variants/genes_file
       log_file:
         source: call_variants/log_file
+      loh_file:
+        source: call_variants/loh_file
       info_pdf_file:
         source: call_variants/info_pdf_file
       segmentation_file:
@@ -197,12 +198,10 @@ steps:
         source: job_uuid
       var_vcf_file:
         source: call_variants/var_vcf_file
-      loh_file:
-        source: call_variants/loh_file
       sample_info_file:
         source: modify_outputs/gdc_sample_info_file
       dnacopy_seg_file:
         source: modify_outputs/gdc_dnacopy_seg_file
       other_files:
         source: tar_outputs/outfile
-    out: [var_vcf_file_uuid, loh_file_uuid, sample_info_file_uuid, dnacopy_seg_file_uuid, other_files_uuid]
+    out: [var_vcf_file_uuid, sample_info_file_uuid, dnacopy_seg_file_uuid, other_files_uuid]

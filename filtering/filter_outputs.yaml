@@ -1,0 +1,5 @@
+input_vcf_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test2/TCGA-FF-8046-01A-11D-2210-10.vcf
+output_vcf_file: TCGA-FF-8046-01A-11D-2210-10.filter.vcf
+prob_thres: 0.2

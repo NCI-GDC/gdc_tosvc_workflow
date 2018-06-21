@@ -38,6 +38,12 @@ outputs:
   gdc_dnacopy_seg_file:
     type: File
     outputSource: modify_outputs/output_dnacopy_seg_file
+  mutect_file:
+    type: File
+    outputSource: remove_nonstandard_variants_mutect/output_file
+  filter_purecn_file:
+    type: File
+    outputSource: filter_purecn/filter_vcf_file
 
 steps:
 

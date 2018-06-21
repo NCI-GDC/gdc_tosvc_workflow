@@ -18,19 +18,29 @@ inputs:
     type: File
     inputBinding:
       position: 1
-      prefix: -i
+      prefix: --info_file
   dnacopy_seg_file:
     type: File
     inputBinding:
       position: 2
-      prefix: -s
+      prefix: --seg_file
+  modified_info_file:
+    type: string
+    inputBinding:
+      position: 3
+      prefix: --modified_info_file
+  modified_seg_file:
+    type: string
+    inputBinding:
+      position: 4
+      prefix: --modified_seg_file
 
 outputs:
-  gdc_sample_info_file:
+  output_sample_info_file:
     type: File
     outputBinding:
-      glob: "*.gdc.csv"
-  gdc_dnacopy_seg_file:
+      glob: $(inputs.modified_info_file)
+  output_dnacopy_seg_file:
     type: File
     outputBinding:
-      glob: "*_dnacopy.gdc.seg"
+      glob: $(inputs.modified_seg_file)

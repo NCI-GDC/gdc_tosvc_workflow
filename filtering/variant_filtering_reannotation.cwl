@@ -34,10 +34,10 @@ outputs:
     outputSource: merge_vcfs/output_vcf_file
   gdc_sample_info_file:
     type: File
-    outputSource: modify_outputs/gdc_sample_info_file
+    outputSource: modify_outputs/output_sample_info_file
   gdc_dnacopy_seg_file:
     type: File
-    outputSource: modify_outputs/gdc_dnacopy_seg_file
+    outputSource: modify_outputs/output_dnacopy_seg_file
 
 steps:
 
@@ -48,7 +48,13 @@ steps:
         source: sample_info_file
       dnacopy_seg_file:
         source: dnacopy_seg_file
-    out: [gdc_sample_info_file, gdc_dnacopy_seg_file]
+      modified_info_file:
+        source: sample_id
+        valueFrom: $(self + ".info.csv")
+      modified_seg_file:
+        source: sample_id
+        valueFrom: $(self + ".dnacopy_seg.csv")
+    out: [output_sample_info_file, output_dnacopy_seg_file]
 
   remove_nonstandard_variants_mutect:
     run: remove_nonstandard_variants.cwl
@@ -56,7 +62,7 @@ steps:
       input_vcf:
         source: mutect_vcf_file
       output_filename:
-        valueFrom: "tmp.vcf"
+        valueFrom: "std.vcf"
     out: [output_file]
 
   remove_nonstandard_variants_purecn:
@@ -87,5 +93,5 @@ steps:
         source: fai_file
       output_filename:
         source: sample_id
-        valueFrom: $(self + ".gdc.vcf")
+        valueFrom: $(self + ".purecn.gdc_filtration.vcf")
     out: [output_vcf_file]

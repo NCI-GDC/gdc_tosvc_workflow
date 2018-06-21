@@ -1,0 +1,1 @@
+cwltool --debug --tmpdir-prefix /mnt/tmp/ --tmp-outdir-prefix /mnt/tmp/ --outdir /mnt/data/DLBC37/PureCN_cwl/cwl_test/ gdc_mutect2_purecn_tosvc_workflow.cwl gdc_mutect2_purecn_tosvc_workflow.yaml  2>/mnt/data/DLBC37/PureCN_cwl/cwl_test/gdc_mutect2_purecn_tosvc_workflow.log &

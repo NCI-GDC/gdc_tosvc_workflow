@@ -46,10 +46,11 @@ inputs:
   - id: gem_max_edit
     type: int
     default: 2
+  - id: var_prob_thres
+    type: float
+    default: 0.2
 
   #input data for pipeline
-  - id: sample_id
-    type: string
   - id: bam_uuid
     type: string
   - id: bam_filesize
@@ -138,18 +139,11 @@ steps:
         source: target_weight_file
       thread_num:
         source: thread_num
+      sample_id:
+        source: job_uuid
       outinfo:
         valueFrom: "."
     out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]
-
-  - id: modify_outputs
-    run: inout/modify_outputs.cwl
-    in:
-      sample_info_file:
-        source: call_variants/sample_info_file
-      dnacopy_seg_file:
-        source: call_variants/dnacopy_file
-    out: [gdc_sample_info_file, gdc_dnacopy_seg_file]
 
   - id: tar_outputs
     run: inout/tar_outputs.cwl
@@ -183,9 +177,30 @@ steps:
       loess_qc_file:
         source: call_variants/loess_qc_file
       compress_file_name:
-        source: sample_id
-        valueFrom: $(self + ".gdc.tar.gz")
+        source: job_uuid
+        valueFrom: $(self + ".purecn.tar.gz")
     out: [outfile]
+
+  - id: variant_filtering_reannotation
+    run: filtering/variant_filtering_reannotation.cwl
+    in:
+      sample_id:
+        source: job_uuid
+      fa_file:
+        source: get_inputs/fa_file
+      fai_file:
+        source: get_inputs/fai_file
+      mutect_vcf_file:
+        source: input_vcf_file
+      purecn_vcf_file:
+        source: call_variants/var_vcf_file
+      sample_info_file:
+        source: call_variants/sample_info_file
+      dnacopy_seg_file:
+        source: call_variants/dnacopy_file
+      var_prob_thres:
+        source: var_prob_thres
+    out: [gdc_vcf_file, gdc_sample_info_file, gdc_dnacopy_seg_file]
 
   - id: upload_outputs
     run: inout/upload_outputs.cwl
@@ -197,11 +212,11 @@ steps:
       job_uuid:
         source: job_uuid
       var_vcf_file:
-        source: call_variants/var_vcf_file
+        source: variant_filtering_reannotation/gdc_vcf_file
       sample_info_file:
-        source: modify_outputs/gdc_sample_info_file
+        source: variant_filtering_reannotation/gdc_sample_info_file
       dnacopy_seg_file:
-        source: modify_outputs/gdc_dnacopy_seg_file
+        source: variant_filtering_reannotation/gdc_dnacopy_seg_file
       other_files:
         source: tar_outputs/outfile
     out: [var_vcf_file_uuid, sample_info_file_uuid, dnacopy_seg_file_uuid, other_files_uuid]

@@ -114,6 +114,15 @@ steps:
         source: gemindex_filesize
     out: [fa_file, fai_file, bam_file, bai_file, bigwig_file, gemindex_file]
   
+  - id: remove_nstd_variants
+    run: auxiliary/remove_nonstandard_variants.cwl
+    in:
+      input_vcf:
+        source: input_vcf_file
+      output_filename:
+        valueFrom: "std.vcf"
+    out: [output_file]
+
   - id: call_variants
     run: purecn/variant-data-gen.cwl
     in:
@@ -132,7 +141,7 @@ steps:
       capture_file:
         source: capture_file
       input_vcf_file:
-        source: input_vcf_file
+        source: remove_nstd_variants/output_file
       normaldb_file:
         source: normaldb_file
       target_weight_file:
@@ -145,8 +154,23 @@ steps:
         valueFrom: "."
     out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]
 
+  - id: modify_outputs
+    run: auxiliary/modify_outputs.cwl
+    in:
+      sample_info_file:
+        source: call_variants/sample_info_file
+      dnacopy_seg_file:
+        source: call_variants/dnacopy_file
+      modified_info_file:
+        source: job_uuid
+        valueFrom: $(self + ".info.csv")
+      modified_seg_file:
+        source: job_uuid
+        valueFrom: $(self + ".dnacopy_seg.csv")
+    out: [output_sample_info_file, output_dnacopy_seg_file]
+
   - id: tar_outputs
-    run: inout/tar_outputs.cwl
+    run: auxiliary/tar_outputs.cwl
     in:
       var_vcf_file:
         source: call_variants/var_vcf_file
@@ -191,16 +215,12 @@ steps:
       fai_file:
         source: get_inputs/fai_file
       mutect_vcf_file:
-        source: input_vcf_file
+        source: remove_nstd_variants/output_file
       purecn_vcf_file:
         source: call_variants/var_vcf_file
-      sample_info_file:
-        source: call_variants/sample_info_file
-      dnacopy_seg_file:
-        source: call_variants/dnacopy_file
       var_prob_thres:
         source: var_prob_thres
-    out: [gdc_vcf_file, gdc_sample_info_file, gdc_dnacopy_seg_file]
+    out: [gdc_vcf_file]
 
   - id: upload_outputs
     run: inout/upload_outputs.cwl
@@ -214,9 +234,9 @@ steps:
       var_vcf_file:
         source: variant_filtering_reannotation/gdc_vcf_file
       sample_info_file:
-        source: variant_filtering_reannotation/gdc_sample_info_file
+        source: modify_outputs/output_sample_info_file
       dnacopy_seg_file:
-        source: variant_filtering_reannotation/gdc_dnacopy_seg_file
+        source: modify_outputs/output_dnacopy_seg_file
       other_files:
         source: tar_outputs/outfile
     out: [var_vcf_file_uuid, sample_info_file_uuid, dnacopy_seg_file_uuid, other_files_uuid]

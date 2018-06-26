@@ -1,0 +1,38 @@
+bioclient_config:
+  class: File
+  path: /mnt/scripts/tosvc_workflow/inout/bioclient.json
+bioclient_upload_bucket: s3://ceph.service.consul/bio-automation-test
+job_uuid: 00000000-0000-0000-0000-000000000000
+
+bam_uuid: 08fed839-3abd-4367-a540-5d7888de38d6
+bam_filesize: 9694763134
+bai_uuid: 27c10218-56f9-4cd5-a0f2-7deb50b60757
+bai_filesize: 6476032
+fa_uuid: ed96790c-3eb5-4aa2-8f46-702d503e64e4
+fa_filesize: 3152288848
+fai_uuid: 10283433-bcec-46bc-bfd5-5215428853ea
+fai_filesize: 129640
+gemindex_uuid: ade45def-94ef-4284-81af-979488542af3
+gemindex_filesize: 4414051216
+bigwig_uuid: 37fc9497-3bcc-4dee-94b9-70a831e847f0
+bigwig_filesize: 1564896096
+
+input_vcf_file:
+  class: File
+  path: /mnt/data/DLBC37/MuTect2_gatk4/TCGA-FF-8046-01A-11D-2210-10.gatk4_mutect2.tumor_only.vcf.gz
+capture_file:
+  class: File
+  path: /mnt/data/refs/gaf_20111020+broad_wex_1.1_hg38.bed
+normaldb_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/normalDB_hg38.rds
+target_weight_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/target_weights_hg38.txt
+
+thread_num: 40
+fa_version: hg38
+sample_id: TCGA-FF-8046-01A-11D-2210-10
+
+run_with_normaldb: [1]
+run_without_normaldb: []

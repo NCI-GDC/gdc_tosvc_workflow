@@ -9,6 +9,7 @@ requirements:
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
   - class: SubworkflowFeatureRequirement
+  - class: ScatterFeatureRequirement
 
 inputs:
   #input ref data
@@ -61,25 +62,37 @@ inputs:
     type: long
   - id: input_vcf_file
     type: File
+
+  #optional inputs
   - id: capture_file
-    type: File?
+    type: File
   - id: normaldb_file
-    type: File?
+    type: File
   - id: target_weight_file
-    type: File?
+    type: File
+
+  #conditinonal inputs
+  - id: run_with_normaldb
+    type:
+      type: array
+      items: int
+  - id: run_without_normaldb
+    type:
+      type: array
+      items: int
 
 outputs:
   - id: var_vcf_file_uuid
     type: string
     outputSource: upload_outputs/var_vcf_file_uuid
   - id: sample_info_file_uuid
-    type: string
+    type: string?
     outputSource: upload_outputs/sample_info_file_uuid
   - id: dnacopy_file_uuid
-    type: string
+    type: string?
     outputSource: upload_outputs/dnacopy_seg_file_uuid
   - id: other_files_uuid
-    type: string
+    type: string?
     outputSource: upload_outputs/other_files_uuid
 
 steps:
@@ -123,20 +136,41 @@ steps:
         valueFrom: "std.vcf"
     out: [output_file]
 
-  - id: call_variants
-    run: purecn/variant-data-gen.cwl
+  - id: mutect_gdcfiltration
+    run: mutect_gdcfiltration_workflow.cwl
+    scatter: run_without_normaldb
     in:
+      run_without_normaldb:
+        source: run_without_normaldb
       fa_file:
         source: get_inputs/fa_file
       fai_file:
         source: get_inputs/fai_file
-      genome:
+      capture_file:
+        source: capture_file
+      input_vcf_file:
+        source: remove_nstd_variants/output_file
+      job_uuid:
+        source: job_uuid
+    out: [output_vcf_file]
+
+  - id: purecn_gdcfiltration
+    run: purecn_gdcfiltration_workflow.cwl
+    scatter: run_with_normaldb
+    in:
+      run_with_normaldb:
+        source: run_with_normaldb
+      fa_file:
+        source: get_inputs/fa_file
+      fai_file:
+        source: get_inputs/fai_file
+      fa_version:
         source: fa_version
-      map_file:
+      bigwig_file:
         source: get_inputs/bigwig_file
-      tumor_bam_file:
+      bam_file:
         source: get_inputs/bam_file
-      tumor_bai_file:
+      bai_file:
         source: get_inputs/bai_file
       capture_file:
         source: capture_file
@@ -148,82 +182,30 @@ steps:
         source: target_weight_file
       thread_num:
         source: thread_num
-      sample_id:
+      job_uuid:
         source: job_uuid
       outinfo:
         valueFrom: "."
-    out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]
+    out: [output_vcf_file, sample_info_file, dnacopy_seg_file, other_files]
 
-  - id: modify_outputs
-    run: auxiliary/modify_outputs.cwl
+  - id: merge_purecn_mutect_gdcfiltration
+    run: merge_purecn_mutect_gdcfiltration.cwl
     in:
+      no_normaldb_vcf_file:
+        source: mutect_gdcfiltration/output_vcf_file
+      normaldb_vcf_file:
+        source: purecn_gdcfiltration/output_vcf_file
       sample_info_file:
-        source: call_variants/sample_info_file
+        source: purecn_gdcfiltration/sample_info_file
       dnacopy_seg_file:
-        source: call_variants/dnacopy_file
-      modified_info_file:
-        source: job_uuid
-        valueFrom: $(self + ".info.csv")
-      modified_seg_file:
-        source: job_uuid
-        valueFrom: $(self + ".dnacopy_seg.csv")
-    out: [output_sample_info_file, output_dnacopy_seg_file]
-
-  - id: tar_outputs
-    run: auxiliary/tar_outputs.cwl
-    in:
-      var_vcf_file:
-        source: call_variants/var_vcf_file
-      genes_file:
-        source: call_variants/genes_file
-      log_file:
-        source: call_variants/log_file
-      loh_file:
-        source: call_variants/loh_file
-      info_pdf_file:
-        source: call_variants/info_pdf_file
-      segmentation_file:
-        source: call_variants/segmentation_file
-      chrome_file:
-        source: call_variants/chrome_file
-      local_optima_file:
-        source: call_variants/local_optima_file
-      interval_file:
-        source: call_variants/interval_file
-      interval_bed_file:
-        source: call_variants/interval_bed_file
-      cov_file:
-        source: call_variants/cov_file
-      loess_file:
-        source: call_variants/loess_file
-      loess_png_file:
-        source: call_variants/loess_png_file
-      loess_qc_file:
-        source: call_variants/loess_qc_file
-      compress_file_name:
-        source: job_uuid
-        valueFrom: $(self + ".purecn.tar.gz")
-    out: [outfile]
-
-  - id: variant_filtering_reannotation
-    run: filtering/variant_filtering_reannotation.cwl
-    in:
-      sample_id:
-        source: job_uuid
-      fa_file:
-        source: get_inputs/fa_file
-      fai_file:
-        source: get_inputs/fai_file
-      mutect_vcf_file:
-        source: remove_nstd_variants/output_file
-      purecn_vcf_file:
-        source: call_variants/var_vcf_file
-      var_prob_thres:
-        source: var_prob_thres
-    out: [gdc_vcf_file]
-
+        source: purecn_gdcfiltration/dnacopy_seg_file
+      other_files:
+        source: purecn_gdcfiltration/other_files
+    out:
+      [output_vcf_file, output_sample_info_file, output_dnacopy_seg_file, output_other_files]
+      
   - id: upload_outputs
-    run: inout/upload_outputs.cwl
+    run: inout/cond_upload_outputs.cwl
     in:
       bioclient_config:
         source: bioclient_config
@@ -232,11 +214,11 @@ steps:
       job_uuid:
         source: job_uuid
       var_vcf_file:
-        source: variant_filtering_reannotation/gdc_vcf_file
+        source: merge_purecn_mutect_gdcfiltration/output_vcf_file
       sample_info_file:
-        source: modify_outputs/output_sample_info_file
+        source: merge_purecn_mutect_gdcfiltration/output_sample_info_file
       dnacopy_seg_file:
-        source: modify_outputs/output_dnacopy_seg_file
+        source: merge_purecn_mutect_gdcfiltration/output_dnacopy_seg_file
       other_files:
-        source: tar_outputs/outfile
+        source: merge_purecn_mutect_gdcfiltration/output_other_files
     out: [var_vcf_file_uuid, sample_info_file_uuid, dnacopy_seg_file_uuid, other_files_uuid]

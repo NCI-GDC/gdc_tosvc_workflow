@@ -20,9 +20,9 @@ inputs:
     type: File
   input_vcf_file:
     type: File
-  capture_file:
-    type: File
   map_file:
+    type: File
+  capture_file:
     type: File
   normaldb_file:
     type: File

@@ -24,6 +24,7 @@ inputs:
     type: File
   - id: other_files
     type: File
+
 outputs:
   - id: var_vcf_file_uuid
     type: string

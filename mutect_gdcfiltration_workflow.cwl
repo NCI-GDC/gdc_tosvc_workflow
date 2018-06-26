@@ -27,7 +27,7 @@ outputs:
 
 steps:
   - id: filter_mutect
-    run: filtering/filter_mutect_outputs.cwl
+    run: gdc_filtering/filter_mutect_outputs.cwl
     in:
       sample_id:
         source: job_uuid

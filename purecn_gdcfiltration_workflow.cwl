@@ -143,7 +143,7 @@ steps:
     out: [outfile]
 
   - id: variant_filtering_reannotation
-    run: filtering/variant_filtering_reannotation.cwl
+    run: gdc_filtering/variant_filtering_reannotation.cwl
     in:
       sample_id:
         source: job_uuid

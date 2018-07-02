@@ -24,7 +24,7 @@ inputs:
     type:
       type: array
       items: File
-  other_files:
+  archive_tar_file:
     type:
       type: array
       items: File
@@ -36,7 +36,7 @@ outputs:
     type: File
   output_dnacopy_seg_file:
     type: File
-  output_other_files:
+  output_archive_tar_file:
     type: File
 
 expression: |
@@ -45,16 +45,16 @@ expression: |
         var output_vcf = inputs.no_normaldb_vcf_file[0];
         var sample_info = null;
         var dnacopy_seg = null;
-        var others = null;
+        var archive_tar = null;
       }
       else if (inputs.no_normaldb_vcf_file.length == 0 && inputs.normaldb_vcf_file.length == 1) {
         var output_vcf = inputs.normaldb_vcf_file[0];
         var sample_info = inputs.sample_info_file[0];
         var dnacopy_seg = inputs.dnacopy_seg_file[0];
-        var others = inputs.other_files[0];
+        var archive_tar = inputs.other_files[0];
       }
       else {
-        throw "the case is unhandled";
+        throw "The case is unhandled";
       }
-      return {'output_vcf_file': output_vcf, 'output_sample_info_file': sample_info, 'output_dnacopy_seg_file': dnacopy_seg, 'output_other_files': others};
+      return {'output_vcf_file': output_vcf, 'output_sample_info_file': sample_info, 'output_dnacopy_seg_file': dnacopy_seg, 'output_archive_tar_file': archive_tar};
     }

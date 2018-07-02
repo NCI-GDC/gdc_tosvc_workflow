@@ -1,12 +1,20 @@
 {
     "config_file": {
         "class": "File",
-        "path": "/mnt/scripts/tosvc_workflow/inout/bioclient.json"
+        "path": "/mnt/scripts/gdc_tosvc_workflow/inout/bioclient.json"
     },
     "upload_bucket": "s3://ceph.service.consul/bio-automation-test",
-    "upload_key": "00000000-0000-0000-0000-000000000000/TCGA-FF-8046-01A-11D-2210-10.vcf",
+    #"upload_key": "00000000-0000-0000-0000-000000000000/TCGA-FF-8046-01A-11D-2210-10.vcf",
+    #"upload_key": "00000000-0000-0000-0000-000000000000/gaf_20111020+broad_wex_1.1_hg38.bed",
+    #"upload_key": "00000000-0000-0000-0000-000000000000/normalDB_hg38.rds",
+    #"upload_key": "00000000-0000-0000-0000-000000000000/target_weights_hg38.txt",
+    "upload_key": "00000000-0000-0000-0000-000000000000/TCGA-FF-8046-01A-11D-2210-10.gatk4_mutect2.tumor_only.vcf.gz",
     "input_file": {
         "class": "File",
-        "path": "/mnt/data/DLBC37/PureCN_cwl/tumor_varcall/TCGA-FF-8046-01A-11D-2210-10.vcf"
+        #"path": "/mnt/data/DLBC37/PureCN_cwl/tumor_varcall/TCGA-FF-8046-01A-11D-2210-10.vcf"
+        #"path": "/mnt/data/refs/gaf_20111020+broad_wex_1.1_hg38.bed"
+        #"path": "/mnt/data/DLBC37/PureCN_cwl/normaldb_capture/normalDB_hg38.rds"
+        #"path": "/mnt/data/DLBC37/PureCN_cwl/normaldb_capture/target_weights_hg38.txt"
+        "path": "/mnt/data/DLBC37/MuTect2_gatk4/TCGA-FF-8046-01A-11D-2210-10.gatk4_mutect2.tumor_only.vcf.gz"
     }
 }

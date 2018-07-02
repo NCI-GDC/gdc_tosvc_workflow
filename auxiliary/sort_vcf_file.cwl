@@ -1,10 +1,10 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-label: Drops non-standard VCF alleles
+label: "Picard VcfFormatConverter"
 cwlVersion: v1.0
 doc: |
-    Filters (REMOVES!) rows from VCF with non-standard alleles
+    Sort a VCF.
 
 requirements:
   - class: DockerRequirement
@@ -14,21 +14,33 @@ requirements:
 inputs:
   input_vcf:
     type: File
-    doc: input vcf file
+    doc: "input vcf file"
     inputBinding:
-      position: 0
+      prefix: "INPUT="
+      separate: false
 
   output_filename:
     type: string
     doc: output basename of output file
     inputBinding:
-        position: 1
+      prefix: "OUTPUT="
+      separate: false
+
+  seq_dict:
+    type: string
+    default: "null"
+    inputBinding:
+      prefix: "SEQUENCE_DICTIONARY="
+      separate: false
 
 outputs:
-  output_vcf:
+  output_vcf_file:
     type: File
-    doc: Filtered VCF file
     outputBinding:
       glob: $(inputs.output_filename)
+  output_vcf_index_file:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_filename + ".tbi")
 
-baseCommand: [/opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py]
+baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, SortVcf]

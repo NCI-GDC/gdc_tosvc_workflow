@@ -16,31 +16,31 @@ inputs:
     type: string
   - id: job_uuid
     type: string
-  - id: var_vcf_file
+  - id: filtered_vcf_file
     type: File
   - id: sample_info_file
     type: File
   - id: dnacopy_seg_file
     type: File
-  - id: other_files
+  - id: archive_tar_file
     type: File
 
 outputs:
-  - id: var_vcf_file_uuid
+  - id: filtered_vcf_uuid
     type: string
-    outputSource: upload_var_vcf_file/output_file_uuid
-  - id: sample_info_file_uuid
+    outputSource: upload_filtered_vcf_file/output_file_uuid
+  - id: sample_info_uuid
     type: string
     outputSource: upload_sample_info_file/output_file_uuid
-  - id: dnacopy_seg_file_uuid
+  - id: dnacopy_seg_uuid
     type: string
     outputSource: upload_dnacopy_seg_file/output_file_uuid
-  - id: other_files_uuid
+  - id: archive_tar_uuid
     type: string
-    outputSource: upload_other_files/output_file_uuid
+    outputSource: upload_archive_tar_file/output_file_uuid
 
 steps:
-  - id: upload_var_vcf_file
+  - id: upload_filtered_vcf_file
     run: bioclient_upload.cwl
     in:
       - id: config_file
@@ -51,7 +51,7 @@ steps:
         source: [job_uuid, var_vcf_file]
         valueFrom: $(self[0] + '/' + self[1].basename)
       - id: input_file
-        source: var_vcf_file
+        source: filtered_vcf_file
     out: [output_file, output_file_uuid]
   - id: upload_sample_info_file
     run: bioclient_upload.cwl
@@ -79,7 +79,7 @@ steps:
       - id: input_file
         source: dnacopy_seg_file
     out: [output_file, output_file_uuid]
-  - id: upload_other_files
+  - id: upload_archive_tar_file
     run: bioclient_upload.cwl
     in:
       - id: config_file
@@ -90,5 +90,5 @@ steps:
         source: [job_uuid, other_files]
         valueFrom: $(self[0] + '/' + self[1].basename)
       - id: input_file
-        source: other_files
+        source: archive_tar_file
     out: [output_file, output_file_uuid]

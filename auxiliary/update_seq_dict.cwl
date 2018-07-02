@@ -1,10 +1,10 @@
 #!/usr/bin/env cwl-runner
 
 class: CommandLineTool
-label: Drops non-standard VCF alleles
+label: "Picard UpdateSequenceDictionary" 
 cwlVersion: v1.0
 doc: |
-    Filters (REMOVES!) rows from VCF with non-standard alleles
+    Updates sequence dictionary in VCF 
 
 requirements:
   - class: DockerRequirement
@@ -14,21 +14,30 @@ requirements:
 inputs:
   input_vcf:
     type: File
-    doc: input vcf file
+    doc: "input vcf file"
     inputBinding:
-      position: 0
+      prefix: "INPUT="
+      separate: false
+
+  sequence_dictionary:
+    type: File
+    doc: sequence dictionary you want to update header with 
+    inputBinding:
+      prefix: SD= 
+      separate: false
 
   output_filename:
     type: string
     doc: output basename of output file
     inputBinding:
-        position: 1
+      prefix: "OUTPUT="
+      separate: false
 
 outputs:
-  output_vcf:
+  output_file:
     type: File
-    doc: Filtered VCF file
     outputBinding:
       glob: $(inputs.output_filename)
+    doc: Updated VCF file 
 
-baseCommand: [/opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py]
+baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, UpdateVcfSequenceDictionary]

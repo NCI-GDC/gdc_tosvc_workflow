@@ -10,8 +10,6 @@ requirements:
   - class: MultipleInputFeatureRequirement
 
 inputs:
-  sample_id:
-    type: string
   fa_file:
     type: File
   fai_file:
@@ -23,6 +21,8 @@ inputs:
   var_prob_thres:
     type: float
     default: 0.2
+  file_prefix:
+    type: string
 
 outputs:
   output_vcf_file:
@@ -38,8 +38,8 @@ steps:
       prob_thres:
         source: var_prob_thres
       output_vcf_filename:
-        source: sample_id
-        valueFrom: $(self + ".purecn.gdc_filtration.vcf")
+        source: file_prefix
+        valueFrom: $(self + ".purecn_filtration.vcf")
     out: [output_vcf_file]
 
   merge_vcfs:
@@ -49,6 +49,6 @@ steps:
       sequence_dictionary:
         source: fai_file
       output_filename:
-        source: sample_id
-        valueFrom: $(self + ".purecn.gdc_filtration.merged.vcf")
+        source: file_prefix
+        valueFrom: $(self + ".variant_filtration.vcf")
     out: [output_vcf_file]

@@ -28,10 +28,10 @@ inputs:
   - id: sample_barcode
     type: string
   - id: project_id
-    type: string
+    type: string?
     doc: GDC project id used for output filenames
   - id: caller_id
-    type: string
+    type: string?
     doc: GDC caller id used for output filenames
   - id: experimental_strategy
     type: string
@@ -311,6 +311,8 @@ steps:
         source: get_inputs/target_weight_file
       fa_name:
         source: fa_name
+      fa_version:
+        source: fa_version
       sample_id:
         source: aliquot_id
       sample_barcode:

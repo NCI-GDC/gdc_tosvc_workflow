@@ -40,6 +40,8 @@ inputs:
   #input parameters
   - id: fa_name
     type: string
+  - id: fa_version
+    type: string
   - id: bam_uuid
     type: string
   - id: sample_id
@@ -84,7 +86,7 @@ steps:
       fai_file:
         source: fai_file
       genome:
-        source: fa_name
+        source: fa_version
       map_file:
         source: bigwig_file
       tumor_bam_file:
@@ -116,9 +118,10 @@ steps:
         source: call_variants/dnacopy_file
       modified_info_file:
         source: file_prefix
-        valueFrom: $(self + ".info.csv")
+        valueFrom: $(self + ".variant_filtration_info.csv")
       modified_seg_file:
         source: file_prefix
+        valueFrom: $(self + ".dnacopy_seg.csv")
     out: [output_sample_info_file, output_dnacopy_seg_file]
 
   - id: tar_outputs

@@ -8,11 +8,11 @@ requirements:
 class: ExpressionTool
 
 inputs:
-  no_normaldb_vcf_file:
+  normaldb_vcf_file:
     type:
       type: array
       items: File
-  normaldb_vcf_file:
+  no_normaldb_vcf_file:
     type:
       type: array
       items: File
@@ -41,17 +41,16 @@ outputs:
 
 expression: |
    ${
-      if (inputs.no_normaldb_vcf_file.length == 1 && inputs.normaldb_vcf_file.length == 0)  {
+      if (inputs.normaldb_vcf_file.length == 1 && inputs.no_normaldb_vcf_file.length == 0) {
+        var output_vcf = inputs.normaldb_vcf_file[0];
+        var sample_info = inputs.sample_info_file[0];
+        var dnacopy_seg = inputs.dnacopy_seg_file[0];
+        var archive_tar = inputs.archive_tar_file[0];
+      } else if (inputs.normaldb_vcf_file.length == 0 && inputs.no_normaldb_vcf_file.length == 1) {
         var output_vcf = inputs.no_normaldb_vcf_file[0];
         var sample_info = null;
         var dnacopy_seg = null;
         var archive_tar = null;
-      }
-      else if (inputs.no_normaldb_vcf_file.length == 0 && inputs.normaldb_vcf_file.length == 1) {
-        var output_vcf = inputs.normaldb_vcf_file[0];
-        var sample_info = inputs.sample_info_file[0];
-        var dnacopy_seg = inputs.dnacopy_seg_file[0];
-        var archive_tar = inputs.other_files[0];
       }
       else {
         throw "The case is unhandled";

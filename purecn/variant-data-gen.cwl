@@ -20,15 +20,17 @@ inputs:
     type: File
   input_vcf_file:
     type: File
-  map_file:
-    type: File
   capture_file:
+    type: File
+  map_file:
     type: File
   normaldb_file:
     type: File
   target_weight_file:
     type: File
   genome:
+    type: string
+  sample_id:
     type: string
   thread_num:
     type: int
@@ -131,8 +133,7 @@ steps:
     run: PureCN.cwl
     in:
       sampleid:
-        source: tumor_bam_file
-        valueFrom: $(self.nameroot.split("_")[0])
+        source: sample_id
       tumor_file:
         source: coverage/loess_file
       input_vcf_file:

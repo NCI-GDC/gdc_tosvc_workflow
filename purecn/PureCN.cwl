@@ -14,7 +14,6 @@ inputs:
     inputBinding:
       position: 1
       prefix: --sampleid
-      valueFrom: $(inputs.tumor_file.nameroot.split("_")[0])
   - id: tumor_file
     type: File
     inputBinding:

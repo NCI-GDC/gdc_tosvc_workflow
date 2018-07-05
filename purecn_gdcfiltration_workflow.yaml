@@ -4,27 +4,45 @@ fa_file:
 fai_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.fa.fai
-bigwig_file:
+dict_file:
   class: File
-  path: /mnt/data/refs/GRCh38.d1.vd1.100.bigWig
-capture_file:
+  path: /mnt/data/refs/GRCh38.d1.vd1.dict
+dict_main_file:
   class: File
-  path: /mnt/data/refs/gaf_20111020+broad_wex_1.1_hg38.bed
+  path: /mnt/data/refs/GRCh38.d1.vd1.dict
+
 bam_file:
   class: File
   path: /mnt/data/DLBC37/BAMs/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn.bam
+  #path: /mnt/data/DLBC37/BAMs/test/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn_chr22.bam
 bai_file:
   class: File
   path: /mnt/data/DLBC37/BAMs/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn.bam.bai
+  #path: /mnt/data/DLBC37/BAMs/test/TCGA-FA-8693-01A-11D-2397-10_Illumina_gdc_realn_chr22.bam.bai
 input_vcf_file:
   class: File
   path: /mnt/data/DLBC37/MuTect2_gatk4/TCGA-FA-8693-01A-11D-2397-10.gatk4_mutect2.tumor_only.vcf.gz
+capture_file:
+  class: File
+  path: /mnt/data/refs/gaf_20111020_broad_wex_1.1_hg38.bed
+
+bigwig_file:
+  class: File
+  path: /mnt/data/refs/GRCh38.d1.vd1.100.bigWig
 normaldb_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/normalDB_hg38.rds
 target_weight_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/normaldb_capture/target_weights_hg38.txt
-thread_num: 40
+
+fa_name: GRCh38.d1.vd1.fa
 fa_version: hg38
-job_uuid: TCGA-FA-8693-01A-11D-2397-10
+bam_uuid: 00000000-0000-0000-0000-00000000001
+sample_barcode: TCGA-DLBC
+aliquot_id: 00000000-0000-0000-0000-00000000001
+patient_barcode: TCGA-DLBC
+case_id: test
+thread_num: 40
+var_prob_thres: 0.2
+file_prefix: test

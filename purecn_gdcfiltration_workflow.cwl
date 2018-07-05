@@ -44,8 +44,6 @@ inputs:
     type: string
   - id: bam_uuid
     type: string
-  - id: sample_id
-    type: string
   - id: sample_barcode
     type: string
   - id: aliquot_id
@@ -69,13 +67,13 @@ outputs:
     outputSource: format_header/output_vcf_file
   - id: sample_info_file
     type: File
-    outputSource: modify_outputs/output_sample_info_file
+    outputSource: modify_purecn_outputs/output_sample_info_file
   - id: dnacopy_seg_file
     type: File
-    outputSource: modify_outputs/output_dnacopy_seg_file
+    outputSource: modify_purecn_outputs/output_dnacopy_seg_file
   - id: archive_tar_file
     type: File
-    outputSource: tar_outputs/outfile
+    outputSource: tar_purecn_outputs/outfile
 
 steps:
   - id: call_variants
@@ -104,13 +102,13 @@ steps:
       thread_num:
         source: thread_num
       sample_id:
-        source: sample_id
+        source: aliquot_id
       outinfo:
         valueFrom: "."
     out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]
 
-  - id: modify_outputs
-    run: auxiliary/modify_outputs.cwl
+  - id: modify_purecn_outputs
+    run: auxiliary/modify_purecn_outputs.cwl
     in:
       sample_info_file:
         source: call_variants/sample_info_file
@@ -118,14 +116,14 @@ steps:
         source: call_variants/dnacopy_file
       modified_info_file:
         source: file_prefix
-        valueFrom: $(self + ".variant_filtration_info.csv")
+        valueFrom: $(self + ".variant_filtration_info.tsv")
       modified_seg_file:
         source: file_prefix
-        valueFrom: $(self + ".dnacopy_seg.csv")
+        valueFrom: $(self + ".dnacopy_seg_info.tsv")
     out: [output_sample_info_file, output_dnacopy_seg_file]
 
-  - id: tar_outputs
-    run: auxiliary/tar_outputs.cwl
+  - id: tar_purecn_outputs
+    run: auxiliary/tar_purecn_outputs.cwl
     in:
       var_vcf_file:
         source: call_variants/var_vcf_file
@@ -218,11 +216,5 @@ steps:
       tumor_aliquot_uuid:
         source: aliquot_id
       tumor_bam_uuid:
-        source: bam_uuid
-      normal_barcode:
-        source: sample_barcode
-      normal_aliquot_uuid:
-        source: aliquot_id
-      normal_bam_uuid:
         source: bam_uuid
     out: [output_vcf_file]

@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/filter_purecn_outputs:latest
+    dockerPull: namsyvo/gdc_tosvc_tools:latest
   - class: InlineJavascriptRequirement
 
 inputs:
@@ -32,3 +32,5 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_vcf_filename)
+
+baseCommand: [python, /gdc_tosvc_tools/filter_purecn_outputs.py]

@@ -313,8 +313,6 @@ steps:
         source: fa_name
       fa_version:
         source: fa_version
-      sample_id:
-        source: aliquot_id
       sample_barcode:
         source: sample_barcode
       bam_uuid:

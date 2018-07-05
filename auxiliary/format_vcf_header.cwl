@@ -8,7 +8,7 @@ doc: |
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/variant-filtration-tool:384f593b3dfc43acfc31d02e75589d2e2545008c 
+    dockerPull: namsyvo/gdc_tosvc_tools:latest
   - class: InlineJavascriptRequirement
 
 inputs:
@@ -55,25 +55,10 @@ inputs:
     inputBinding:
       prefix: --tumor_bam_uuid
 
-  normal_barcode:
-    type: string
-    inputBinding:
-      prefix: --normal_barcode
-
-  normal_aliquot_uuid:
-    type: string
-    inputBinding:
-      prefix: --normal_aliquot_uuid
-
-  normal_bam_uuid:
-    type: string
-    inputBinding:
-      prefix: --normal_bam_uuid
-
 outputs:
   output_vcf_file:
     type: File
     outputBinding:
       glob: $(inputs.output_vcf)
 
-baseCommand: [python3, /opt/variant-filtration-tool/FormatVcfHeaderForGDC.py]
+baseCommand: [python, /gdc_tosvc_tools/format_vcf_header.py]

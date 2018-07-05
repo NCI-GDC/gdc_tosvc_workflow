@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/modify_purecn_outputs:latest
+    dockerPull: namsyvo/gdc_tosvc_tools:latest
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
@@ -44,3 +44,5 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.modified_seg_file)
+
+baseCommand: [python, /gdc_tosvc_tools/modify_purecn_outputs.py]

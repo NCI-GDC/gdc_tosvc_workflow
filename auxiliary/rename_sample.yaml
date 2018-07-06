@@ -1,0 +1,5 @@
+input_vcf_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/cwl_test_cond1/00000000-0000-0000-0000-000000000000.gdc_filtration.vcf.gz
+output_vcf_filename: TCGA-FF-8046-01A-11D-2210-10.newsample.vcf.gz
+new_sample_name: TUMOR

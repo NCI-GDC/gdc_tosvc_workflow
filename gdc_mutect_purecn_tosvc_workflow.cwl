@@ -360,6 +360,19 @@ steps:
     out:
       [output_vcf_file, output_vcf_index_file]
 
+  - id: rename_sample
+    run: auxiliary/rename_sample.cwl
+    in:
+      input_vcf_file:
+        source: sort_vcf_file/output_vcf_file
+      output_vcf_filename:
+        source: sort_vcf_file/output_vcf_file
+        valueFrom: $(self.basename)
+      new_sample_name:
+        valueFrom: "TUMOR"
+    out:
+      [output_vcf_file]
+
   - id: upload_outputs
     run: inout/cond_upload_outputs.cwl
     in:
@@ -370,7 +383,7 @@ steps:
       job_uuid:
         source: job_uuid
       filtered_vcf_file:
-        source: sort_vcf_file/output_vcf_file
+        source: rename_sample/output_vcf_file
       filtered_vcf_index_file:
         source: sort_vcf_file/output_vcf_index_file
       sample_info_file:

@@ -10,6 +10,10 @@ requirements:
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
   - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - $(inputs.input_vcf_file)
+      - $(inputs.input_vcf_index_file)
 
 inputs:
   input_vcf_file:
@@ -18,21 +22,25 @@ inputs:
     inputBinding:
       prefix: "INPUT="
       separate: false
-    secondaryFiles:
-      - ".tbi"
+      valueFrom: $(self.basename)
 
-  output_vcf_filename:
-    type: string
-    doc: output basename of output file
-    inputBinding:
-      prefix: "OUTPUT="
-      separate: false
+  input_vcf_index_file:
+    type: File
+    doc: "input vcf index file"
 
   new_sample_name:
     type: string
     doc: new name of sample
     inputBinding:
       prefix: "NEW_SAMPLE_NAME="
+      separate: false
+
+  output_vcf_filename:
+    type: string
+    doc: output basename of output file
+    inputBinding:
+      valueFrom: $(self + '.variant_filtration.vcf.gz')
+      prefix: "OUTPUT="
       separate: false
 
 outputs:

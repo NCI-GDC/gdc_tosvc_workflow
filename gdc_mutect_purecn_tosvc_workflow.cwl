@@ -365,11 +365,12 @@ steps:
     in:
       input_vcf_file:
         source: sort_vcf_file/output_vcf_file
-      output_vcf_filename:
-        source: sort_vcf_file/output_vcf_file
-        valueFrom: $(self.basename)
+      input_vcf_index_file:
+        source: sort_vcf_file/output_vcf_index_file
       new_sample_name:
         valueFrom: "TUMOR"
+      output_vcf_filename:
+        source: get_filename_prefix/output
     out:
       [output_vcf_file]
 

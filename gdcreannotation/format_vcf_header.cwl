@@ -4,7 +4,7 @@ class: CommandLineTool
 label: "FormatVcfHeader"
 cwlVersion: v1.0
 doc: |
-    Format VCF header for GDC 
+    Format VCF header for GDC tumor-only variant calling pipeline
 
 requirements:
   - class: DockerRequirement
@@ -40,20 +40,20 @@ inputs:
     inputBinding:
       prefix: --case_id
 
-  tumor_barcode:
+  sample_barcode:
     type: string
     inputBinding:
-      prefix: --tumor_barcode
+      prefix: --sample_barcode
 
-  tumor_aliquot_uuid:
+  aliquot_uuid:
     type: string
     inputBinding:
-      prefix: --tumor_aliquot_uuid
+      prefix: --aliquot_uuid
 
-  tumor_bam_uuid:
+  bam_uuid:
     type: string
     inputBinding:
-      prefix: --tumor_bam_uuid
+      prefix: --bam_uuid
 
 outputs:
   output_vcf_file:

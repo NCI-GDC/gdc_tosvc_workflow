@@ -38,9 +38,7 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
-  output_vcf_index_file:
-    type: File
-    outputBinding:
-      glob: $(inputs.output_filename + ".tbi")
+    secondaryFiles:
+      - ".tbi"
 
 baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, SortVcf]

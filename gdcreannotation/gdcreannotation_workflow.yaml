@@ -1,0 +1,13 @@
+input_vcf_file:
+  class: File
+  path: /mnt/data/DLBC37/MuTect2_gatk4/VCFs/TCGA-FF-8046-01A-11D-2210-10.gatk4_mutect2.tumor_only.vcf
+dict_main_file:
+  class: File
+  path: /mnt/data/refs/GRCh38.d1.vd1.main.dict
+fa_name: GRCh38.d1.vd1.fa
+patient_barcode: TCGA-FF-8046
+case_id: TCGA-FF-8046
+aliquot_id: 00000000-0000-0000-0000-00000000001
+bam_uuid: 08fed839-3abd-4367-a540-5d7888de38d6
+sample_barcode: TCGA-FF-8046-01A-11D-2210-10
+filename_prefix: test

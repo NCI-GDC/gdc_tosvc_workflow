@@ -40,7 +40,5 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_vcf_filename)
-    secondaryFiles:
-      - ".tbi"
 
 baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, RenameSampleInVcf]

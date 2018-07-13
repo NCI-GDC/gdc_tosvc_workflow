@@ -255,30 +255,10 @@ steps:
         source: get_inputs/fa_file
       fai_file:
         source: get_inputs/fai_file
-      dict_file:
-        source: get_inputs/dict_file
-      dict_main_file:
-        source: get_inputs/dict_main_file
       input_vcf_file:
         source: remove_nstd_variants/output_vcf
       capture_file:
         source: get_inputs/capture_file
-      bam_uuid:
-        source: bam_uuid
-      fa_name:
-        source: fa_name
-      patient_barcode:
-        source: patient_barcode
-      case_id:
-        source: case_id
-      aliquot_id:
-        source: aliquot_id
-      sample_barcode:
-        source: sample_barcode
-      job_uuid:
-        source: job_uuid
-      file_prefix:
-        source: get_filename_prefix/output
     out: [output_vcf_file]
 
   - id: purecn_gdcfiltration
@@ -309,25 +289,15 @@ steps:
         source: get_inputs/normaldb_file
       target_weight_file:
         source: get_inputs/target_weight_file
-      fa_name:
-        source: fa_name
       fa_version:
         source: fa_version
-      sample_barcode:
-        source: sample_barcode
-      bam_uuid:
-        source: bam_uuid
-      patient_barcode:
-        source: patient_barcode
-      aliquot_id:
-        source: aliquot_id
-      case_id:
-        source: case_id
       thread_num:
         source: thread_num
       var_prob_thres:
         source: var_prob_thres
-      file_prefix:
+      aliquot_id:
+        source: aliquot_id
+      filename_prefix:
         source: get_filename_prefix/output
       outinfo:
         valueFrom: "."
@@ -349,27 +319,26 @@ steps:
     out:
       [output_vcf_file, output_sample_info_file, output_dnacopy_seg_file, output_archive_tar_file]
 
-  - id: sort_vcf_file
-    run: auxiliary/sort_vcf_file.cwl
-    in:
-      input_vcf:
-        source: determine_purecn_gdcfiltration/output_vcf_file
-      output_filename:
-        source: determine_purecn_gdcfiltration/output_vcf_file
-        valueFrom: $(self.basename + ".gz")
-    out:
-      [output_vcf_file, output_vcf_index_file]
-
-  - id: rename_sample
-    run: auxiliary/rename_sample.cwl
+  - id: gdc_reannotation
+    run: gdcreannotation/gdcreannotation_workflow.cwl
     in:
       input_vcf_file:
-        source: sort_vcf_file/output_vcf_file
-      input_vcf_index_file:
-        source: sort_vcf_file/output_vcf_index_file
-      new_sample_name:
-        valueFrom: "TUMOR"
-      output_vcf_filename:
+        source: determine_purecn_gdcfiltration/output_vcf_file
+      dict_main_file:
+        source: get_inputs/dict_main_file
+      fa_name:
+        source: fa_name
+      patient_barcode:
+        source: patient_barcode
+      case_id:
+        source: case_id
+      aliquot_id:
+        source: aliquot_id
+      bam_uuid:
+        source: bam_uuid
+      sample_barcode:
+        source: sample_barcode
+      filename_prefix:
         source: get_filename_prefix/output
     out:
       [output_vcf_file]
@@ -384,9 +353,7 @@ steps:
       job_uuid:
         source: job_uuid
       filtered_vcf_file:
-        source: rename_sample/output_vcf_file
-      filtered_vcf_index_file:
-        source: sort_vcf_file/output_vcf_index_file
+        source: gdc_reannotation/output_vcf_file
       sample_info_file:
         source: determine_purecn_gdcfiltration/output_sample_info_file
       dnacopy_seg_file:
@@ -394,4 +361,3 @@ steps:
       archive_tar_file:
         source: determine_purecn_gdcfiltration/output_archive_tar_file
     out: [filtered_vcf_uuid, filtered_vcf_index_uuid, sample_info_uuid, dnacopy_seg_uuid, archive_tar_uuid]
-

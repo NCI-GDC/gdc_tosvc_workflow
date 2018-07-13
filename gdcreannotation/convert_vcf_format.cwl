@@ -12,14 +12,14 @@ requirements:
   - class: InlineJavascriptRequirement
 
 inputs:
-  input_vcf:
+  input_vcf_file:
     type: File
     doc: "input vcf file"
     inputBinding:
       prefix: "INPUT="
       separate: false
 
-  output_filename:
+  output_vcf_filename:
     type: string
     doc: output basename of output file
     inputBinding:
@@ -37,10 +37,8 @@ outputs:
   output_vcf_file:
     type: File
     outputBinding:
-      glob: $(inputs.output_filename)
-  output_vcf_index_file:
-    type: File
-    outputBinding:
-      glob: $(inputs.output_filename + ".tbi")
+      glob: $(inputs.output_vcf_filename)
+    secondaryFiles:
+      - ".tbi"
 
 baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, VcfFormatConverter, REQUIRE_INDEX=false]

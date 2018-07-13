@@ -18,8 +18,6 @@ inputs:
     type: string
   - id: filtered_vcf_file
     type: File
-  - id: filtered_vcf_index_file
-    type: File
   - id: sample_info_file
     type: File?
   - id: dnacopy_seg_file
@@ -67,10 +65,11 @@ steps:
       - id: upload_bucket
         source: bioclient_upload_bucket
       - id: upload_key
-        source: [job_uuid, filtered_vcf_index_file]
-        valueFrom: $(self[0] + '/' + self[1].basename)
+        source: [job_uuid, filtered_vcf_file]
+        valueFrom: $(self[0] + '/' + self[1].secondaryFiles[0].basename)
       - id: input_file
-        source: filtered_vcf_index_file
+        source: filtered_vcf_file
+        valueFrom: $(self.secondaryFiles[0])
     out: [output_file_uuid]
     
   - id: upload_sample_info_file

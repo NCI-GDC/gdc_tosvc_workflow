@@ -21,7 +21,7 @@ inputs:
   var_prob_thres:
     type: float
     default: 0.2
-  file_prefix:
+  filename_prefix:
     type: string
 
 outputs:
@@ -38,8 +38,8 @@ steps:
       prob_thres:
         source: var_prob_thres
       output_vcf_filename:
-        source: file_prefix
-        valueFrom: $(self + ".purecn_filtration.vcf")
+        source: filename_prefix
+        valueFrom: $(self + ".filtered_purecn.vcf")
     out: [output_vcf_file]
 
   merge_vcfs:
@@ -49,6 +49,6 @@ steps:
       sequence_dictionary:
         source: fai_file
       output_filename:
-        source: file_prefix
-        valueFrom: $(self + ".variant_filtration.vcf")
+        source: filename_prefix
+        valueFrom: $(self + ".merged_mutect_filtered_purecn.vcf")
     out: [output_vcf_file]

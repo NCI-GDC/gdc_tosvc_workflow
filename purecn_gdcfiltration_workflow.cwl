@@ -38,19 +38,7 @@ inputs:
     type: File?
 
   #input parameters
-  - id: fa_name
-    type: string
   - id: fa_version
-    type: string
-  - id: bam_uuid
-    type: string
-  - id: sample_barcode
-    type: string
-  - id: aliquot_id
-    type: string
-  - id: patient_barcode
-    type: string
-  - id: case_id
     type: string
   - id: thread_num
     type: int
@@ -58,13 +46,15 @@ inputs:
   - id: var_prob_thres
     type: float
     default: 0.2
-  - id: file_prefix
+  - id: aliquot_id
+    type: string
+  - id: filename_prefix
     type: string
 
 outputs:
   - id: output_vcf_file
     type: File
-    outputSource: format_header/output_vcf_file
+    outputSource: variant_filtration_reannotation/output_vcf_file
   - id: sample_info_file
     type: File
     outputSource: modify_purecn_outputs/output_sample_info_file
@@ -115,10 +105,10 @@ steps:
       dnacopy_seg_file:
         source: call_variants/dnacopy_file
       modified_info_file:
-        source: file_prefix
+        source: filename_prefix
         valueFrom: $(self + ".variant_filtration_info.tsv")
       modified_seg_file:
-        source: file_prefix
+        source: filename_prefix
         valueFrom: $(self + ".dnacopy_seg_info.tsv")
     out: [output_sample_info_file, output_dnacopy_seg_file]
 
@@ -154,7 +144,7 @@ steps:
       loess_qc_file:
         source: call_variants/loess_qc_file
       compress_file_name:
-        source: file_prefix
+        source: filename_prefix
         valueFrom: $(self + ".variant_filtration_archive.tar.gz")
     out: [outfile]
 
@@ -171,50 +161,6 @@ steps:
         source: call_variants/var_vcf_file
       var_prob_thres:
         source: var_prob_thres
-      file_prefix:
-        source: file_prefix
-    out: [output_vcf_file]
-
-  - id: update_dictionary
-    run: auxiliary/update_seq_dict.cwl
-    in:
-      input_vcf:
-        source: variant_filtration_reannotation/output_vcf_file
-      sequence_dictionary:
-        source: dict_main_file
-      output_filename:
-        source: file_prefix
-        valueFrom: $(self + '.updatedseqdict.vcf')
-    out: [output_file]
-
-  - id: filter_contigs
-    run: auxiliary/filter_contigs.cwl
-    in:
-      input_vcf:
-        source: update_dictionary/output_file
-      output_vcf:
-        source: file_prefix
-        valueFrom: $(self + '.updatedseqdict.contigfilter.vcf')
-    out: [output_vcf_file]
-
-  - id: format_header
-    run: auxiliary/format_vcf_header.cwl
-    in:
-      input_vcf:
-        source: filter_contigs/output_vcf_file
-      output_vcf:
-        source: file_prefix
-        valueFrom: $(self + '.variant_filtration.vcf')
-      reference_name:
-        source: fa_name
-      patient_barcode: 
-        source: patient_barcode
-      case_id:
-        source: case_id
-      tumor_barcode:
-        source: sample_barcode
-      tumor_aliquot_uuid:
-        source: aliquot_id
-      tumor_bam_uuid:
-        source: bam_uuid
+      filename_prefix:
+        source: filename_prefix
     out: [output_vcf_file]

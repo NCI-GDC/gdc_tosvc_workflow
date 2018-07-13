@@ -9,9 +9,9 @@ requirements:
   - class: StepInputExpressionRequirement
 
 inputs:
-  - id: dict_main_file
-    type: File
   - id: input_vcf_file
+    type: File
+  - id: dict_main_file
     type: File
   - id: fa_name
     type: string
@@ -31,9 +31,7 @@ inputs:
 outputs:
   - id: output_vcf_file
     type: File
-    outputSource: rename_sample/output_vcf_file
-    secondaryFiles:
-      - ".tbi"
+    outputSource: convert_vcf_format/output_vcf_file
 
 steps:
   - id: update_dictionary
@@ -83,9 +81,9 @@ steps:
   - id: sort_vcf_file
     run: sort_vcf_file.cwl
     in:
-      input_vcf:
+      input_vcf_file:
         source: format_header/output_vcf_file
-      output_filename:
+      output_vcf_filename:
         source: format_header/output_vcf_file
         valueFrom: $(self.basename + ".gz")
     out:
@@ -98,6 +96,17 @@ steps:
         source: sort_vcf_file/output_vcf_file
       new_sample_name:
         valueFrom: "TUMOR"
+      output_vcf_filename:
+        source: sort_vcf_file/output_vcf_file
+        valueFrom: $(self.basename)
+    out:
+      [output_vcf_file]
+
+  - id: convert_vcf_format
+    run: convert_vcf_format.cwl
+    in:
+      input_vcf_file:
+        source: rename_sample/output_vcf_file
       output_vcf_filename:
         source: filename_prefix
         valueFrom: $(self + ".variant_filtration.vcf.gz")

@@ -100,6 +100,8 @@ steps:
   - id: modify_purecn_outputs
     run: auxiliary/modify_purecn_outputs.cwl
     in:
+      sample_id:
+        source: aliquot_id
       sample_info_file:
         source: call_variants/sample_info_file
       dnacopy_seg_file:

@@ -14,6 +14,11 @@ requirements:
       - $(inputs.dnacopy_seg_file)
 
 inputs:
+  sample_id:
+    type: string
+    inputBinding:
+      position: 0
+      prefix: --sample_id
   sample_info_file:
     type: File
     inputBinding:

@@ -3,8 +3,6 @@
 class: CommandLineTool
 label: "Picard MergeVcfs"
 cwlVersion: v1.0
-doc: |
-    Merge VCF files 
 
 requirements:
   - class: DockerRequirement
@@ -12,23 +10,20 @@ requirements:
   - class: InlineJavascriptRequirement
 
 inputs:
-  input_vcf:
+  input_vcf_file:
     type:
       type: array
       items: File
       inputBinding:
-        prefix: I=
+        prefix: INPUT=
         separate: false
-    doc: "input vcf file"
-
-  sequence_dictionary:
+  seq_dict:
     type: File
     doc: reference sequence dictionary file
     inputBinding:
       prefix: "SEQUENCE_DICTIONARY="
       separate: false
-
-  output_filename:
+  output_vcf_filename:
     type: string
     doc: output basename of merged 
     inputBinding:
@@ -39,7 +34,7 @@ outputs:
   output_vcf_file:
     type: File
     outputBinding:
-      glob: $(inputs.output_filename)
+      glob: $(inputs.output_vcf_filename)
     secondaryFiles:
       - ".tbi"
 

@@ -1,9 +1,9 @@
-input_vcf:
+input_vcf_file:
   - class: File
     path: /mnt/data/DLBC37/MuTect2_gatk4/TCGA-FF-8046-01A-11D-2210-10.gatk4_mutect2.tumor_only.vcf.gz
   - class: File
     path: /mnt/data/DLBC37/PureCN_cwl/cwl_test/TCGA-FF-8046-01A-11D-2210-10.filter.vcf
-sequence_dictionary:
+seq_dict:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.fa.fai
-output_filename: TCGA-FF-8046-01A-11D-2210-10.purecn.gdc_filtration.vcf
+output_vcf_filename: TCGA-FF-8046-01A-11D-2210-10.purecn.gdc_filtration.vcf

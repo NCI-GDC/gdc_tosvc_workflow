@@ -54,7 +54,7 @@ inputs:
 outputs:
   - id: output_vcf_file
     type: File
-    outputSource: variant_filtration_reannotation/output_vcf_file
+    outputSource: filter_purecn_outputs/output_vcf_file
   - id: sample_info_file
     type: File
     outputSource: modify_purecn_outputs/output_sample_info_file
@@ -63,11 +63,11 @@ outputs:
     outputSource: modify_purecn_outputs/output_dnacopy_seg_file
   - id: archive_tar_file
     type: File
-    outputSource: tar_purecn_outputs/outfile
+    outputSource: archive_purecn_outputs/outfile
 
 steps:
-  - id: call_variants
-    run: purecn/variant-data-gen.cwl
+  - id: call_somatic_variants
+    run: purecn/call_somatic_variants.cwl
     in:
       fa_file:
         source: fa_file
@@ -97,15 +97,51 @@ steps:
         valueFrom: "."
     out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]
 
+  - id: archive_purecn_outputs
+    run: auxiliary/archive_purecn_outputs.cwl
+    in:
+      var_vcf_file:
+        source: call_somatic_variants/var_vcf_file
+      genes_file:
+        source: call_somatic_variants/genes_file
+      log_file:
+        source: call_somatic_variants/log_file
+      loh_file:
+        source: call_somatic_variants/loh_file
+      info_pdf_file:
+        source: call_somatic_variants/info_pdf_file
+      segmentation_file:
+        source: call_somatic_variants/segmentation_file
+      chrome_file:
+        source: call_somatic_variants/chrome_file
+      local_optima_file:
+        source: call_somatic_variants/local_optima_file
+      interval_file:
+        source: call_somatic_variants/interval_file
+      interval_bed_file:
+        source: call_somatic_variants/interval_bed_file
+      cov_file:
+        source: call_somatic_variants/cov_file
+      loess_file:
+        source: call_somatic_variants/loess_file
+      loess_png_file:
+        source: call_somatic_variants/loess_png_file
+      loess_qc_file:
+        source: call_somatic_variants/loess_qc_file
+      compress_file_name:
+        source: filename_prefix
+        valueFrom: $(self + ".variant_filtration_archive.tar.gz")
+    out: [outfile]
+
   - id: modify_purecn_outputs
-    run: auxiliary/modify_purecn_outputs.cwl
+    run: gdcreannotation/modify_purecn_outputs.cwl
     in:
       sample_id:
         source: aliquot_id
       sample_info_file:
-        source: call_variants/sample_info_file
+        source: call_somatic_variants/sample_info_file
       dnacopy_seg_file:
-        source: call_variants/dnacopy_file
+        source: call_somatic_variants/dnacopy_file
       modified_info_file:
         source: filename_prefix
         valueFrom: $(self + ".variant_filtration_info.tsv")
@@ -114,55 +150,25 @@ steps:
         valueFrom: $(self + ".dnacopy_seg_info.tsv")
     out: [output_sample_info_file, output_dnacopy_seg_file]
 
-  - id: tar_purecn_outputs
-    run: auxiliary/tar_purecn_outputs.cwl
+  - id: merge_vcfs
+    run: auxiliary/merge_vcfs.cwl
     in:
-      var_vcf_file:
-        source: call_variants/var_vcf_file
-      genes_file:
-        source: call_variants/genes_file
-      log_file:
-        source: call_variants/log_file
-      loh_file:
-        source: call_variants/loh_file
-      info_pdf_file:
-        source: call_variants/info_pdf_file
-      segmentation_file:
-        source: call_variants/segmentation_file
-      chrome_file:
-        source: call_variants/chrome_file
-      local_optima_file:
-        source: call_variants/local_optima_file
-      interval_file:
-        source: call_variants/interval_file
-      interval_bed_file:
-        source: call_variants/interval_bed_file
-      cov_file:
-        source: call_variants/cov_file
-      loess_file:
-        source: call_variants/loess_file
-      loess_png_file:
-        source: call_variants/loess_png_file
-      loess_qc_file:
-        source: call_variants/loess_qc_file
-      compress_file_name:
-        source: filename_prefix
-        valueFrom: $(self + ".variant_filtration_archive.tar.gz")
-    out: [outfile]
-
-  - id: variant_filtration_reannotation
-    run: gdcfiltration/variant_filtration_reannotation.cwl
-    in:
-      fa_file:
-        source: fa_file
-      fai_file:
+      input_vcf_file: [input_vcf_file, call_somatic_variants/var_vcf_file]
+      seq_dict:
         source: fai_file
-      mutect_vcf_file:
-        source: input_vcf_file
-      purecn_vcf_file:
-        source: call_variants/var_vcf_file
-      var_prob_thres:
-        source: var_prob_thres
-      filename_prefix:
+      output_vcf_filename:
         source: filename_prefix
+        valueFrom: $(self + ".merged_mutect_purecn.vcf")
+    out: [output_vcf_file]
+
+  - id: filter_purecn_outputs
+    run: gdcfiltration/filter_purecn_outputs.cwl
+    in:
+      input_vcf_file:
+        source: merge_vcfs/output_vcf_file
+      prob_thres:
+        source: var_prob_thres
+      output_vcf_filename:
+        source: filename_prefix
+        valueFrom: $(self + ".filtered_purecn.vcf")
     out: [output_vcf_file]

@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/purecn
+    dockerPull: namsyvo/purecn:latest
   - class: InlineJavascriptRequirement
 
 inputs:

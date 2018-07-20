@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/interval
+    dockerPull: namsyvo/interval:latest
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

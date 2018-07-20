@@ -5,24 +5,11 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/normaldb
+    dockerPull: namsyvo/normaldb:latest
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
       $([inputs.normaldir])
-
-#    listing: |
-#      ${
-#        console.log(Object.keys(inputs.normaldir));
-#        return inputs.normaldir;
-#      }
-      
-#    listing: |
-#      ${
-#        return inputs.normaldir.listing
-#      }
-
-arguments: ["--force"]
 
 inputs:
   - id: normaldir
@@ -48,3 +35,5 @@ outputs:
     type: Directory
     outputBinding:
       glob: "./"
+
+arguments: ["--force"]

@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/coverage
+    dockerPull: namsyvo/coverage:latest
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

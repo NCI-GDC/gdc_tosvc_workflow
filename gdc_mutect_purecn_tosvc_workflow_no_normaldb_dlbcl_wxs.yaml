@@ -1,0 +1,54 @@
+bioclient_config:
+  class: File
+  path: /mnt/scripts/gdc_tosvc_workflow/inout/bioclient.json
+bioclient_upload_bucket: s3://ceph.service.consul/bio-automation-test
+job_uuid: 00000000-0000-0000-0000-000000000004
+aliquot_id: 00000000-0000-0000-0000-00000000004
+case_id: DLBCL
+patient_barcode: DLBCL10905
+sample_barcode: DLBCL10905_5162
+project_id: NCICCR-DLBCL
+caller_id: gatk4_mutect2
+experimental_strategy: Seq_DNA_WXS
+
+fa_uuid: ed96790c-3eb5-4aa2-8f46-702d503e64e4
+fa_filesize: 3152288848
+fai_uuid: 10283433-bcec-46bc-bfd5-5215428853ea
+fai_filesize: 129640
+dict_uuid: cf9768de-12ec-4afb-9af2-1b6ba3e07c0d
+dict_filesize: 345630
+
+fa_main_uuid: 3ef08e41-6cd7-4788-8486-7481c6460be9
+fa_main_filesize: 3132407714
+fai_main_uuid: ed8d2d9d-18b6-4d40-9a55-789e0185ac6c
+fai_main_filesize: 790
+dict_main_uuid: c908673b-2a39-4f35-83fb-feaccb791392
+dict_main_filesize: 2824
+
+bam_uuid: b6c35976-e0b7-433d-977e-3a99dcd8bf4a
+bam_filesize: 26585657045
+bai_uuid: 384c44d4-3549-467d-a94c-76468e26ea60
+bai_filesize: 7475992
+input_vcf_uuid: 186e035c-fa0e-476a-b051-93c81e130b99
+input_vcf_filesize: 6290062
+capture_uuid: 1ea9fe0f-2929-4403-9ec8-95c84eae3473
+capture_filesize: 96437129
+
+bigwig_uuid: 37fc9497-3bcc-4dee-94b9-70a831e847f0
+bigwig_filesize: 1564896096
+gemindex_uuid: ade45def-94ef-4284-81af-979488542af3
+gemindex_filesize: 4414051216
+normaldb_uuid: 6541ce0f-7f33-41f4-a1c0-453c0d0585f7
+normaldb_filesize: 88194794
+target_weight_uuid: daa3aa38-0eac-43e4-aaea-715028e68fab
+target_weight_filesize: 8389394
+
+fa_name: GRCh38.d1.vd1.fa
+fa_version: hg38
+thread_num: 40
+var_prob_thres: 0.2
+gem_max_mismatch: 2
+gem_max_edit: 2
+
+run_with_normaldb: []
+run_without_normaldb: [1]

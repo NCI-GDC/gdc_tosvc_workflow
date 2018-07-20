@@ -38,9 +38,9 @@ bigwig_uuid: 37fc9497-3bcc-4dee-94b9-70a831e847f0
 bigwig_filesize: 1564896096
 gemindex_uuid: ade45def-94ef-4284-81af-979488542af3
 gemindex_filesize: 4414051216
-normaldb_uuid: fab2e277-bb75-40eb-831b-e6d7d346dd98
-normaldb_filesize: 88194783
-target_weight_uuid: 5e694073-3b30-431a-bdda-4c912c8fd351
+normaldb_uuid: 6541ce0f-7f33-41f4-a1c0-453c0d0585f7
+normaldb_filesize: 88194794
+target_weight_uuid: daa3aa38-0eac-43e4-aaea-715028e68fab
 target_weight_filesize: 8389394
 
 fa_name: GRCh38.d1.vd1.fa

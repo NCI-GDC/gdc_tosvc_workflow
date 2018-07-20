@@ -43,16 +43,22 @@ inputs:
     type: File
     inputBinding:
       position: 7
-      prefix: --interval
+      prefix: --intervals
   - id: target_weight_file
     type: File
     inputBinding:
       position: 8
       prefix: --targetweightfile
+  - id: seed
+    type: int
+    default: 123
+    inputBinding:
+      position: 9
+      prefix: --seed
   - id: outinfo
     type: string
     inputBinding:
-      position: 9
+      position: 10
       prefix: --out
 
 outputs:

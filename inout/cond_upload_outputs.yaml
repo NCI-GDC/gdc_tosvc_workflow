@@ -9,7 +9,7 @@ filtered_vcf_file:
   secondaryFiles:
     - class: File
       path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall/TCGA-FF-8046-01A-11D-2210-10.vcf.gz.tbi
-sample_info_file: null
+filtration_metric_file: null
 #  class: File
 #  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall/TCGA-FF-8046-01A-11D-2210-10.csv
 dnacopy_seg_file: null

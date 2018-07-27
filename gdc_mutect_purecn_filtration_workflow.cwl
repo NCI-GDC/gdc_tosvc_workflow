@@ -143,9 +143,9 @@ outputs:
   - id: filtered_vcf_index_uuid
     type: string
     outputSource: upload_outputs/filtered_vcf_index_uuid
-  - id: sample_info_uuid
+  - id: filtration_metric_uuid
     type: string?
-    outputSource: upload_outputs/sample_info_uuid
+    outputSource: upload_outputs/filtration_metric_uuid
   - id: dnacopy_seg_uuid
     type: string?
     outputSource: upload_outputs/dnacopy_seg_uuid
@@ -299,9 +299,9 @@ steps:
         source: aliquot_id
       filename_prefix:
         source: get_filename_prefix/output
-      outinfo:
+      output_dir:
         valueFrom: "."
-    out: [output_vcf_file, sample_info_file, dnacopy_seg_file, archive_tar_file]
+    out: [output_vcf_file, filtration_metric_file, dnacopy_seg_file, archive_tar_file]
 
   - id: determine_purecn_gdcfiltration
     run: determine_purecn_gdcfiltration.cwl
@@ -310,14 +310,14 @@ steps:
         source: gdcfiltration/output_vcf_file
       normaldb_vcf_file:
         source: purecn_gdcfiltration/output_vcf_file
-      sample_info_file:
-        source: purecn_gdcfiltration/sample_info_file
+      filtration_metric_file:
+        source: purecn_gdcfiltration/filtration_metric_file
       dnacopy_seg_file:
         source: purecn_gdcfiltration/dnacopy_seg_file
       archive_tar_file:
         source: purecn_gdcfiltration/archive_tar_file
     out:
-      [output_vcf_file, output_sample_info_file, output_dnacopy_seg_file, output_archive_tar_file]
+      [output_vcf_file, output_filtration_metric_file, output_dnacopy_seg_file, output_archive_tar_file]
 
   - id: gdc_reannotation
     run: gdcreannotation/gdcreannotation_workflow.cwl
@@ -354,10 +354,10 @@ steps:
         source: job_uuid
       filtered_vcf_file:
         source: gdc_reannotation/output_vcf_file
-      sample_info_file:
-        source: determine_purecn_gdcfiltration/output_sample_info_file
+      filtration_metric_file:
+        source: determine_purecn_gdcfiltration/output_filtration_metric_file
       dnacopy_seg_file:
         source: determine_purecn_gdcfiltration/output_dnacopy_seg_file
       archive_tar_file:
         source: determine_purecn_gdcfiltration/output_archive_tar_file
-    out: [filtered_vcf_uuid, filtered_vcf_index_uuid, sample_info_uuid, dnacopy_seg_uuid, archive_tar_uuid]
+    out: [filtered_vcf_uuid, filtered_vcf_index_uuid, filtration_metric_uuid, dnacopy_seg_uuid, archive_tar_uuid]

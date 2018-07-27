@@ -9,7 +9,7 @@ requirements:
   - class: InlineJavascriptRequirement
 
 inputs:
-  - id: sampleid
+  - id: sample_id
     type: string?
     inputBinding:
       position: 1
@@ -55,25 +55,42 @@ inputs:
     inputBinding:
       position: 9
       prefix: --seed
-  - id: outinfo
+  - id: output_dir
     type: string
+    default: "."
     inputBinding:
       position: 10
       prefix: --out
 
 outputs:
-  - id: sample_info_file
+  - id: var_vcf_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + ".csv")
-  - id: chrome_file
+      glob: $(inputs.sampleid + ".vcf")
+  - id: var_csv_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_chromosomes.pdf")
+      glob: $(inputs.sampleid + "_variants.csv")
+  - id: metric_file
+    type: File
+    outputBinding:
+      glob: $(inputs.sample_id + ".csv")
   - id: dnacopy_file
     type: File
     outputBinding:
       glob: $(inputs.sampleid + "_dnacopy.seg")
+  - id: segmentation_file
+    type: File
+    outputBinding:
+      glob: $(inputs.sampleid + "_segmentation.pdf")
+  - id: loh_file
+    type: File
+    outputBinding:
+      glob: $(inputs.sampleid + "_loh.csv")
+  - id: chrome_file
+    type: File
+    outputBinding:
+      glob: $(inputs.sampleid + "_chromosomes.pdf")
   - id: genes_file
     type: File
     outputBinding:
@@ -82,33 +99,17 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.sampleid + "_local_optima.pdf")
-  - id: log_file
-    type: File
-    outputBinding:
-      glob: $(inputs.sampleid + ".log")
-  - id: loh_file
-    type: File
-    outputBinding:
-      glob: $(inputs.sampleid + "_loh.csv")
-  - id: info_pdf_file
-    type: File
-    outputBinding:
-      glob: $(inputs.sampleid + ".pdf")
   - id: rds_file
     type: File
     outputBinding:
       glob: $(inputs.sampleid + ".rds")
-  - id: segmentation_file
+  - id: info_pdf_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_segmentation.pdf")
-  - id: var_csv_file
+      glob: $(inputs.sampleid + ".pdf")
+  - id: log_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_variants.csv")
-  - id: var_vcf_file
-    type: File
-    outputBinding:
-      glob: $(inputs.sampleid + ".vcf")
+      glob: $(inputs.sampleid + ".log")
 
 arguments: ["--outvcf", "--parallel", "--force", "--postoptimize"]

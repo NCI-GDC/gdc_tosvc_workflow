@@ -35,8 +35,9 @@ inputs:
     inputBinding:
       position: 4
       prefix: --cpu
-  - id: outdir
+  - id: output_dir
     type: string
+    default: "."
     inputBinding:
       position: 5
       prefix: --outdir

@@ -1,39 +1,39 @@
-sample_info_file:
+var_vcf_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.vcf
+var_csv_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_variants.csv
+metric_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall/TCGA-FA-8693-01A-11D-2397-10.csv
 dnacopy_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_dnacopy.seg
-genes_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_genes.csv
-log_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.log
-loh_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_loh.csv
-info_pdf_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.pdf
-rds_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.rds
 segmentation_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_segmentation.pdf
+loh_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_loh.csv
 chrome_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_chromosomes.pdf
+genes_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_genes.csv
+rds_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.rds
 local_optima_file:
   class: File
   path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_local_optima.pdf
-var_csv_file:
+info_pdf_file:
   class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_variants.csv
-var_vcf_file:
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.pdf
+log_file:
   class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.vcf
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.log
 
 interval_file:
   class: File

@@ -36,43 +36,42 @@ inputs:
     type: int
 
 outputs:
-  sample_info_file:
-    type: File
-    outputSource: var_call/sample_info_file
-  dnacopy_file:
-    type: File
-    outputSource: var_call/dnacopy_file
-  genes_file:
-    type: File
-    outputSource: var_call/genes_file
-  log_file:
-    type: File
-    outputSource: var_call/log_file
-  loh_file:
-    type: File
-    outputSource: var_call/loh_file
-  info_pdf_file:
-    type: File
-    outputSource: var_call/info_pdf_file
-  rds_file:
-    type: File
-    outputSource: var_call/rds_file
-  segmentation_file:
-    type: File
-    outputSource: var_call/segmentation_file
-  chrome_file:
-    type: File
-    outputSource: var_call/chrome_file
-  local_optima_file:
-    type: File
-    outputSource: var_call/local_optima_file
-  var_csv_file:
-    type: File
-    outputSource: var_call/var_csv_file
   var_vcf_file:
     type: File
     outputSource: var_call/var_vcf_file
-
+  var_csv_file:
+    type: File
+    outputSource: var_call/var_csv_file
+  metric_file:
+    type: File
+    outputSource: var_call/metric_file
+  dnacopy_file:
+    type: File
+    outputSource: var_call/dnacopy_file
+  segmentation_file:
+    type: File
+    outputSource: var_call/segmentation_file
+  loh_file:
+    type: File
+    outputSource: var_call/loh_file
+  chrome_file:
+    type: File
+    outputSource: var_call/chrome_file
+  genes_file:
+    type: File
+    outputSource: var_call/genes_file
+  local_optima_file:
+    type: File
+    outputSource: var_call/local_optima_file
+  rds_file:
+    type: File
+    outputSource: var_call/rds_file
+  info_pdf_file:
+    type: File
+    outputSource: var_call/info_pdf_file
+  log_file:
+    type: File
+    outputSource: var_call/log_file
   interval_file:
     type: File
     outputSource: interval/interval_file
@@ -125,14 +124,12 @@ steps:
         source: interval/interval_file
       thread_num:
         source: thread_num
-      outdir:
-        valueFrom: "."
     out: [cov_file, loess_file, loess_png_file, loess_qc_file]
 
   var_call:
     run: PureCN.cwl
     in:
-      sampleid:
+      sample_id:
         source: sample_id
       tumor_file:
         source: coverage/loess_file
@@ -146,6 +143,4 @@ steps:
         source: target_weight_file
       genome:
         source: genome
-      outinfo:
-        valueFrom: "."
-    out: [sample_info_file, chrome_file, dnacopy_file, genes_file, local_optima_file, log_file, loh_file, info_pdf_file, rds_file, segmentation_file, var_csv_file, var_vcf_file]
+    out: [var_vcf_file, var_csv_file, metric_file, dnacopy_file, segmentation_file, loh_file, chrome_file, genes_file, local_optima_file, rds_file, info_pdf_file, log_file]

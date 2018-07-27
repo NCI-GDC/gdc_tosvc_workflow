@@ -10,7 +10,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - $(inputs.sample_info_file)
+      - $(inputs.metric_file)
       - $(inputs.dnacopy_seg_file)
 
 inputs:
@@ -19,7 +19,7 @@ inputs:
     inputBinding:
       position: 0
       prefix: --sample_id
-  sample_info_file:
+  metric_file:
     type: File
     inputBinding:
       position: 1
@@ -29,7 +29,7 @@ inputs:
     inputBinding:
       position: 2
       prefix: --seg_file
-  modified_info_file:
+  modified_metric_file:
     type: string
     inputBinding:
       position: 3
@@ -41,10 +41,10 @@ inputs:
       prefix: --modified_seg_file
 
 outputs:
-  output_sample_info_file:
+  output_filtration_metric_file:
     type: File
     outputBinding:
-      glob: $(inputs.modified_info_file)
+      glob: $(inputs.modified_metric_file)
   output_dnacopy_seg_file:
     type: File
     outputBinding:

@@ -66,11 +66,11 @@ outputs:
   - id: var_vcf_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + ".vcf")
+      glob: $(inputs.sample_id + ".vcf")
   - id: var_csv_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_variants.csv")
+      glob: $(inputs.sample_id + "_variants.csv")
   - id: metric_file
     type: File
     outputBinding:
@@ -78,38 +78,38 @@ outputs:
   - id: dnacopy_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_dnacopy.seg")
+      glob: $(inputs.sample_id + "_dnacopy.seg")
   - id: segmentation_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_segmentation.pdf")
+      glob: $(inputs.sample_id + "_segmentation.pdf")
   - id: loh_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_loh.csv")
+      glob: $(inputs.sample_id + "_loh.csv")
   - id: chrome_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_chromosomes.pdf")
+      glob: $(inputs.sample_id + "_chromosomes.pdf")
   - id: genes_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_genes.csv")
+      glob: $(inputs.sample_id + "_genes.csv")
   - id: local_optima_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + "_local_optima.pdf")
+      glob: $(inputs.sample_id + "_local_optima.pdf")
   - id: rds_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + ".rds")
+      glob: $(inputs.sample_id + ".rds")
   - id: info_pdf_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + ".pdf")
+      glob: $(inputs.sample_id + ".pdf")
   - id: log_file
     type: File
     outputBinding:
-      glob: $(inputs.sampleid + ".log")
+      glob: $(inputs.sample_id + ".log")
 
 arguments: ["--outvcf", "--parallel", "--force", "--postoptimize"]

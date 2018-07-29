@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/interval:latest
+    dockerPull: quay.io/ncigdc/purecn_interval:1.11.11
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

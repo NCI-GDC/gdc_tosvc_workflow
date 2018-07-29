@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/gdc_tosvc_tools:latest
+    dockerPull: quay.io/ncigdc/gdc_tosvc_tools:latest
   - class: InlineJavascriptRequirement
 
 inputs:

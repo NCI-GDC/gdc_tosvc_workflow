@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/coverage:latest
+    dockerPull: quay.io/ncigdc/purecn_coverage:1.11.11
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

@@ -5,7 +5,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: namsyvo/normaldb:latest
+    dockerPull: quay.io/ncigdc/purecn_normaldb:1.11.11
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

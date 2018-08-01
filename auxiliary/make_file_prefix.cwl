@@ -10,12 +10,12 @@ class: ExpressionTool
 inputs:
   job_uuid:
     type: string
+  experimental_strategy:
+    type: string
   project_id:
     type: string?
   caller_id:
     type: string?
-  experimental_strategy:
-    type: string
 
 outputs:
   output:
@@ -25,7 +25,7 @@ expression: |
   ${
      var exp = inputs.experimental_strategy.toLowerCase().replace(/[-\s]/g, "_");
      var pid = inputs.project_id ? inputs.project_id + '.': '';
-     var cid = inputs.caller_id ? '.' + inputs.caller_id : '';
+     var cid = inputs.caller_id ? '.' + inputs.caller_id.replace(/[-\s]/g, "_") : '';
      var pfx = pid + inputs.job_uuid + '.' + exp + cid; 
      return {'output': pfx};
    }

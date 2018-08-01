@@ -20,7 +20,7 @@ inputs:
     type: File
   input_vcf_file:
     type: File
-  capture_file:
+  capture_kit_file:
     type: File
   map_file:
     type: File
@@ -99,8 +99,8 @@ steps:
         source: fa_file
       fai_file:
         source: fai_file
-      capture_file:
-        source: capture_file
+      capture_kit_file:
+        source: capture_kit_file
       map_file:
         source: map_file
       genome:

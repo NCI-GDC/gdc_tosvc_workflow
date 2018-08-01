@@ -31,8 +31,8 @@ bai_uuid: 384c44d4-3549-467d-a94c-76468e26ea60
 bai_filesize: 7475992
 input_vcf_uuid: 186e035c-fa0e-476a-b051-93c81e130b99
 input_vcf_filesize: 6290062
-capture_uuid: 1ea9fe0f-2929-4403-9ec8-95c84eae3473
-capture_filesize: 96437129
+capture_kit_uuid: 1ea9fe0f-2929-4403-9ec8-95c84eae3473
+capture_kit_filesize: 96437129
 
 bigwig_uuid: 37fc9497-3bcc-4dee-94b9-70a831e847f0
 bigwig_filesize: 1564896096

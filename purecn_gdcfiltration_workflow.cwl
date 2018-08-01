@@ -27,7 +27,7 @@ inputs:
     type: File
   - id: input_vcf_file
     type: File
-  - id: capture_file
+  - id: capture_kit_file
     type: File
 
   - id: bigwig_file
@@ -81,8 +81,8 @@ steps:
         source: bam_file
       tumor_bai_file:
         source: bai_file
-      capture_file:
-        source: capture_file
+      capture_kit_file:
+        source: capture_kit_file
       input_vcf_file:
         source: input_vcf_file
       normaldb_file:

@@ -50,9 +50,9 @@ inputs:
     type: string
   - id: vcf_filesize
     type: long
-  - id: capture_uuid
+  - id: capture_kit_uuid
     type: string
-  - id: capture_filesize
+  - id: capture_kit_filesize
     type: long
 
   - id: bigwig_uuid
@@ -102,9 +102,9 @@ outputs:
   - id: vcf_file
     type: File
     outputSource: get_vcf/output
-  - id: capture_file
+  - id: capture_kit_file
     type: File
-    outputSource: get_capture/output
+    outputSource: get_capture_kit/output
 
   - id: bigwig_file
     type: File?
@@ -221,15 +221,15 @@ steps:
         source: vcf_filesize
     out:
       - id: output
-  - id: get_capture
+  - id: get_capture_kit
     run: bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
       - id: download_handle
-        source: capture_uuid
+        source: capture_kit_uuid
       - id: file_size
-        source: capture_filesize
+        source: capture_kit_filesize
     out:
       - id: output
 

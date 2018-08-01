@@ -78,9 +78,9 @@ inputs:
     type: string
   - id: input_vcf_filesize
     type: long
-  - id: capture_uuid
+  - id: capture_kit_uuid
     type: string
-  - id: capture_filesize
+  - id: capture_kit_filesize
     type: long
     
   #GEM and PureCN ref files (optional)
@@ -198,10 +198,10 @@ steps:
         source: input_vcf_uuid
       - id: vcf_filesize
         source: input_vcf_filesize
-      - id: capture_uuid
-        source: capture_uuid
-      - id: capture_filesize
-        source: capture_filesize
+      - id: capture_kit_uuid
+        source: capture_kit_uuid
+      - id: capture_kit_filesize
+        source: capture_kit_filesize
 
       - id: bigwig_uuid
         source: bigwig_uuid
@@ -221,7 +221,7 @@ steps:
       - id: target_weight_filesize
         source: target_weight_filesize
 
-    out: [fa_file, fai_file, dict_file, fa_main_file, fai_main_file, dict_main_file, bam_file, bai_file, vcf_file, capture_file, bigwig_file, gemindex_file, normaldb_file, target_weight_file]
+    out: [fa_file, fai_file, dict_file, fa_main_file, fai_main_file, dict_main_file, bam_file, bai_file, vcf_file, capture_kit_file, bigwig_file, gemindex_file, normaldb_file, target_weight_file]
   
   - id: get_filename_prefix
     run: auxiliary/make_file_prefix.cwl
@@ -257,8 +257,8 @@ steps:
         source: get_inputs/fai_file
       input_vcf_file:
         source: remove_nstd_variants/output_vcf
-      capture_file:
-        source: get_inputs/capture_file
+      capture_kit_file:
+        source: get_inputs/capture_kit_file
     out: [output_vcf_file]
 
   - id: purecn_gdcfiltration
@@ -281,8 +281,8 @@ steps:
         source: get_inputs/bai_file
       input_vcf_file:
         source: remove_nstd_variants/output_vcf
-      capture_file:
-        source: get_inputs/capture_file
+      capture_kit_file:
+        source: get_inputs/capture_kit_file
       bigwig_file:
         source: get_inputs/bigwig_file
       normaldb_file:

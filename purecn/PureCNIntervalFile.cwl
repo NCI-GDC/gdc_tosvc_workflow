@@ -22,7 +22,7 @@ inputs:
       valueFrom: $(self.basename)
   - id: fai_file
     type: File
-  - id: capture_file
+  - id: capture_kit_file
     type: File
     inputBinding:
       position: 2

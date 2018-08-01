@@ -4,7 +4,7 @@ fa_file:
 fai_file:
   class: File
   path: /mnt/data/refs/GRCh38.d1.vd1.fa.fai
-capture_file:
+capture_kit_file:
   class: File
   path: /mnt/data/DLBCL/uploads/S04380110_Covered.hg38.bed
 map_file:

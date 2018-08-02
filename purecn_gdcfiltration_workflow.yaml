@@ -38,11 +38,11 @@ target_weight_file:
 
 fa_name: GRCh38.d1.vd1.fa
 fa_version: hg38
-bam_uuid: 00000000-0000-0000-0000-00000000001
+bam_uuid: 00000000-0000-0000-0000-00000000005
 sample_barcode: TCGA-DLBC
-aliquot_id: 00000000-0000-0000-0000-00000000001
+aliquot_id: 00000000-0000-0000-0000-00000000005
 patient_barcode: TCGA-DLBC
 case_id: test
 thread_num: 40
 var_prob_thres: 0.2
-file_prefix: test
+filename_prefix: test

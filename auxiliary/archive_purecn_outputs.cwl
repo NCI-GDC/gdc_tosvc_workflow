@@ -82,9 +82,9 @@ inputs:
       valueFrom: $(self.basename)
   interval_bed_file:
     type: File
-    doc: if this is optional (type: File?) and we still pass the value to it from super worflow |
+    doc: if this is optional (File?) and we still pass the value to it from super worflow |
          the workflow gets crash with cwltool 1.0.20180306163216 |
-         but run well with newer cwltool such as 1.0.20180403145700
+         but runs well with newer cwltool such as 1.0.20180403145700
     inputBinding:
       position: 11
       valueFrom: $(self.basename)

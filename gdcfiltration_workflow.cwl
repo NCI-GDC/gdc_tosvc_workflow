@@ -15,8 +15,6 @@ inputs:
     type: File
   - id: input_vcf_file
     type: File
-  - id: capture_kit_file
-    type: File
 
 outputs:
   - id: output_vcf_file
@@ -33,8 +31,6 @@ steps:
         source: fai_file
       input_vcf_file:
         source: input_vcf_file
-      capture_kit_file:
-        source: capture_kit_file
       output_vcf_filename:
         source: input_vcf_file
         valueFrom: $(self.basename + ".filtered_mutect.vcf")

@@ -10,6 +10,10 @@ requirements:
   - class: SubworkflowFeatureRequirement
 
 inputs:
+  #ref info
+  - id: bioclient_config
+    type: File
+
   #input ref data
   - id: fa_file
     type: File
@@ -27,15 +31,6 @@ inputs:
     type: File
   - id: input_vcf_file
     type: File
-  - id: capture_kit_file
-    type: File
-
-  - id: bigwig_file
-    type: File?
-  - id: normaldb_file
-    type: File?
-  - id: target_weight_file
-    type: File?
 
   #input parameters
   - id: fa_version
@@ -50,6 +45,28 @@ inputs:
     type: string
   - id: filename_prefix
     type: string
+
+  #GEM and PureCN ref files
+  - id: capture_kit_uuid
+    type: string
+  - id: capture_kit_filesize
+    type: long
+  - id: bigwig_uuid
+    type: string
+  - id: bigwig_filesize
+    type: long
+  - id: gemindex_uuid
+    type: string
+  - id: gemindex_filesize
+    type: long
+  - id: normaldb_uuid
+    type: string
+  - id: normaldb_filesize
+    type: long
+  - id: target_weight_uuid
+    type: string
+  - id: target_weight_filesize
+    type: long
 
 outputs:
   - id: output_vcf_file
@@ -66,6 +83,33 @@ outputs:
     outputSource: archive_purecn_outputs/output_file
 
 steps:
+  - id: get_inputs
+    run: inout/get_purecn_inputs.cwl
+    in:
+      - id: bioclient_config
+        source: bioclient_config
+      - id: capture_kit_uuid
+        source: capture_kit_uuid
+      - id: capture_kit_filesize
+        source: capture_kit_filesize
+      - id: bigwig_uuid
+        source: bigwig_uuid
+      - id: bigwig_filesize
+        source: bigwig_filesize
+      - id: gemindex_uuid
+        source: gemindex_uuid
+      - id: gemindex_filesize
+        source: gemindex_filesize
+      - id: normaldb_uuid
+        source: normaldb_uuid
+      - id: normaldb_filesize
+        source: normaldb_filesize
+      - id: target_weight_uuid
+        source: target_weight_uuid
+      - id: target_weight_filesize
+        source: target_weight_filesize
+    out: [capture_kit_file, bigwig_file, gemindex_file, normaldb_file, target_weight_file]
+
   - id: call_somatic_variants
     run: purecn/call_somatic_variants.cwl
     in:
@@ -75,20 +119,20 @@ steps:
         source: fai_file
       genome:
         source: fa_version
-      map_file:
-        source: bigwig_file
       tumor_bam_file:
         source: bam_file
       tumor_bai_file:
         source: bai_file
-      capture_kit_file:
-        source: capture_kit_file
       input_vcf_file:
         source: input_vcf_file
+      map_file:
+        source: get_inputs/bigwig_file
+      capture_kit_file:
+        source: get_inputs/capture_kit_file
       normaldb_file:
-        source: normaldb_file
+        source: get_inputs/normaldb_file
       target_weight_file:
-        source: target_weight_file
+        source: get_inputs/target_weight_file
       thread_num:
         source: thread_num
       sample_id:

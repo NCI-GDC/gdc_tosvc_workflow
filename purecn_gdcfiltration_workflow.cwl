@@ -137,7 +137,25 @@ steps:
         source: thread_num
       sample_id:
         source: aliquot_id
-    out: [var_vcf_file, var_csv_file, metric_file, dnacopy_file, segmentation_file, loh_file, chrome_file, genes_file, local_optima_file, rds_file, info_pdf_file, log_file, interval_file, interval_bed_file, cov_file, loess_file, loess_png_file, loess_qc_file]
+    out:
+      - id: var_vcf_file
+      - id: var_csv_file
+      - id: metric_file
+      - id: dnacopy_file
+      - id: segmentation_file
+      - id: loh_file
+      - id: chrome_file
+      - id: genes_file
+      - id: local_optima_file
+      - id: rds_file
+      - id: info_pdf_file
+      - id: log_file
+      - id: interval_file
+      - id: interval_bed_file
+      - id: cov_file
+      - id: loess_file
+      - id: loess_png_file
+      - id: loess_qc_file
 
   - id: archive_purecn_outputs
     run: auxiliary/archive_purecn_outputs.cwl
@@ -196,10 +214,21 @@ steps:
         valueFrom: $(self + ".dnacopy_seg.tsv")
     out: [output_filtration_metric_file, output_dnacopy_seg_file]
 
+  - id: sort_purecn_vcf
+    run: gdcreannotation/sort_vcf_file.cwl
+    in:
+      input_vcf_file:
+        source: call_somatic_variants/var_vcf_file
+      output_vcf_filename:
+        source: call_somatic_variants/var_vcf_file
+        valueFrom: $(self.basename + ".gz")
+    out:
+      [output_vcf_file]
+
   - id: merge_vcfs
     run: auxiliary/merge_vcfs.cwl
     in:
-      input_vcf_file: [input_vcf_file, call_somatic_variants/var_vcf_file]
+      input_vcf_file: [input_vcf_file, sort_purecn_vcf/output_vcf_file]
       seq_dict:
         source: fai_file
       output_vcf_filename:

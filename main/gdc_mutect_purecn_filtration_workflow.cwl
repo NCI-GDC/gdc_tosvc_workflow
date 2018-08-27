@@ -310,7 +310,7 @@ steps:
       [output_vcf_file, output_filtration_metric_file, output_dnacopy_seg_file, output_archive_tar_file]
 
   - id: gdc_reannotation
-    run: gdcreannotation/gdcreannotation_workflow.cwl
+    run: gdcfiltration/gdcreannotation_workflow.cwl
     in:
       input_vcf_file:
         source: determine_purecn_gdcfiltration/output_vcf_file

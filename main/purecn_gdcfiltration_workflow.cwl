@@ -198,7 +198,7 @@ steps:
     out: [output_file]
 
   - id: modify_purecn_outputs
-    run: gdcreannotation/modify_purecn_outputs.cwl
+    run: gdcfiltration/modify_purecn_outputs.cwl
     in:
       sample_id:
         source: aliquot_id
@@ -215,7 +215,7 @@ steps:
     out: [output_filtration_metric_file, output_dnacopy_seg_file]
 
   - id: sort_purecn_vcf
-    run: gdcreannotation/sort_vcf_file.cwl
+    run: auxiliary/sort_vcf_file.cwl
     in:
       input_vcf_file:
         source: call_somatic_variants/var_vcf_file

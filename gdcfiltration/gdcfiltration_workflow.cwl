@@ -25,10 +25,6 @@ steps:
   - id: filter_mutect
     run: gdcfiltration/filter_mutect_outputs.cwl
     in:
-      fa_file:
-        source: fa_file
-      fai_file:
-        source: fai_file
       input_vcf_file:
         source: input_vcf_file
       output_vcf_filename:

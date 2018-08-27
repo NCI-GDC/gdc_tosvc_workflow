@@ -37,37 +37,37 @@ inputs:
 
 outputs:
   var_vcf_file:
-    type: File
+    type: File?
     outputSource: var_call/var_vcf_file
   var_csv_file:
-    type: File
+    type: File?
     outputSource: var_call/var_csv_file
   metric_file:
-    type: File
+    type: File?
     outputSource: var_call/metric_file
   dnacopy_file:
-    type: File
+    type: File?
     outputSource: var_call/dnacopy_file
   segmentation_file:
-    type: File
+    type: File?
     outputSource: var_call/segmentation_file
   loh_file:
-    type: File
+    type: File?
     outputSource: var_call/loh_file
   chrome_file:
-    type: File
+    type: File?
     outputSource: var_call/chrome_file
   genes_file:
-    type: File
+    type: File?
     outputSource: var_call/genes_file
   local_optima_file:
-    type: File
+    type: File?
     outputSource: var_call/local_optima_file
   rds_file:
-    type: File
+    type: File?
     outputSource: var_call/rds_file
   info_pdf_file:
-    type: File
+    type: File?
     outputSource: var_call/info_pdf_file
   log_file:
     type: File

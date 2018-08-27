@@ -155,7 +155,7 @@ outputs:
 
 steps:
   - id: get_inputs
-    run: inout/get_inputs.cwl
+    run: ../inout/get_inputs.cwl
     in:
       - id: bioclient_config
         source: bioclient_config
@@ -202,7 +202,7 @@ steps:
     out: [fa_file, fai_file, dict_file, fa_main_file, fai_main_file, dict_main_file, bam_file, bai_file, vcf_file]
   
   - id: get_filename_prefix
-    run: auxiliary/make_file_prefix.cwl
+    run: ../auxiliary/make_file_prefix.cwl
     in:
       - id: job_uuid
         source: job_uuid
@@ -215,7 +215,7 @@ steps:
     out: [output]
 
   - id: remove_nstd_variants
-    run: auxiliary/remove_nonstandard_variants.cwl
+    run: ../auxiliary/remove_nonstandard_variants.cwl
     in:
       input_vcf:
         source: get_inputs/vcf_file
@@ -224,7 +224,7 @@ steps:
     out: [output_vcf]
 
   - id: gdcfiltration
-    run: gdcfiltration_workflow.cwl
+    run: ../gdcfiltration/gdcfiltration_workflow.cwl
     scatter: run_without_normaldb
     in:
       run_without_normaldb:
@@ -310,7 +310,7 @@ steps:
       [output_vcf_file, output_filtration_metric_file, output_dnacopy_seg_file, output_archive_tar_file]
 
   - id: gdc_reannotation
-    run: gdcfiltration/gdcreannotation_workflow.cwl
+    run: ../gdcfiltration/gdcreannotation_workflow.cwl
     in:
       input_vcf_file:
         source: determine_purecn_gdcfiltration/output_vcf_file
@@ -334,7 +334,7 @@ steps:
       [output_vcf_file]
 
   - id: upload_outputs
-    run: inout/cond_upload_outputs.cwl
+    run: ../inout/cond_upload_outputs.cwl
     in:
       bioclient_config:
         source: bioclient_config

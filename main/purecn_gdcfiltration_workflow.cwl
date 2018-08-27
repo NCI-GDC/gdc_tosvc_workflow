@@ -84,7 +84,7 @@ outputs:
 
 steps:
   - id: get_inputs
-    run: inout/get_purecn_inputs.cwl
+    run: ../inout/get_purecn_inputs.cwl
     in:
       - id: bioclient_config
         source: bioclient_config
@@ -111,7 +111,7 @@ steps:
     out: [capture_kit_file, bigwig_file, gemindex_file, normaldb_file, target_weight_file]
 
   - id: call_somatic_variants
-    run: purecn/call_somatic_variants.cwl
+    run: ../purecn/call_somatic_variants.cwl
     in:
       fa_file:
         source: fa_file
@@ -158,7 +158,7 @@ steps:
       - id: loess_qc_file
 
   - id: archive_purecn_outputs
-    run: auxiliary/archive_purecn_outputs.cwl
+    run: ../auxiliary/archive_purecn_outputs.cwl
     in:
       var_vcf_file:
         source: call_somatic_variants/var_vcf_file
@@ -198,7 +198,7 @@ steps:
     out: [output_file]
 
   - id: modify_purecn_outputs
-    run: gdcfiltration/modify_purecn_outputs.cwl
+    run: ../gdcfiltration/modify_purecn_outputs.cwl
     in:
       sample_id:
         source: aliquot_id
@@ -215,7 +215,7 @@ steps:
     out: [output_filtration_metric_file, output_dnacopy_seg_file]
 
   - id: sort_purecn_vcf
-    run: auxiliary/sort_vcf_file.cwl
+    run: ../auxiliary/sort_vcf_file.cwl
     in:
       input_vcf_file:
         source: call_somatic_variants/var_vcf_file
@@ -226,7 +226,7 @@ steps:
       [output_vcf_file]
 
   - id: merge_vcfs
-    run: auxiliary/merge_vcfs.cwl
+    run: ../auxiliary/merge_vcfs.cwl
     in:
       input_vcf_file: [input_vcf_file, sort_purecn_vcf/output_vcf_file]
       seq_dict:
@@ -237,7 +237,7 @@ steps:
     out: [output_vcf_file]
 
   - id: filter_purecn_outputs
-    run: gdcfiltration/filter_purecn_outputs.cwl
+    run: ../gdcfiltration/filter_purecn_outputs.cwl
     in:
       input_vcf_file:
         source: merge_vcfs/output_vcf_file

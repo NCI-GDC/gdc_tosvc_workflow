@@ -79,7 +79,7 @@ steps:
     out: [output_vcf_file]
 
   - id: sort_vcf_file
-    run: sort_vcf_file.cwl
+    run: ../auxiliary/sort_vcf_file.cwl
     in:
       input_vcf_file:
         source: format_header/output_vcf_file
@@ -103,7 +103,7 @@ steps:
       [output_vcf_file]
 
   - id: convert_vcf_format
-    run: convert_vcf_format.cwl
+    run: ../auxiliary/convert_vcf_format.cwl
     in:
       input_vcf_file:
         source: rename_sample/output_vcf_file

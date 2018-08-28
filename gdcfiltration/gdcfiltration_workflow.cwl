@@ -23,7 +23,7 @@ outputs:
 
 steps:
   - id: filter_mutect
-    run: gdcfiltration/filter_mutect_outputs.cwl
+    run: filter_mutect_outputs.cwl
     in:
       input_vcf_file:
         source: input_vcf_file

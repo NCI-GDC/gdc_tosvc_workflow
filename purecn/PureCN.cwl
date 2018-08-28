@@ -67,7 +67,7 @@ outputs:
     type: File?
     outputBinding:
       glob: $(inputs.sample_id + ".vcf")
-   - id: var_csv_file
+  - id: var_csv_file
     type: File?
     outputBinding:
       glob: $(inputs.sample_id + "_variants.csv")

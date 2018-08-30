@@ -7,6 +7,9 @@ requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/purecn:latest
   - class: InlineJavascriptRequirement
+successCodes:
+  - 0
+  - 1
 
 inputs:
   - id: sample_id

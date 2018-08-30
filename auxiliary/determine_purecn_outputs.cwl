@@ -8,11 +8,11 @@ requirements:
 class: ExpressionTool
 
 inputs:
-  normaldb_vcf_file:
+  purecn_fail_vcf_file:
     type:
       type: array
       items: ['null', File]
-  no_normaldb_vcf_file:
+  purecn_success_vcf_file:
     type:
       type: array
       items: ['null', File]
@@ -33,21 +33,21 @@ outputs:
   output_vcf_file:
     type: File
   output_filtration_metric_file:
-    type: File
+    type: File?
   output_dnacopy_seg_file:
-    type: File
+    type: File?
   output_archive_tar_file:
-    type: File
+    type: File?
 
 expression: |
    ${
-      if (inputs.normaldb_vcf_file.length == 1 && inputs.no_normaldb_vcf_file.length == 0) {
-        var output_vcf = inputs.normaldb_vcf_file[0];
+      if (inputs.purecn_success_vcf_file.length == 1 && inputs.purecn_fail_vcf_file.length == 0) {
+        var output_vcf = inputs.purecn_success_vcf_file[0];
         var filtration_metric = inputs.filtration_metric_file[0];
         var dnacopy_seg = inputs.dnacopy_seg_file[0];
         var archive_tar = inputs.archive_tar_file[0];
-      } else if (inputs.normaldb_vcf_file.length == 0 && inputs.no_normaldb_vcf_file.length == 1) {
-        var output_vcf = inputs.no_normaldb_vcf_file[0];
+      } else if (inputs.purecn_success_vcf_file.length == 0 && inputs.purecn_fail_vcf_file.length == 1) {
+        var output_vcf = inputs.purecn_fail_vcf_file[0];
         var filtration_metric = null;
         var dnacopy_seg = null;
         var archive_tar = null;

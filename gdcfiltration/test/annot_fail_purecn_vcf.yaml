@@ -1,0 +1,7 @@
+input_vcf_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test2/TCGA-FF-8046-01A-11D-2210-10.vcf
+purecn_log_file:
+  class: File
+  path: /mnt/data/DLBCL/PureCN_cwl/cwl_test_dlbcl2/7ba32188-5608-445c-8d04-f7c389acea27.log
+output_vcf_filename: TCGA-FF-8046-01A-11D-2210-10.filter.vcf

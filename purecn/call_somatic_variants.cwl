@@ -21,13 +21,13 @@ inputs:
   input_vcf_file:
     type: File
   capture_kit_file:
-    type: File
+    type: File?
   map_file:
-    type: File
+    type: File?
   normaldb_file:
-    type: File
+    type: File?
   target_weight_file:
-    type: File
+    type: File?
   genome:
     type: string
   sample_id:
@@ -70,7 +70,7 @@ outputs:
     type: File?
     outputSource: var_call/info_pdf_file
   log_file:
-    type: File
+    type: File?
     outputSource: var_call/log_file
   interval_file:
     type: File

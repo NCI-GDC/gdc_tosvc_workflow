@@ -238,7 +238,7 @@ steps:
     out: [output_vcf_file]
 
   - id: purecn_gdcfiltration
-    run: purecn_gdcfiltration_workflow.cwl
+    run: ../purecn/purecn_gdcfiltration_workflow.cwl
     scatter: run_with_normaldb
     in:
       run_with_normaldb:
@@ -294,7 +294,7 @@ steps:
     out: [output_vcf_file, filtration_metric_file, dnacopy_seg_file, archive_tar_file]
 
   - id: determine_purecn_gdcfiltration
-    run: determine_purecn_gdcfiltration.cwl
+    run: ../auxiliary/determine_purecn_gdcfiltration.cwl
     in:
       no_normaldb_vcf_file:
         source: gdcfiltration/output_vcf_file

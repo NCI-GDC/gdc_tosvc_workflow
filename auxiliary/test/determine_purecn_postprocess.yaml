@@ -1,0 +1,3 @@
+purecn_vcf_file:
+  class: File
+  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test2/TCGA-FF-8046-01A-11D-2210-10.vcf

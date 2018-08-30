@@ -2,8 +2,8 @@ bioclient_config:
   class: File
   path: /home/ubuntu/bioclient.json
 bioclient_upload_bucket: s3://ceph.service.consul/bio-automation-test
-job_uuid: 00000000-0000-0000-0000-000000000003
-aliquot_id: 00000000-0000-0000-0000-00000000003
+job_uuid: 00000000-0000-0000-0000-000000000006
+aliquot_id: 7ba32188-5608-445c-8d04-f7c389acea27
 case_id: DLBCL
 patient_barcode: DLBCL10905
 sample_barcode: DLBCL10905_5162

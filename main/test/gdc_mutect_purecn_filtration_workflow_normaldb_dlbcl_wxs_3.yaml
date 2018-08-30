@@ -1,9 +1,9 @@
 bioclient_config:
   class: File
-  path: /mnt/scripts/gdc_tosvc_workflow/inout/bioclient.json
+  path: /home/ubuntu/bioclient.json
 bioclient_upload_bucket: s3://ceph.service.consul/bio-automation-test
-job_uuid: 00000000-0000-0000-0000-000000000003
-aliquot_id: 00000000-0000-0000-0000-00000000003
+job_uuid: 00000000-0000-0000-0000-000000000008
+aliquot_id: 453bc5e2-43da-4325-bd62-d5f1e9d8c971
 case_id: DLBCL
 patient_barcode: DLBCL10905
 sample_barcode: DLBCL10905_5162

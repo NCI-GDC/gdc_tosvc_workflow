@@ -10,84 +10,84 @@ requirements:
   - class: MultipleInputFeatureRequirement
 
 inputs:
-  fa_file:
+  - id: fa_file
     type: File
-  fai_file:
+  - id: fai_file
     type: File
-  tumor_bam_file:
+  - id: tumor_bam_file
     type: File
-  tumor_bai_file:
+  - id: tumor_bai_file
     type: File
-  input_vcf_file:
+  - id: input_vcf_file
     type: File
-  capture_kit_file:
+  - id: capture_kit_file
     type: File?
-  map_file:
+  - id: map_file
     type: File?
-  normaldb_file:
+  - id: normaldb_file
     type: File?
-  target_weight_file:
+  - id: target_weight_file
     type: File?
-  genome:
+  - id: genome
     type: string
-  sample_id:
+  - id: sample_id
     type: string
-  thread_num:
+  - id: thread_num
     type: int
 
 outputs:
-  var_vcf_file:
+  - id: var_vcf_file
     type: File?
     outputSource: var_call/var_vcf_file
-  var_csv_file:
+  - id: var_csv_file
     type: File?
     outputSource: var_call/var_csv_file
-  metric_file:
+  - id: metric_file
     type: File?
     outputSource: var_call/metric_file
-  dnacopy_file:
+  - id: dnacopy_file
     type: File?
     outputSource: var_call/dnacopy_file
-  segmentation_file:
+  - id: segmentation_file
     type: File?
     outputSource: var_call/segmentation_file
-  loh_file:
+  - id: loh_file
     type: File?
     outputSource: var_call/loh_file
-  chrome_file:
+  - id: chrome_file
     type: File?
     outputSource: var_call/chrome_file
-  genes_file:
+  - id: genes_file
     type: File?
     outputSource: var_call/genes_file
-  local_optima_file:
+  - id: local_optima_file
     type: File?
     outputSource: var_call/local_optima_file
-  rds_file:
+  - id: rds_file
     type: File?
     outputSource: var_call/rds_file
-  info_pdf_file:
+  - id: info_pdf_file
     type: File?
     outputSource: var_call/info_pdf_file
-  log_file:
+  - id: log_file
     type: File?
     outputSource: var_call/log_file
-  interval_file:
+  - id: interval_file
     type: File
     outputSource: interval/interval_file
-  interval_bed_file:
+  - id: interval_bed_file
     type: File
     outputSource: interval/interval_bed_file
-  cov_file:
+  - id: cov_file
     type: File
     outputSource: coverage/cov_file
-  loess_file:
+  - id: loess_file
     type: File
     outputSource: coverage/loess_file
-  loess_png_file:
+  - id: loess_png_file
     type: File
     outputSource: coverage/loess_png_file
-  loess_qc_file:
+  - id: loess_qc_file
     type: File
     outputSource: coverage/loess_qc_file
 
@@ -95,52 +95,70 @@ steps:
   interval:
     run: PureCNIntervalFile.cwl
     in:
-      fa_file:
+      - id: fa_file
         source: fa_file
-      fai_file:
+      - id: fai_file
         source: fai_file
-      capture_kit_file:
+      - id: capture_kit_file
         source: capture_kit_file
-      map_file:
+      - id: map_file
         source: map_file
-      genome:
+      - id: genome
         source: genome
-      out_file:
+      - id: out_file
         source: fa_file
         valueFrom: $(self.nameroot + ".capture_baits_hg38_gcgene.txt")
-      export_file:
+      - id: export_file
         source: fa_file
         valueFrom: $(self.nameroot + ".capture_baits_optimized_hg38.bed")
-    out: [interval_file, interval_bed_file]
+    out:
+      - id: interval_file
+      - id: interval_bed_file
 
   coverage:
     run: PureCNCoverage.cwl
     in:
-      bam_file:
+      - id: bam_file
         source: tumor_bam_file
-      bai_file:
+      - id: bai_file
         source: tumor_bai_file
-      interval_file:
+      - id: interval_file
         source: interval/interval_file
-      thread_num:
+      - id: thread_num
         source: thread_num
-    out: [cov_file, loess_file, loess_png_file, loess_qc_file]
+    out:
+      - id: cov_file
+      - id: loess_file
+      - id: loess_png_file
+      - id: loess_qc_file
 
   var_call:
     run: PureCN.cwl
     in:
-      sample_id:
+      - id: sample_id
         source: sample_id
-      tumor_file:
+      - id: tumor_file
         source: coverage/loess_file
-      input_vcf_file:
+      - id: input_vcf_file
         source: input_vcf_file
-      interval_file:
+      - id: interval_file
         source: interval/interval_file
-      normaldb_file:
+      - id: normaldb_file
         source: normaldb_file
-      target_weight_file:
+      - id: target_weight_file
         source: target_weight_file
-      genome:
+      - id: genome
         source: genome
-    out: [var_vcf_file, var_csv_file, metric_file, dnacopy_file, segmentation_file, loh_file, chrome_file, genes_file, local_optima_file, rds_file, info_pdf_file, log_file]
+    out:
+      - id: var_vcf_file
+      - id: var_csv_file
+      - id: metric_file
+      - id: dnacopy_file
+      - id: segmentation_file
+      - id: loh_file
+      - id: chrome_file
+      - id: genes_file
+      - id: local_optima_file
+      - id: rds_file
+      - id: info_pdf_file
+      - id: log_file

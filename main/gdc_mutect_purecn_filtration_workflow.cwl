@@ -36,7 +36,6 @@ inputs:
   - id: experimental_strategy
     type: string
     doc: GDC experimental strategy used for output filenames
-  
   #full ref files
   - id: fa_uuid
     type: string
@@ -50,7 +49,6 @@ inputs:
     type: string
   - id: dict_filesize
     type: long
-
   #main ref files
   - id: fa_main_uuid
     type: string
@@ -64,7 +62,6 @@ inputs:
     type: string
   - id: dict_main_filesize
     type: long
-
   #input data for pipeline
   - id: bam_uuid
     type: string
@@ -78,7 +75,6 @@ inputs:
     type: string
   - id: input_vcf_filesize
     type: long
-    
   #GEM and PureCN ref files (optional)
   - id: capture_kit_uuid
     type: string?
@@ -100,7 +96,6 @@ inputs:
     type: string?
   - id: target_weight_filesize
     type: long?
-
   #parameters
   - id: fa_name
     type: string
@@ -125,7 +120,6 @@ inputs:
   - id: gem_max_edit
     type: int
     default: 2
-
   #conditinonal inputs
   - id: run_with_normaldb
     type:
@@ -159,7 +153,6 @@ steps:
     in:
       - id: bioclient_config
         source: bioclient_config
-
       - id: fa_uuid
         source: fa_uuid
       - id: fa_filesize
@@ -172,7 +165,6 @@ steps:
         source: dict_uuid
       - id: dict_filesize
         source: dict_filesize
-
       - id: fa_main_uuid
         source: fa_uuid
       - id: fa_main_filesize
@@ -185,7 +177,6 @@ steps:
         source: dict_main_uuid
       - id: dict_main_filesize
         source: dict_main_filesize
-
       - id: bam_uuid
         source: bam_uuid
       - id: bam_filesize
@@ -198,9 +189,16 @@ steps:
         source: input_vcf_uuid
       - id: vcf_filesize
         source: input_vcf_filesize
-
-    out: [fa_file, fai_file, dict_file, fa_main_file, fai_main_file, dict_main_file, bam_file, bai_file, vcf_file]
-  
+    out:
+      - id: fa_file
+      - id: fai_file
+      - id: dict_file
+      - id: fa_main_file
+      - id: fai_main_file
+      - id: dict_main_file
+      - id: bam_file
+      - id: bai_file
+      - id: vcf_file
   - id: get_filename_prefix
     run: ../auxiliary/make_file_prefix.cwl
     in:
@@ -212,142 +210,151 @@ steps:
         source: caller_id
       - id: experimental_strategy
         source: experimental_strategy
-    out: [output]
-
+    out:
+      - id: output
   - id: remove_nstd_variants
     run: ../auxiliary/remove_nonstandard_variants.cwl
     in:
-      input_vcf:
+      - id: input_vcf
         source: get_inputs/vcf_file
-      output_filename:
+      - id: output_filename
         valueFrom: "std.vcf"
-    out: [output_vcf]
-
+    out:
+      - id: output_vcf
   - id: gdcfiltration
     run: ../gdcfiltration/gdcfiltration_workflow.cwl
     scatter: run_without_normaldb
     in:
-      run_without_normaldb:
+      - id: run_without_normaldb
         source: run_without_normaldb
-      fa_file:
+      - id: fa_file
         source: get_inputs/fa_file
-      fai_file:
+      - id: fai_file
         source: get_inputs/fai_file
-      input_vcf_file:
+      - id: input_vcf_file
         source: remove_nstd_variants/output_vcf
-    out: [output_vcf_file]
-
+    out:
+      - id: output_vcf_file
   - id: purecn_gdcfiltration
     run: ../purecn/purecn_gdcfiltration_workflow.cwl
     scatter: run_with_normaldb
     in:
-      run_with_normaldb:
+      - id: run_with_normaldb
         source: run_with_normaldb
-      fa_file:
+      - id: fa_file
         source: get_inputs/fa_file
-      fai_file:
+      - id: fai_file
         source: get_inputs/fai_file
-      dict_file:
+      - id: dict_file
         source: get_inputs/dict_file
-      dict_main_file:
+      - id: dict_main_file
         source: get_inputs/dict_main_file
-      bam_file:
+      - id: bam_file
         source: get_inputs/bam_file
-      bai_file:
+      - id: bai_file
         source: get_inputs/bai_file
-      input_vcf_file:
+      - id: input_vcf_file
         source: remove_nstd_variants/output_vcf
-      fa_version:
+      - id: fa_version
         source: fa_version
-      thread_num:
+      - id: thread_num
         source: thread_num
-      var_prob_thres:
+      - id: var_prob_thres
         source: var_prob_thres
-      aliquot_id:
+      - id: aliquot_id
         source: aliquot_id
-      filename_prefix:
+      - id: filename_prefix
         source: get_filename_prefix/output
-      bioclient_config:
+      - id: bioclient_config
         source: bioclient_config
-      capture_kit_uuid:
+      - id: capture_kit_uuid
         source: capture_kit_uuid
-      capture_kit_filesize:
+      - id: capture_kit_filesize
         source: capture_kit_filesize
-      bigwig_uuid:
+      - id: bigwig_uuid
         source: bigwig_uuid
-      bigwig_filesize:
+      - id: bigwig_filesize
         source: bigwig_filesize
-      gemindex_uuid:
+      - id: gemindex_uuid
         source: gemindex_uuid
-      gemindex_filesize:
-       source: gemindex_filesize
-      normaldb_uuid:
+      - id: gemindex_filesize
+        source: gemindex_filesize
+      - id: normaldb_uuid
         source: normaldb_uuid
-      normaldb_filesize:
+      - id: normaldb_filesize
         source: normaldb_filesize
-      target_weight_uuid:
+      - id: target_weight_uuid
         source: target_weight_uuid
-      target_weight_filesize:
+      - id: target_weight_filesize
         source: target_weight_filesize
-      output_dir:
+      - id: output_dir
         valueFrom: "."
-    out: [output_vcf_file, filtration_metric_file, dnacopy_seg_file, archive_tar_file]
-
+    out:
+      - id: output_vcf_file
+      - id: filtration_metric_file
+      - id: dnacopy_seg_file
+      - id: archive_tar_file
   - id: determine_purecn_gdcfiltration
     run: ../auxiliary/determine_purecn_gdcfiltration.cwl
     in:
-      no_normaldb_vcf_file:
+      - id: no_normaldb_vcf_file
         source: gdcfiltration/output_vcf_file
-      normaldb_vcf_file:
+      - id: normaldb_vcf_file
         source: purecn_gdcfiltration/output_vcf_file
-      filtration_metric_file:
+      - id: filtration_metric_file
         source: purecn_gdcfiltration/filtration_metric_file
-      dnacopy_seg_file:
+      - id: dnacopy_seg_file
         source: purecn_gdcfiltration/dnacopy_seg_file
-      archive_tar_file:
+      - id: archive_tar_file
         source: purecn_gdcfiltration/archive_tar_file
     out:
-      [output_vcf_file, output_filtration_metric_file, output_dnacopy_seg_file, output_archive_tar_file]
-
+      - id: output_vcf_file
+      - id: output_filtration_metric_file
+      - id: output_dnacopy_seg_file
+      - id: output_archive_tar_file
   - id: gdc_reannotation
     run: ../gdcfiltration/gdcreannotation_workflow.cwl
     in:
-      input_vcf_file:
+      - id: input_vcf_file
         source: determine_purecn_gdcfiltration/output_vcf_file
-      dict_main_file:
+      - id: dict_main_file
         source: get_inputs/dict_main_file
-      fa_name:
+      - id: fa_name
         source: fa_name
-      patient_barcode:
+      - id: patient_barcode
         source: patient_barcode
-      case_id:
+      - id: case_id
         source: case_id
-      aliquot_id:
+      - id: aliquot_id
         source: aliquot_id
-      bam_uuid:
+      - id: bam_uuid
         source: bam_uuid
-      sample_barcode:
+      - id: sample_barcode
         source: sample_barcode
-      filename_prefix:
+      - id: filename_prefix
         source: get_filename_prefix/output
     out:
-      [output_vcf_file]
-
+      - id: output_vcf_file
   - id: upload_outputs
     run: ../inout/cond_upload_outputs.cwl
     in:
-      bioclient_config:
+      - id: bioclient_config
         source: bioclient_config
-      bioclient_upload_bucket:
+      - id: bioclient_upload_bucket
         source: bioclient_upload_bucket
-      job_uuid:
+      - id: job_uuid
         source: job_uuid
-      filtered_vcf_file:
+      - id: filtered_vcf_file
         source: gdc_reannotation/output_vcf_file
-      filtration_metric_file:
+      - id: filtration_metric_file
         source: determine_purecn_gdcfiltration/output_filtration_metric_file
-      dnacopy_seg_file:
+      - id: dnacopy_seg_file
         source: determine_purecn_gdcfiltration/output_dnacopy_seg_file
-      archive_tar_file:
+      - id: archive_tar_file
         source: determine_purecn_gdcfiltration/output_archive_tar_file
-    out: [filtered_vcf_uuid, filtered_vcf_index_uuid, filtration_metric_uuid, dnacopy_seg_uuid, archive_tar_uuid]
+    out:
+      - id: filtered_vcf_uuid
+      - id: filtered_vcf_index_uuid
+      - id: filtration_metric_uuid
+      - id: dnacopy_seg_uuid
+      - id: archive_tar_uuid

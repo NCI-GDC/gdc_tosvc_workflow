@@ -18,17 +18,17 @@ requirements:
     outdirMax: 1
 
 inputs:
-  config_file:
+  - id: config_file
     type: File?
-  upload_bucket:
+  - id: upload_bucket
     type: string?
-  upload_key:
+  - id: upload_key
     type: string?
-  input_file:
+  - id: input_file
     type: File?
 
 outputs:
-  output_file_uuid:
+  - id: output_file_uuid
     type: string?
     outputBinding:
       glob: "*_upload.json"      

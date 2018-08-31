@@ -30,57 +30,57 @@ requirements:
 baseCommand: ["tar", "hczf"]
 
 inputs:
-  var_vcf_file:
+  - id: var_vcf_file
     type: File
     inputBinding:
       position: 1
       valueFrom: $(self.basename)
-  genes_file:
+  - id: genes_file
     type: File
     inputBinding:
       position: 2
       valueFrom: $(self.basename)
-  loh_file:
+  - id: loh_file
     type: File
     inputBinding:
       position: 3
       valueFrom: $(self.basename)
-  metric_file:
+  - id: metric_file
     type: File
     inputBinding:
       position: 4
       valueFrom: $(self.basename)
-  info_pdf_file:
+  - id: info_pdf_file
     type: File
     inputBinding:
       position: 5
       valueFrom: $(self.basename)
-  dnacopy_file:
+  - id: dnacopy_file
     type: File
     inputBinding:
       position: 6
       valueFrom: $(self.basename)
-  segmentation_file:
+  - id: segmentation_file
     type: File
     inputBinding:
       position: 7
       valueFrom: $(self.basename)
-  chrome_file:
+  - id: chrome_file
     type: File
     inputBinding:
       position: 8
       valueFrom: $(self.basename)
-  local_optima_file:
+  - id: local_optima_file
     type: File
     inputBinding:
       position: 9
       valueFrom: $(self.basename)
-  interval_file:
+  - id: interval_file
     type: File
     inputBinding:
       position: 10
       valueFrom: $(self.basename)
-  interval_bed_file:
+  - id: interval_bed_file
     type: File
     doc: if this is optional (File?) and we still pass the value to it from super worflow |
          the workflow gets crash with cwltool 1.0.20180306163216 |
@@ -88,39 +88,38 @@ inputs:
     inputBinding:
       position: 11
       valueFrom: $(self.basename)
-  cov_file:
+  - id: cov_file
     type: File
     inputBinding:
       position: 12
       valueFrom: $(self.basename)
-  loess_file:
+  - id: loess_file
     type: File
     inputBinding:
       position: 13
       valueFrom: $(self.basename)
-  loess_png_file:
+  - id: loess_png_file
     type: File
     inputBinding:
       position: 14
       valueFrom: $(self.basename)
-  loess_qc_file:
+  - id: loess_qc_file
     type: File
     inputBinding:
       position: 15
       valueFrom: $(self.basename)
-  log_file:
+  - id: log_file
     type: File
     inputBinding:
       position: 16
       valueFrom: $(self.basename)
-
-  compress_file_name:
+  - id: compress_file_name
     type: string
     inputBinding:
       position: 0
 
 outputs:
-  output_file:
+  - id: output_file
     type: File
     outputBinding:
       glob: $(inputs.compress_file_name)

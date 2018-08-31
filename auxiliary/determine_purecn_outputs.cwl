@@ -8,35 +8,35 @@ requirements:
 class: ExpressionTool
 
 inputs:
-  purecn_fail_vcf_file:
+  - id: purecn_fail_vcf_file
     type:
       type: array
       items: ['null', File]
-  purecn_success_vcf_file:
+  - id: purecn_success_vcf_file
     type:
       type: array
       items: ['null', File]
-  filtration_metric_file:
+  - id: filtration_metric_file
     type:
       type: array
       items: ['null', File]
-  dnacopy_seg_file:
+  - id: dnacopy_seg_file
     type:
       type: array
       items: ['null', File]
-  archive_tar_file:
+  - id: archive_tar_file
     type:
       type: array
       items: ['null', File]
 
 outputs:
-  output_vcf_file:
+  - id: output_vcf_file
     type: File
-  output_filtration_metric_file:
+  - id: output_filtration_metric_file
     type: File?
-  output_dnacopy_seg_file:
+  - id: output_dnacopy_seg_file
     type: File?
-  output_archive_tar_file:
+  - id: output_archive_tar_file
     type: File?
 
 expression: |
@@ -55,5 +55,6 @@ expression: |
       else {
         throw "The case is unhandled";
       }
-      return {'output_vcf_file': output_vcf, 'output_filtration_metric_file': filtration_metric, 'output_dnacopy_seg_file': dnacopy_seg, 'output_archive_tar_file': archive_tar};
+      return {'output_vcf_file': output_vcf, 'output_filtration_metric_file': filtration_metric,
+              'output_dnacopy_seg_file': dnacopy_seg, 'output_archive_tar_file': archive_tar};
     }

@@ -11,7 +11,6 @@ requirements:
 inputs:
   - id: bioclient_config
     type: File
-
   - id: capture_kit_uuid
     type: string
   - id: capture_kit_filesize

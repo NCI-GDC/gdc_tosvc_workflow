@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/gdc_tosvc_tools:c3b1b6044acd2df3cadc28d642dd6fcc335832db
+    dockerPull: quay.io/ncigdc/gdc_tosvc_tools:06d509b6f9ba5a26d31690153b08f2381823ec1d
   - class: InlineJavascriptRequirement
 
 baseCommand: [python, /gdc_tosvc_tools/annot_fail_purecn_vcf.py]

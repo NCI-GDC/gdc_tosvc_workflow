@@ -11,23 +11,22 @@ requirements:
     dockerPull: quay.io/ncigdc/variant-filtration-tool:384f593b3dfc43acfc31d02e75589d2e2545008c 
   - class: InlineJavascriptRequirement
 
+baseCommand: [python3, /opt/variant-filtration-tool/FilterContigs.py]
+
 inputs:
-  input_vcf:
+  - id: input_vcf
     type: File
     doc: "input vcf file"
     inputBinding:
       prefix: --input_vcf
-
-  output_vcf:
+  - id: output_vcf
     type: string
     doc: output basename of vcf 
     inputBinding:
       prefix: --output_vcf
 
 outputs:
-  output_vcf_file:
+  - id: output_vcf_file
     type: File
     outputBinding:
       glob: $(inputs.output_vcf)
-
-baseCommand: [python3, /opt/variant-filtration-tool/FilterContigs.py] 

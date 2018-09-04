@@ -13,41 +13,41 @@ requirements:
       - $(inputs.metric_file)
       - $(inputs.dnacopy_seg_file)
 
+baseCommand: [python, /gdc_tosvc_tools/modify_purecn_outputs.py]
+
 inputs:
-  sample_id:
+  - id: sample_id
     type: string
     inputBinding:
       position: 0
       prefix: --sample_id
-  metric_file:
+  - id: metric_file
     type: File
     inputBinding:
       position: 1
       prefix: --info_file
-  dnacopy_seg_file:
+  - id: dnacopy_seg_file
     type: File
     inputBinding:
       position: 2
       prefix: --seg_file
-  modified_metric_file:
+  - id: modified_metric_file
     type: string
     inputBinding:
       position: 3
       prefix: --modified_info_file
-  modified_seg_file:
+  - id: modified_seg_file
     type: string
     inputBinding:
       position: 4
       prefix: --modified_seg_file
 
 outputs:
-  output_filtration_metric_file:
+  - id: output_filtration_metric_file
     type: File
     outputBinding:
       glob: $(inputs.modified_metric_file)
-  output_dnacopy_seg_file:
+  - id: output_dnacopy_seg_file
     type: File
     outputBinding:
       glob: $(inputs.modified_seg_file)
-
-baseCommand: [python, /gdc_tosvc_tools/modify_purecn_outputs.py]

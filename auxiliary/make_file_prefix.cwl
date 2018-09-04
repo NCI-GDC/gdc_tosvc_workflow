@@ -8,17 +8,17 @@ requirements:
 class: ExpressionTool
 
 inputs:
-  job_uuid:
+  - id: job_uuid
     type: string
-  experimental_strategy:
+  - id: experimental_strategy
     type: string
-  project_id:
+  - id: project_id
     type: string?
-  caller_id:
+  - id: caller_id
     type: string?
 
 outputs:
-  output:
+  - id: output
     type: string
 
 expression: |

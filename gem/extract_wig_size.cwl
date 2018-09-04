@@ -12,6 +12,8 @@ requirements:
       - $(inputs.wig_file)
       - $(inputs.size_file)
 
+baseCommand: [python, /gdc_tosvc_tools/extract_wig_size.py]
+
 inputs:
   - id: wig_file
     type: File
@@ -35,5 +37,3 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.size_file.basename + '.trim.tsv')
-
-baseCommand: [python, /gdc_tosvc_tools/extract_wig_size.py]

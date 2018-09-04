@@ -55,7 +55,8 @@ steps:
         valueFrom: $(self[0] + '/' + self[1].basename)
       - id: input_file
         source: filtered_vcf_file
-    out: [output_file_uuid]
+    out:
+      - id: output_file_uuid
 
   - id: upload_filtered_vcf_index_file
     run: bioclient_cond_upload.cwl
@@ -70,7 +71,8 @@ steps:
       - id: input_file
         source: filtered_vcf_file
         valueFrom: $(self.secondaryFiles[0])
-    out: [output_file_uuid]
+    out:
+      - id: output_file_uuid
     
   - id: upload_filtration_metric_file
     run: bioclient_cond_upload.cwl
@@ -91,7 +93,8 @@ steps:
            }
       - id: input_file
         source: filtration_metric_file
-    out: [output_file_uuid]
+    out:
+      - id: output_file_uuid
     
   - id: upload_dnacopy_seg_file
     run: bioclient_cond_upload.cwl
@@ -112,7 +115,8 @@ steps:
            }
       - id: input_file
         source: dnacopy_seg_file
-    out: [output_file_uuid]
+    out:
+      - id: output_file_uuid
     
   - id: upload_archive_tar_file
     run: bioclient_cond_upload.cwl
@@ -133,4 +137,5 @@ steps:
            }
       - id: input_file
         source: archive_tar_file
-    out: [output_file_uuid]
+    out:
+      - id: output_file_uuid

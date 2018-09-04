@@ -2,13 +2,17 @@
 
 cwlVersion: v1.0
 
+class: CommandLineTool
+
 requirements:
   - class: DockerRequirement
     dockerPull: biocontainers/samtools
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
 
-class: CommandLineTool
+stdout: readlen.txt
+
+baseCommand: ["samtools", "view"]
 
 inputs:
   - id: bam
@@ -21,10 +25,6 @@ inputs:
 outputs:
   - id: readlen
     type: stdout
-
-stdout: readlen.txt
-
-baseCommand: ["samtools", "view"]
 
 arguments:
   - valueFrom: "|"

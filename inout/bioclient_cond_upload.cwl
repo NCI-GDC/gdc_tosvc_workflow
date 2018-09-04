@@ -17,18 +17,20 @@ requirements:
     outdirMin: 1
     outdirMax: 1
 
+baseCommand: []
+
 inputs:
-  config_file:
+  - id: config_file
     type: File?
-  upload_bucket:
+  - id: upload_bucket
     type: string?
-  upload_key:
+  - id: upload_key
     type: string?
-  input_file:
+  - id: input_file
     type: File?
 
 outputs:
-  output_file_uuid:
+  - id: output_file_uuid
     type: string?
     outputBinding:
       glob: "*_upload.json"      
@@ -43,15 +45,12 @@ outputs:
            }
          }
 
-baseCommand: []
-
 arguments:
   - valueFrom: |
       ${
          var tool = "/usr/local/bin/bio_client.py"
          var reqs = ["config_file", "upload_bucket", "upload_key"]
          var cmd = []
-
          if(inputs.input_file !== null) {
              for(var i=0; i < reqs.length; i++) {
                  if(inputs[i] === null) {

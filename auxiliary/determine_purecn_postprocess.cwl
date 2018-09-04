@@ -30,5 +30,6 @@ expression: |
         var success_purecn_array = [];
         var fail_purecn_array = [1];
       }
-      return {'success_purecn': success_purecn_array, 'fail_purecn': fail_purecn_array};
+      return {'success_purecn': success_purecn_array,
+              'fail_purecn': fail_purecn_array};
     }

@@ -13,8 +13,10 @@ requirements:
   - class: InitialWorkDirRequirement
     listing: $(inputs.input_files)
 
+baseCommand: [tar]
+
 inputs:
-  input_files:
+  - id: input_files
     type:
       type: array
       items: File
@@ -24,17 +26,15 @@ inputs:
     inputBinding:
       position: 1
 
-  output_archive_name:
+  - id: output_archive_name
     type: string
     inputBinding:
       prefix: -hczf
       position: 0
 
 outputs:
-  output_archive:
+  - id: output_archive
     type: File
     outputBinding:
       glob: $(inputs.output_archive_name)
     doc: The archived directory
-
-baseCommand: [tar]

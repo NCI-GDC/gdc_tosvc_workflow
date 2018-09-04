@@ -37,78 +37,81 @@ steps:
   - id: update_dictionary
     run: update_seq_dict.cwl
     in:
-      input_vcf:
+      - id: input_vcf
         source: input_vcf_file
-      sequence_dictionary:
+      - id: sequence_dictionary
         source: dict_main_file
-      output_filename:
+      - id: output_filename
         source: input_vcf_file
         valueFrom: $(self.basename + '.updatedseqdict.vcf')
-    out: [output_file]
+    out:
+      - id: output_file
 
   - id: filter_contigs
     run: filter_contigs.cwl
     in:
-      input_vcf:
+      - id: input_vcf
         source: update_dictionary/output_file
-      output_vcf:
+      - id: output_vcf
         source: update_dictionary/output_file
         valueFrom: $(self.basename + '.filtered_contigs.vcf')
-    out: [output_vcf_file]
+    out:
+      - id: output_vcf_file
 
   - id: format_header
     run: format_vcf_header.cwl
     in:
-      input_vcf:
+      - id: input_vcf
         source: filter_contigs/output_vcf_file
-      output_vcf:
+      - id: output_vcf
         source: filter_contigs/output_vcf_file
         valueFrom: $(self.basename + '.gdcheader.vcf')
-      reference_name:
+      - id: reference_name
         source: fa_name
-      patient_barcode: 
+      - id: patient_barcode
         source: patient_barcode
-      case_id:
+      - id: case_id
         source: case_id
-      sample_barcode:
+      - id: sample_barcode
         source: sample_barcode
-      aliquot_uuid:
+      - id: aliquot_uuid
         source: aliquot_id
-      bam_uuid:
+      - id: bam_uuid
         source: bam_uuid
-    out: [output_vcf_file]
+    out:
+      - id: output_vcf_file
 
   - id: sort_vcf_file
     run: ../auxiliary/sort_vcf_file.cwl
     in:
-      input_vcf_file:
+      - id: input_vcf_file
         source: format_header/output_vcf_file
-      output_vcf_filename:
+      - id: output_vcf_filename
         source: format_header/output_vcf_file
         valueFrom: $(self.basename + ".gz")
     out:
-      [output_vcf_file]
+      - id: output_vcf_file
 
   - id: rename_sample
     run: rename_sample.cwl
     in:
-      input_vcf_file:
+      - id: input_vcf_file
         source: sort_vcf_file/output_vcf_file
-      new_sample_name:
+      - id: new_sample_name
         valueFrom: "TUMOR"
-      output_vcf_filename:
+      - id: output_vcf_filename
         source: sort_vcf_file/output_vcf_file
         valueFrom: $(self.basename)
     out:
-      [output_vcf_file]
+      - id: output_vcf_file
 
   - id: convert_vcf_format
     run: ../auxiliary/convert_vcf_format.cwl
     in:
-      input_vcf_file:
+      - id: input_vcf_file
         source: rename_sample/output_vcf_file
-      output_vcf_filename:
+      - id: output_vcf_filename
         source: filename_prefix
         valueFrom: $(self + ".variant_filtration.vcf.gz")
     out:
-      [output_vcf_file]
+      - id: output_vcf_file

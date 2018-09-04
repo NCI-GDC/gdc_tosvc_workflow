@@ -11,22 +11,22 @@ requirements:
     dockerPull: quay.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
   - class: InlineJavascriptRequirement
 
+baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, UpdateVcfSequenceDictionary]
+
 inputs:
-  input_vcf:
+  - id: input_vcf
     type: File
     doc: "input vcf file"
     inputBinding:
       prefix: "INPUT="
       separate: false
-
-  sequence_dictionary:
+  - id: sequence_dictionary
     type: File
     doc: sequence dictionary you want to update header with 
     inputBinding:
       prefix: SD= 
       separate: false
-
-  output_filename:
+  - id: output_filename
     type: string
     doc: output basename of output file
     inputBinding:
@@ -34,10 +34,8 @@ inputs:
       separate: false
 
 outputs:
-  output_file:
+  - id: output_file
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
     doc: Updated VCF file 
-
-baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, UpdateVcfSequenceDictionary]

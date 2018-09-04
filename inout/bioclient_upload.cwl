@@ -26,25 +26,21 @@ inputs:
     inputBinding:
       prefix: --config-file
       position: 0
-
   - id: upload
     type: string
     default: upload
     inputBinding:
       position: 1
-
   - id: upload_bucket
     type: string
     inputBinding:
       prefix: --upload-bucket
       position: 2
-
   - id: upload_key
     type: string
     inputBinding:
       prefix: --upload_key
       position: 3
-
   - id: input_file
     type: File
     inputBinding:
@@ -55,7 +51,6 @@ outputs:
     type: File
     outputBinding:
       glob: "*_upload.json"
-
   - id: output_file_uuid
     type: string 
     outputBinding:

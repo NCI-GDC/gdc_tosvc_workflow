@@ -11,7 +11,6 @@ requirements:
 inputs:
   - id: bioclient_config
     type: File
-
   - id: fa_uuid
     type: string
   - id: fa_filesize
@@ -24,7 +23,6 @@ inputs:
     type: string
   - id: dict_filesize
     type: long
-
   - id: fa_main_uuid
     type: string
   - id: fa_main_filesize
@@ -37,7 +35,6 @@ inputs:
     type: string
   - id: dict_main_filesize
     type: long
-
   - id: bam_uuid
     type: string
   - id: bam_filesize
@@ -61,7 +58,6 @@ outputs:
   - id: dict_file
     type: File
     outputSource: get_dict/output
-
   - id: fa_main_file
     type: File
     outputSource: get_fa_main/output
@@ -71,7 +67,6 @@ outputs:
   - id: dict_main_file
     type: File
     outputSource: get_dict_main/output
-
   - id: bam_file
     type: File
     outputSource: get_bam/output
@@ -116,7 +111,6 @@ steps:
         source: dict_filesize
     out:
       - id: output
-
   - id: get_fa_main
     run: bioclient_download.cwl
     in:
@@ -150,7 +144,6 @@ steps:
         source: dict_main_filesize
     out:
       - id: output
-
   - id: get_bam
     run: bioclient_download.cwl
     in:

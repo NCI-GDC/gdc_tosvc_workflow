@@ -9,21 +9,23 @@ requirements:
     dockerPull: quay.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
   - class: InlineJavascriptRequirement
 
+baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, MergeVcfs]
+
 inputs:
-  input_vcf_file:
+  - id: input_vcf_file
     type:
       type: array
       items: File
       inputBinding:
         prefix: INPUT=
         separate: false
-  seq_dict:
+  - id: seq_dict
     type: File
     doc: reference sequence dictionary file
     inputBinding:
       prefix: "SEQUENCE_DICTIONARY="
       separate: false
-  output_vcf_filename:
+  - id: output_vcf_filename
     type: string
     doc: output basename of merged 
     inputBinding:
@@ -31,11 +33,9 @@ inputs:
       separate: false
 
 outputs:
-  output_vcf_file:
+  - id: output_vcf_file
     type: File
     outputBinding:
       glob: $(inputs.output_vcf_filename)
     secondaryFiles:
       - ".tbi"
-
-baseCommand: [java, -Xmx4G, -jar, /opt/picard.jar, MergeVcfs]

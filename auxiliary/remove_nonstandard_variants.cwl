@@ -11,24 +11,24 @@ requirements:
     dockerPull: quay.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
   - class: InlineJavascriptRequirement
 
+baseCommand: [/opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py]
+
 inputs:
-  input_vcf:
+  - id: input_vcf
     type: File
     doc: input vcf file
     inputBinding:
       position: 0
 
-  output_filename:
+  - id: output_filename
     type: string
     doc: output basename of output file
     inputBinding:
         position: 1
 
 outputs:
-  output_vcf:
+  - id: output_vcf
     type: File
     doc: Filtered VCF file
     outputBinding:
       glob: $(inputs.output_filename)
-
-baseCommand: [/opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py]

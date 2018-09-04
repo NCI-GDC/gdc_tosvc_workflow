@@ -10,50 +10,50 @@ requirements:
   - class: MultipleInputFeatureRequirement
 
 inputs:
-  tumor_bam:
+  - id: tumor_bam
     type: File
     secondaryFiles:
       - '.bai'
-  gem_index:
+  - id: gem_index
     type: File
-  gem_thread_num:
+  - id: gem_thread_num
     type: int
     default: 40
-  gem_max_mismatch:
+  - id: gem_max_mismatch
     type: int
     default: 2
-  gem_max_edit:
+  - id: gem_max_edit
     type: int
     default: 2
 
 outputs:
-  bigwig_file:
+  - id: bigwig_file:
     type: File
     outputSource: wig2bigwig/bigwigfile
-  extracted_wig_file:
+  - id: extracted_wig_file:
     type: File
     outputSource: extract_wig_size/extracted_wig_file
-  extracted_size_file:
+  - id: extracted_size_file:
     type: File
     outputSource: extract_wig_size/extracted_size_file
-  wig_file:
+  - id: wig_file:
     type: File
     outputSource: gem2wig/wigfile
-  size_file:
+  - id: size_file:
     type: File
     outputSource: gem2wig/sizefile
-  map_file:
+  - id: map_file:
     type: File
     outputSource: gem_mappability/mapfile
 
 steps:
-  get_readlen:
+  - id: get_readlen
     run: get_readlen.cwl
     in:
       bam: tumor_bam
     out: [readlen]
       
-  gem_mappability:
+  - id: gem_mappability
     run: gem-mappability.cwl
     in:
       indexfile: gem_index
@@ -63,21 +63,21 @@ steps:
       max_edit: gem_max_edit
     out: [mapfile]
 
-  gem2wig:
+  - id: gem2wig
     run: gem2wig.cwl
     in:
       indexfile: gem_index
       mapfile: gem_mappability/mapfile
     out: [wigfile, sizefile]
 
-  extract_wig_size:
+  - id: extract_wig_size
     run: extract_wig_size.cwl
     in:
       wig_file: gem2wig/wigfile
       size_file: gem2wig/sizefile
     out: [extracted_wig_file, extracted_size_file]
 
-  wig2bigwig:
+  - id: wig2bigwig
     run: wig2bigwig.cwl
     in:
       wigfile: extract_wig_size/extracted_wig_file

@@ -19,7 +19,6 @@ inputs:
     doc: "input vcf file"
     inputBinding:
       prefix: --input_vcf
-
   - id: output_vcf
     type: string
     doc: output basename of vcf 

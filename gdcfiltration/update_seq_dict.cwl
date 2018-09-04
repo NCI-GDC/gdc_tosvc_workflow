@@ -20,14 +20,12 @@ inputs:
     inputBinding:
       prefix: "INPUT="
       separate: false
-
   - id: sequence_dictionary
     type: File
     doc: sequence dictionary you want to update header with 
     inputBinding:
       prefix: SD= 
       separate: false
-
   - id: output_filename
     type: string
     doc: output basename of output file

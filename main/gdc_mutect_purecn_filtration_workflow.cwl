@@ -36,6 +36,7 @@ inputs:
   - id: experimental_strategy
     type: string
     doc: GDC experimental strategy used for output filenames
+
   #full ref files
   - id: fa_uuid
     type: string
@@ -49,6 +50,7 @@ inputs:
     type: string
   - id: dict_filesize
     type: long
+
   #main ref files
   - id: fa_main_uuid
     type: string
@@ -62,6 +64,7 @@ inputs:
     type: string
   - id: dict_main_filesize
     type: long
+
   #input data for pipeline
   - id: bam_uuid
     type: string
@@ -75,6 +78,7 @@ inputs:
     type: string
   - id: input_vcf_filesize
     type: long
+
   #GEM and PureCN ref files (optional)
   - id: capture_kit_uuid
     type: string?
@@ -96,7 +100,8 @@ inputs:
     type: string?
   - id: target_weight_filesize
     type: long?
-  #parameters
+
+ #parameters
   - id: fa_name
     type: string
     default: "GRCh38.d1.vd1.fa"
@@ -120,6 +125,7 @@ inputs:
   - id: gem_max_edit
     type: int
     default: 2
+
   #conditinonal inputs
   - id: run_with_normaldb
     type:
@@ -199,6 +205,7 @@ steps:
       - id: bam_file
       - id: bai_file
       - id: vcf_file
+
   - id: get_filename_prefix
     run: ../auxiliary/make_file_prefix.cwl
     in:
@@ -212,6 +219,7 @@ steps:
         source: experimental_strategy
     out:
       - id: output
+
   - id: remove_nstd_variants
     run: ../auxiliary/remove_nonstandard_variants.cwl
     in:
@@ -221,6 +229,7 @@ steps:
         valueFrom: "std.vcf"
     out:
       - id: output_vcf
+
   - id: gdcfiltration
     run: ../gdcfiltration/gdcfiltration_workflow.cwl
     scatter: run_without_normaldb
@@ -235,6 +244,7 @@ steps:
         source: remove_nstd_variants/output_vcf
     out:
       - id: output_vcf_file
+
   - id: purecn_gdcfiltration
     run: ../purecn/purecn_gdcfiltration_workflow.cwl
     scatter: run_with_normaldb
@@ -294,6 +304,7 @@ steps:
       - id: filtration_metric_file
       - id: dnacopy_seg_file
       - id: archive_tar_file
+
   - id: determine_purecn_gdcfiltration
     run: ../auxiliary/determine_purecn_gdcfiltration.cwl
     in:
@@ -312,6 +323,7 @@ steps:
       - id: output_filtration_metric_file
       - id: output_dnacopy_seg_file
       - id: output_archive_tar_file
+
   - id: gdc_reannotation
     run: ../gdcfiltration/gdcreannotation_workflow.cwl
     in:
@@ -335,6 +347,7 @@ steps:
         source: get_filename_prefix/output
     out:
       - id: output_vcf_file
+
   - id: upload_outputs
     run: ../inout/cond_upload_outputs.cwl
     in:

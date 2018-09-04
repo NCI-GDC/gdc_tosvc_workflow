@@ -10,11 +10,10 @@ requirements:
   - class: SubworkflowFeatureRequirement
 
 inputs:
-  #ref info
   - id: bioclient_config
     type: File
 
-  #input ref data
+  #ref data
   - id: fa_file
     type: File
   - id: fai_file
@@ -24,7 +23,7 @@ inputs:
   - id: dict_main_file
     type: File
 
-  #input data for pipeline
+  #data for pipeline
   - id: bam_file
     type: File
   - id: bai_file
@@ -32,7 +31,7 @@ inputs:
   - id: input_vcf_file
     type: File
 
-  #input parameters
+  #parameters
   - id: fa_version
     type: string
   - id: thread_num

@@ -17,6 +17,8 @@ requirements:
     outdirMin: 1
     outdirMax: 1
 
+baseCommand: []
+
 inputs:
   - id: config_file
     type: File?
@@ -43,15 +45,12 @@ outputs:
            }
          }
 
-baseCommand: []
-
 arguments:
   - valueFrom: |
       ${
          var tool = "/usr/local/bin/bio_client.py"
          var reqs = ["config_file", "upload_bucket", "upload_key"]
          var cmd = []
-
          if(inputs.input_file !== null) {
              for(var i=0; i < reqs.length; i++) {
                  if(inputs[i] === null) {

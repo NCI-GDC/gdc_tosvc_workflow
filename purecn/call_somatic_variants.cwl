@@ -92,7 +92,7 @@ outputs:
     outputSource: coverage/loess_qc_file
 
 steps:
-  interval:
+  - id: interval
     run: PureCNIntervalFile.cwl
     in:
       - id: fa_file
@@ -115,7 +115,7 @@ steps:
       - id: interval_file
       - id: interval_bed_file
 
-  coverage:
+  - id: coverage
     run: PureCNCoverage.cwl
     in:
       - id: bam_file
@@ -132,7 +132,7 @@ steps:
       - id: loess_png_file
       - id: loess_qc_file
 
-  var_call:
+  - id: var_call
     run: PureCN.cwl
     in:
       - id: sample_id

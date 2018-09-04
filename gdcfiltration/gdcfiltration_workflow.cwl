@@ -25,9 +25,10 @@ steps:
   - id: filter_mutect
     run: filter_mutect_outputs.cwl
     in:
-      input_vcf_file:
+      - id: input_vcf_file
         source: input_vcf_file
-      output_vcf_filename:
+      - id: output_vcf_filename
         source: input_vcf_file
         valueFrom: $(self.basename + ".filtered_mutect.vcf")
-    out: [output_vcf_file]
+    out:
+      - id: output_vcf_file

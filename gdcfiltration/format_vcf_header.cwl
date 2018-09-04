@@ -18,39 +18,32 @@ inputs:
     doc: "input vcf file"
     inputBinding:
       prefix: --input_vcf
-
   - id: output_vcf
     type: string
     doc: output basename of vcf 
     inputBinding:
       prefix: --output_vcf
-
   - id: reference_name
     type: string?
     default: GRCh38.d1.vd1.fa
     inputBinding:
       prefix: --reference_name
-
   - id: patient_barcode
     type: string
     inputBinding:
       prefix: --patient_barcode
-
   - id: case_id
     type: string
     inputBinding:
       prefix: --case_id
-
   - id: sample_barcode
     type: string
     inputBinding:
       prefix: --sample_barcode
-
   - id: aliquot_uuid
     type: string
     inputBinding:
       prefix: --aliquot_uuid
-
   - id: bam_uuid
     type: string
     inputBinding:

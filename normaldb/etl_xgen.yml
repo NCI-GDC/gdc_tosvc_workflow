@@ -1,3 +1,6 @@
+bioclient_config:
+  class: File
+  location: /home/ubuntu/bioclient.json
 bam_uuids:
   - 162ff50f-de6b-42d8-a8eb-8059f8756575
   - 1eeb33d2-6c87-4a64-8838-de7f084b9b7c

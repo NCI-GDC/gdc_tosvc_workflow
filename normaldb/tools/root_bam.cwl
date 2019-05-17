@@ -37,6 +37,6 @@ outputs:
     outputBinding:
       glob: $(inputs.bam.basename)
     secondaryFiles:
-      - $(inputs.bam_index.basename)
+      - ^.bai
 
 baseCommand: "true"

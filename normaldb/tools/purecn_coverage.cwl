@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn_interval:1.11.11
+    dockerPull: quay.io/ncigdc/purecn_coverage:1.11.11
 
 inputs:
   - id: bam

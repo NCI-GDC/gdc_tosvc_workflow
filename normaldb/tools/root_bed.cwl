@@ -37,6 +37,6 @@ outputs:
     outputBinding:
       glob: $(inputs.bed.basename)
     secondaryFiles:
-      - $(inputs.bed_index.basename)
+      - .tbi
 
 baseCommand: "true"

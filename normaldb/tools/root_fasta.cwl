@@ -37,6 +37,6 @@ outputs:
     outputBinding:
       glob: $(inputs.fasta.basename)
     secondaryFiles:
-      - $(inputs.fasta_index.basename)
+      - .fai
 
 baseCommand: "true"

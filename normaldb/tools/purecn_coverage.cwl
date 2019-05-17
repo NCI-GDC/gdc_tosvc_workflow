@@ -10,11 +10,9 @@ requirements:
 
 inputs:
   - id: bam
-    type:
-      type: array
-      items: File
-      inputBinding:
-        prefix: --bam
+    type: File
+    inputBinding:
+      prefix: --bam
     secondaryFiles:
       - ^.bai
 

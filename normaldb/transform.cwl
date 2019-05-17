@@ -46,6 +46,7 @@ steps:
   
   - id: purecn_coverage
     run: tools/purecn_coverage.cwl
+    scatter: [bam]
     in:
       - id: bam
         source: bams

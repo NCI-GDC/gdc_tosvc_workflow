@@ -10,9 +10,11 @@ requirements:
 
 inputs:
   - id: bam
-    type: File
-    inputBinding:
-      prefix: --bam
+    type:
+      type: array
+      items: File
+      inputBinding:
+        prefix: --bam
     secondaryFiles:
       - ^.bai
 
@@ -35,9 +37,9 @@ inputs:
 
   - id: threads
     type: long
-    default: 8
+    default: 24
     inputBinding:
-      prefix: --cores
+      prefix: --cpu
 
 outputs:
   - id: coverage

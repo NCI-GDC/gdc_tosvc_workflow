@@ -35,9 +35,9 @@ inputs:
 
   - id: threads
     type: long
-    default: 1
+    default: 8
     inputBinding:
-      prefix: --cpu
+      prefix: --cores
 
 outputs:
   - id: coverage

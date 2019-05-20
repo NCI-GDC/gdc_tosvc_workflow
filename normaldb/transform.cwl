@@ -7,7 +7,8 @@ class: Workflow
 requirements:
   - class: InlineJavascriptRequirement
   - class: ScatterFeatureRequirement
-    
+  - class: StepInputExpressionRequirement
+
 inputs:
   - id: bams
     type:
@@ -39,7 +40,7 @@ outputs:
   - id: purecn_txt
     type: File
     outputSource: purecn_intervals/txt
-  
+
 steps:
   - id: purecn_intervals
     run: tools/purecn_intervals.cwl
@@ -52,7 +53,7 @@ steps:
         source: bigwig
     out:
       - id: output
-  
+
   - id: purecn_coverage
     run: tools/purecn_coverage.cwl
     scatter: [bam]
@@ -76,7 +77,7 @@ steps:
         valueFrom: purecn_loess.lst
     out:
       - id: output
-        
+
   - id: tools/purecn_normaldb.cwl
     in:
       - id: inputcoveragefiles

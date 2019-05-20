@@ -14,6 +14,9 @@ inputs:
     type:
       type: array
       items: File
+      
+  - id: outname
+    type: string
 
 arguments:
   - valueFrom: |

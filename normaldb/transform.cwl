@@ -30,16 +30,16 @@ inputs:
 outputs:
   - id: purecn_bed
     type: File
-    outputSource: purecn_intervals/bed
+    outputSource: purecn_normaldb/bed
   - id: purecn_png
     type: File
-    outputSource: purecn_intervals/png
+    outputSource: purecn_normaldb/png
   - id: purecn_rds
     type: File
-    outputSource: purecn_intervals/rds
+    outputSource: purecn_normaldb/rds
   - id: purecn_txt
     type: File
-    outputSource: purecn_intervals/txt
+    outputSource: purecn_normaldb/txt
 
 steps:
   - id: purecn_intervals
@@ -78,7 +78,8 @@ steps:
     out:
       - id: output
 
-  - id: tools/purecn_normaldb.cwl
+  - id: purecn_normaldb
+    run: tools/purecn_normaldb.cwl
     in:
       - id: inputcoveragefiles
         source: purecn_coverage/loess_txt

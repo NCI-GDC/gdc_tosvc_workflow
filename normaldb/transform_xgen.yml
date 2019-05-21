@@ -1,9 +1,6 @@
 bed:
   class: File
-  location: /mnt/scratch/purecn_xgen/xgen-exome-research-panel-targetsae255a1532796e2eaa53ff00001c1b3c.hg38.bed.gz
-  secondaryFiles:
-    - class: File
-      location: /mnt/scratch/purecn_xgen/xgen-exome-research-panel-targetsae255a1532796e2eaa53ff00001c1b3c.hg38.bed.gz.tbi
+  location: /mnt/scratch/purecn_xgen/xgen_exome_research_panel_v1.0.hg38.bed
 fasta:
   class: File
   location: /mnt/scratch/purecn_xgen/GRCh38.d1.vd1.fa

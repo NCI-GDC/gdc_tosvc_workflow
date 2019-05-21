@@ -18,8 +18,6 @@ inputs:
       - ^.bai
   - id: bed
     type: File
-    secondaryFiles:
-      - .tbi
   - id: fasta
     type: File
     secondaryFiles:

@@ -49,10 +49,8 @@ bam_index_sizes:
   - 6205872
   - 6274712
   - 6115680
-bed_uuid: 9f2ca2a4-aeb8-4ad1-b394-56ea1eb6719e
-bed_size: 2831919
-bed_index_uuid: 34b6f381-d2a2-4d0e-bb8a-f04649076ce3
-bed_index_size: 435438
+bed_uuid: 7f676e3e-8631-4400-8640-52b21bd5166d
+bed_size: 4924551
 fasta_uuid: ed96790c-3eb5-4aa2-8f46-702d503e64e4
 fasta_size: 3152288848
 fasta_index_uuid: 10283433-bcec-46bc-bfd5-5215428853ea

@@ -32,10 +32,6 @@ inputs:
     type: string
   - id: bed_size
     type: long
-  - id: bed_index_uuid
-    type: string
-  - id: bed_index_size
-    type: long
   - id: fasta_uuid
     type: string
   - id: fasta_size
@@ -50,7 +46,18 @@ inputs:
     type: long
 
 outputs:
-  []
+  - id: bed
+    type: File
+    outputSource: transform/purecn_bed
+  - id: png
+    type: File
+    outputSource: transform/purecn_png
+  - id: rds
+    type: File
+    outputSource: transform/purecn_rds
+  - id: txt
+    type: File
+    outputSource: transform/purecn_txt
   
 steps:
   - id: extract_bams
@@ -80,18 +87,6 @@ steps:
         source: bed_uuid
       - id: file_size
         source: bed_size
-    out:
-      - id: output
-
-  - id: extract_bed_index
-    run: tools/bio_client_download.cwl
-    in:
-      - id: config-file
-        source: bioclient_config
-      - id: download_handle
-        source: bed_index_uuid
-      - id: file_size
-        source: bed_index_size
     out:
       - id: output
 
@@ -141,26 +136,19 @@ steps:
     out:
       - id: output
 
-  - id: root_bed
-    run: tools/root_bed.cwl
-    in:
-      - id: bed
-        source: extract_bed/output
-      - id: bed_index
-        source: extract_bed_index/output
-    out:
-      - id: output
-
   - id: transform
     run: transform.cwl
     in:
       - id: bams
         source: extract_bams/output
       - id: bed
-        source: root_bed/output
+        source: extract_bed/output
       - id: fasta
         source: root_fasta/output
       - id: bigwig
         source: extract_bigwig/output
     out:
-      - id: output
+      - id: purecn_bed
+      - id: purecn_png
+      - id: purecn_rds
+      - id: purecn_txt

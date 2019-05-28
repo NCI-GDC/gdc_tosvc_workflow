@@ -81,17 +81,14 @@ steps:
       - id: output_vcf_file
 
   - id: merge_vcfs
-    run: ../auxiliary/merge_vcfs.cwl
+    run: ../auxiliary/custom_merge_vcfs.cwl
     in:
-      - id: input_vcf_file
-        source: [input_vcf_file, sort_purecn_vcf/output_vcf_file]
-      - id: seq_dict
-        source: fai_file
-      - id: output_vcf_filename
+      purecn_vcf: sort_purecn_vcf/output_vcf_file
+      raw_vcf: input_vcf_file
+      output_vcf_filename:
         source: filename_prefix
         valueFrom: $(self + ".merged_mutect_purecn.vcf")
-    out:
-      - id: output_vcf_file
+    out: [ output_vcf_file ]
 
   - id: filter_purecn_outputs
     run: ../gdcfiltration/filter_purecn_outputs.cwl

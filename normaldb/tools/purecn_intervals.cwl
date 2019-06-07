@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn_interval:1.11.11
+    dockerPull: quay.io/ncigdc/purecn:latest
 
 inputs:
   - id: fasta
@@ -52,3 +52,5 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.bed.nameroot)
+
+baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/IntervalFile.R]

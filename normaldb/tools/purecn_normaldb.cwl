@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn_normaldb:1.11.11
+    dockerPull: quay.io/ncigdc/purecn:latest
   - class: InitialWorkDirRequirement
     listing: |
       ${
@@ -69,3 +69,5 @@ outputs:
     type: File
     outputBinding:
       glob: "interval_weights_*.txt"
+
+baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/NormalDB.R]

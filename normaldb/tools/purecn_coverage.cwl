@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn_coverage:1.11.11
+    dockerPull: quay.io/ncigdc/purecn:latest
 
 inputs:
   - id: bam
@@ -60,3 +60,4 @@ outputs:
     outputBinding:
       glob: "*coverage_loess_qc.txt"
 
+baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/Coverage.R]

@@ -50,7 +50,7 @@ outputs:
     type:
       type: array
       items: File
-    outputSource: extract_bam/output
+    outputSource: extract_bams/output
   - id: bed
     type: File
     outputSource: extract_bed/output

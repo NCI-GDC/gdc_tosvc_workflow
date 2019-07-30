@@ -58,5 +58,5 @@ inputcoveragefiles:
   - class: File
     loation: /mnt/SCRATCH/run/nextera/0cb3af1d-60e7-4998-8168-e0ea79b3d994_wxs_gdc_realn_coverage_loess.txt
 coveragefiles:
-  - class: File
-    loation: /mnt/SCRATCH/run/nextera/purecn_loess.lst
+  class: File
+  loation: /mnt/SCRATCH/run/nextera/purecn_loess.lst

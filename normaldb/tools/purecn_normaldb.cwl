@@ -19,6 +19,7 @@ requirements:
         }
         return inputlist;
       }
+  - class: InlineJavascriptRequirement
 
 inputs:
   - id: inputcoveragefiles

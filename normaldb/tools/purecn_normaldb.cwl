@@ -52,7 +52,7 @@ inputs:
 
 outputs:
   - id: bed
-    type: File
+    type: [File, "null"]
     outputBinding:
       glob: "low_coverage_targets_*.bed"
 

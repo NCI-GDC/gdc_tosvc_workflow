@@ -47,7 +47,7 @@ inputs:
 
 outputs:
   - id: bed
-    type: File
+    type: [File, "null"]
     outputSource: transform/purecn_bed
   - id: png
     type: File

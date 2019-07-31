@@ -27,7 +27,7 @@ inputs:
 
 outputs:
   - id: purecn_bed
-    type: File
+    type: [File, "null"]
     outputSource: purecn_normaldb/bed
   - id: purecn_png
     type: File

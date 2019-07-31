@@ -1,6 +1,22 @@
 inputcoveragefiles:
   - class: File
+    location: /mnt/SCRATCH/run/nextera/ee262e1d-0560-4720-9270-41ed676d887b_wgs_gdc_realn_coverage_loess.txt
+  - class: File
+    location: /mnt/SCRATCH/run/nextera/ee07d9ad-7e3e-475e-828b-e949994a32ee_wgs_gdc_realn_coverage_loess.txt
+  - class: File
+    location: /mnt/SCRATCH/run/nextera/c5e6f8ca-f7f9-48e5-b8b2-cf81562b323e_wgs_gdc_realn_coverage_loess.txt
+  - class: File
+    location: /mnt/SCRATCH/run/nextera/bd504223-27b1-4c70-af68-6985b7e5d23b_wgs_gdc_realn_coverage_loess.txt
+  - class: File
+    location: /mnt/SCRATCH/run/nextera/3fe573bd-7595-4c87-8006-ae55bfb46f6d_wgs_gdc_realn_coverage_loess.txt
+  - class: File
+    location: /mnt/SCRATCH/run/nextera/05e1c388-5dbe-44bd-8309-474ce6854f2a_wgs_gdc_realn_coverage_loess.txt
+  - class: File
+    location: /mnt/SCRATCH/run/nextera/0582feca-5f76-4ca8-99a1-2183174f62a9_wgs_gdc_realn_coverage_loess.txt
+  - class: File
     location: /mnt/SCRATCH/run/nextera/fc028a4c-0e9f-44f7-9d44-d51bee5a66b7_wxs_gdc_realn_coverage_loess.txt
+  - class: File
+    location: /mnt/SCRATCH/run/nextera/f2ace677-28ab-4e3b-a334-6eea54e87495_wgs_gdc_realn_coverage_loess.txt
   - class: File
     location: /mnt/SCRATCH/run/nextera/f1a6dc62-ade8-4e25-bcf7-752ecbc4f7dc_wxs_gdc_realn_coverage_loess.txt
   - class: File

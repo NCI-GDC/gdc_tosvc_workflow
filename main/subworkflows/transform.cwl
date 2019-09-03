@@ -123,7 +123,7 @@ outputs:
 
 steps:
   - id: get_filename_prefix
-    run: ../tools/make_file_prefix.cwl
+    run: tools/make_file_prefix.cwl
     in:
       - id: job_uuid
         source: job_uuid
@@ -137,7 +137,7 @@ steps:
       - id: output
 
   - id: remove_nstd_variants
-    run: ../tools/remove_nonstandard_variants.cwl
+    run: tools/remove_nonstandard_variants.cwl
     in:
       - id: input_vcf
         source: get_inputs/vcf_file
@@ -204,7 +204,7 @@ steps:
       - id: archive_tar_file
 
   - id: determine_purecn_gdcfiltration
-    run: ../tools/determine_purecn_gdcfiltration.cwl
+    run: tools/determine_purecn_gdcfiltration.cwl
     in:
       - id: no_normaldb_vcf_file
         source: gdcfiltration/output_vcf_file

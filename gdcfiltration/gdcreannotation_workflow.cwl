@@ -54,7 +54,7 @@ steps:
         source: update_dictionary/output_file
       - id: output_vcf
         source: update_dictionary/output_file
-        valueFrom: $(self.basename + '.filtered_contigs.vcf')
+        valueFrom: $(self.basename).filtered_contigs.vcf
     out:
       - id: output_vcf_file
 

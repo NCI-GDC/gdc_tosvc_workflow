@@ -21,12 +21,14 @@ inputs:
       separate: false
     secondaryFiles:
       - ".tbi"
+
   - id: new_sample_name
     type: string
     doc: new name of sample
     inputBinding:
       prefix: "NEW_SAMPLE_NAME="
       separate: false
+
   - id: output_vcf_filename
     type: string
     doc: output basename of output file

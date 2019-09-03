@@ -35,7 +35,7 @@ outputs:
 
 steps:
   - id: update_dictionary
-    run: update_seq_dict.cwl
+    run: tools/picard_updatevcfsequencedictionary.cwl
     in:
       - id: input_vcf
         source: input_vcf_file
@@ -48,7 +48,7 @@ steps:
       - id: output_file
 
   - id: filter_contigs
-    run: filter_contigs.cwl
+    run: tools/gdc_variant_filtration_tool.cwl
     in:
       - id: input_vcf
         source: update_dictionary/output_file
@@ -59,7 +59,7 @@ steps:
       - id: output_vcf_file
 
   - id: format_header
-    run: format_vcf_header.cwl
+    run: tools/gdc_format_vcf_header.cwl
     in:
       - id: input_vcf
         source: filter_contigs/output_vcf_file
@@ -81,8 +81,8 @@ steps:
     out:
       - id: output_vcf_file
 
-  - id: sort_vcf_file
-    run: ../auxiliary/sort_vcf_file.cwl
+  - id: sortvcf
+    run: tools/picard_sortvcf.cwl
     in:
       - id: input_vcf_file
         source: format_header/output_vcf_file
@@ -93,7 +93,7 @@ steps:
       - id: output_vcf_file
 
   - id: rename_sample
-    run: rename_sample.cwl
+    run: tools/picard_renamesampleinvcf.cwl
     in:
       - id: input_vcf_file
         source: sort_vcf_file/output_vcf_file
@@ -106,7 +106,7 @@ steps:
       - id: output_vcf_file
 
   - id: convert_vcf_format
-    run: ../auxiliary/convert_vcf_format.cwl
+    run: tools/picard_vcfformatconverter.cwl
     in:
       - id: input_vcf_file
         source: rename_sample/output_vcf_file

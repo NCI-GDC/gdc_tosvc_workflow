@@ -19,12 +19,14 @@ inputs:
     inputBinding:
       prefix: "INPUT="
       separate: false
+
   - id: output_vcf_filename
     type: string
     doc: output basename of output file
     inputBinding:
       prefix: "OUTPUT="
       separate: false
+
   - id: seq_dict
     type: string
     default: "null"

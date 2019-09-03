@@ -9,7 +9,7 @@ requirements:
   - class: StepInputExpressionRequirement
 
 inputs:
-  - id: input_vcf_file
+  - id: vcf
     type: File
   - id: dict_main_file
     type: File
@@ -31,29 +31,29 @@ inputs:
 outputs:
   - id: output_vcf_file
     type: File
-    outputSource: convert_vcf_format/output_vcf_file
+    outputSource: vcfformatconverter/output
 
 steps:
   - id: update_dictionary
     run: tools/picard_updatevcfsequencedictionary.cwl
     in:
-      - id: input_vcf
-        source: input_vcf_file
+      - id: input
+        source: vcf
       - id: sequence_dictionary
         source: dict_main_file
-      - id: output_filename
-        source: input_vcf_file
-        valueFrom: $(self.basename + '.updatedseqdict.vcf')
+      - id: output
+        source: vcf
+        valueFrom: $(self.basename).updatedseqdict.vcf
     out:
-      - id: output_file
+      - id: output
 
   - id: filter_contigs
     run: tools/gdc_variant_filtration_tool.cwl
     in:
       - id: input_vcf
-        source: update_dictionary/output_file
+        source: update_dictionary/output
       - id: output_vcf
-        source: update_dictionary/output_file
+        source: update_dictionary/output
         valueFrom: $(self.basename).filtered_contigs.vcf
     out:
       - id: output_vcf_file
@@ -65,7 +65,7 @@ steps:
         source: filter_contigs/output_vcf_file
       - id: output_vcf
         source: filter_contigs/output_vcf_file
-        valueFrom: $(self.basename + '.gdcheader.vcf')
+        valueFrom: $(self.basename).gdcheader.vcf
       - id: reference_name
         source: fa_name
       - id: patient_barcode
@@ -84,34 +84,34 @@ steps:
   - id: sortvcf
     run: tools/picard_sortvcf.cwl
     in:
-      - id: input_vcf_file
+      - id: input
         source: format_header/output_vcf_file
-      - id: output_vcf_filename
+      - id: output
         source: format_header/output_vcf_file
-        valueFrom: $(self.basename + ".gz")
+        valueFrom: $(self.basename).gz
     out:
-      - id: output_vcf_file
+      - id: output
 
   - id: rename_sample
     run: tools/picard_renamesampleinvcf.cwl
     in:
-      - id: input_vcf_file
-        source: sort_vcf_file/output_vcf_file
+      - id: input
+        source: sortvcf/output
       - id: new_sample_name
         valueFrom: "TUMOR"
-      - id: output_vcf_filename
-        source: sort_vcf_file/output_vcf_file
+      - id: output
+        source: sortvcf/output
         valueFrom: $(self.basename)
     out:
-      - id: output_vcf_file
+      - id: output
 
-  - id: convert_vcf_format
+  - id: vcfformatconverter
     run: tools/picard_vcfformatconverter.cwl
     in:
-      - id: input_vcf_file
-        source: rename_sample/output_vcf_file
-      - id: output_vcf_filename
+      - id: input
+        source: rename_sample/output
+      - id: output
         source: filename_prefix
-        valueFrom: $(self + ".variant_filtration.vcf.gz")
+        valueFrom: $(self).variant_filtration.vcf.gz
     out:
-      - id: output_vcf_file
+      - id: output

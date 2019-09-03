@@ -11,52 +11,52 @@ requirements:
     coresMax: 1
     ramMin: 10000
     ramMax: 10000
-    tmpdirMin: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
-    tmpdirMax: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
-    outdirMin: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
-    outdirMax: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
+    tmpdirMin: $(Math.ceil(1.2 * inputs.input.size / 1048576))
+    tmpdirMax: $(Math.ceil(1.2 * inputs.input.size / 1048576))
+    outdirMin: $(Math.ceil(1.2 * inputs.input.size / 1048576))
+    outdirMax: $(Math.ceil(1.2 * inputs.input.size / 1048576))
 
 class: CommandLineTool
 
 inputs:
-  - id: CREATE_INDEX
+  - id: create_index
     type: string
-    default: "true"
+    default: true
     inputBinding:
       prefix: CREATE_INDEX=
       separate: false
 
-  - id: INPUT
+  - id: input
     type: File
     inputBinding:
       prefix: INPUT=
       separate: false
 
-  - id: OUTPUT
+  - id: output
     type: string
     inputBinding:
       prefix: OUTPUT=
       separate: false
 
-  - id: TMP_DIR
+  - id: tmp_dir
     type: string
     default: .
     inputBinding:
       prefix: TMP_DIR=
       separate: false
 
-  - id: VALIDATION_STRINGENCY
+  - id: validation_stringency
     type: string
-    default: "STRICT"
+    default: STRICT
     inputBinding:
       prefix: VALIDATION_STRINGENCY=
       separate: false
 
 outputs:
-  - id: SORTED_OUTPUT
+  - id: output
     type: File
     outputBinding:
-      glob: $(inputs.OUTPUT)
+      glob: $(inputs.output)
     secondaryFiles:
       - .tbi
 

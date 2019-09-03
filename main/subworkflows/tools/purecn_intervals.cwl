@@ -47,7 +47,7 @@ arguments:
     prefix: --outfile
     separate: true
 
-  - valeuFrom: $(inputs.fasta.nameroot)
+  - valueFrom: $(inputs.fasta.nameroot)
     prefix: --export
     separate: true
 

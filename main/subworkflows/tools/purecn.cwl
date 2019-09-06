@@ -6,50 +6,9 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:5d5ac8fca6399ae8ff1587b2678d32449249d44fa132498ed9231286bbea2c97
-  - class: InitialWorkDirRequirement
-    listing: |
-      ${
-        var inputlist = [];
-        for (var i=0; i<inputs.inputcoveragefiles.length; i++) {
-           var newentry = {"entry": inputs.inputcoveragefiles[i],
-                           "entryname": inputs.inputcoveragefiles[i].basename,
-                           "writeable": false};
-           inputlist.push(newentry);
-        }
-        return inputlist;
-      }
-  - class: InlineJavascriptRequirement
+    dockerPull: quay.io/ncigdc/purecn:latest
 
 inputs:
-  - id: genome
-    type: string
-    default: hg38
-    inputBinding:
-      prefix: --genome
-
-  - id: intervals
-    type: File
-    inputBinding:
-      prefix: --intervals
-
-  - id: normaldb
-    type: File
-    inputBinding:
-      prefix: --normaldb
-
-  - id: out
-    type: string
-    default: "."
-    inputBinding:
-      prefix: --out
-
-  - id: 
-  - id: inputcoveragefiles
-    type:
-      type: array
-      items: File
-
   - id: coveragefiles
     type: File
     inputBinding:
@@ -67,31 +26,134 @@ inputs:
     inputBinding:
       prefix: --genome
 
-  - id: outdir
+  - id: intervals
+    type: File
+    inputBinding:
+      prefix: --intervals
+
+  - id: intervalweightfile
+    type: [File, "null"]
+    inputBinding:
+      prefix: --intervalweightfile
+
+  - id: normal
+    type: [File, "null"]
+    inputBinding:
+      prefix: --normal
+
+  - id: normal_panel
+    type: [File, "null"]
+    inputBinding:
+      prefix: --normal_panel
+
+  - id: normaldb
+    type: File
+    inputBinding:
+      prefix: --normaldb
+
+  - id: out
     type: string
     default: .
     inputBinding:
-      prefix: --outdir
+      prefix: --out
+
+  - id: outvcf
+    type: boolean
+    default: true
+    inputBinding:
+      prefix: --outvcf
+
+  - id: parallel
+    type: boolean
+    default: true
+    inputBinding:
+      prefix: --parallel
+
+  - id: postoptimize
+    type: boolean
+    default: true
+    inputBinding:
+      prefix: --postoptimize
+
+  - id: sampleid
+    type: string
+    inputBinding:
+      prefix: --sampleid
+
+  - id: statsfile
+    type: [File, "null"]
+    inputBinding:
+      prefix: --statsfile
+
+  - id: tumor
+    type: File
+    inputBinding:
+      prefix: --tumor
+
+  - id: vcf
+    type: File
+    inputBinding:
+      prefix: --vcf
 
 outputs:
-  - id: bed
+  - id: chromosomes_pdf
     type: [File, "null"]
     outputBinding:
-      glob: "low_coverage_targets_*.bed"
+      glob: $(inputs.sample_id)_chromosomes.pdf
 
-  - id: png
-    type: File
+  - id: csv
+    type: [File, "null"]
     outputBinding:
-      glob: "interval_weights_*.png"
-      
+      glob: $(inputs.sample_id).csv
+
+  - id: dnacopy_seg
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id)_dnacopy.seg
+
+  - id: genes_csv
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id)_genes.csv
+
+  - id: local_optima_pdf
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id)_local_optima.pdf
+
+  - id: log
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id).log
+
+  - id: loh_csv
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id)_loh.csv
+
+  - id: pdf
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id).pdf
+
   - id: rds
-    type: File
+    type: [File, "null"]
     outputBinding:
-      glob: "normalDB_*.rds"
-      
-  - id: txt
-    type: File
+      glob: $(inputs.sample_id).rds
+
+  - id: segmentation_pdf
+    type: [File, "null"]
     outputBinding:
-      glob: "interval_weights_*.txt"
+      glob: $(inputs.sample_id)_segmentation.pdf
+
+  - id: variants_csv
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id)_variants.csv
+
+  - id: vcf
+    type: [File, "null"]
+    outputBinding:
+      glob: $(inputs.sample_id).vcf
 
 baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/PureCN.R]

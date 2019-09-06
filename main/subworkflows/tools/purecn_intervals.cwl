@@ -14,6 +14,18 @@ inputs:
     inputBinding:
       prefix: --fasta
 
+  - id: force
+    type: boolean
+    default: true
+    inputBinding:
+      prefix: --force
+
+  - id: genome
+    type: string
+    default: hg38
+    inputBinding:
+      prefix: --genome
+
   - id: infile
     type: File
     inputBinding:
@@ -24,30 +36,18 @@ inputs:
     inputBinding:
       prefix: --mappability
 
-  - id: genome
-    type: string
-    default: hg38
-    inputBinding:
-      prefix: --genome
-
   - id: offtarget
     type: boolean
     default: true
     inputBinding:
       prefix: --offtarget
 
-  - id: force
-    type: boolean
-    default: true
-    inputBinding:
-      prefix: --force
-
 arguments:
-  - valueFrom: $(inputs.fasta.nameroot).$(inputs.bed.nameroot).$(inputs.genome).txt
+  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).txt
     prefix: --outfile
     separate: true
 
-  - valueFrom: $(inputs.fasta.nameroot)
+  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).$(inputs.infile.nameext)
     prefix: --export
     separate: true
 
@@ -55,11 +55,11 @@ outputs:
   - id: interval
     type: File
     outputBinding:
-      glob: $(inputs.fasta.nameroot).$(inputs.bed.nameroot).$(inputs.genome).txt
+      glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).txt
 
   - id: bed
     type: File
     outputBinding:
-      glob: $(inputs.bed.basename)
+      glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).$(inputs.infile.nameext)
 
 baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/IntervalFile.R]

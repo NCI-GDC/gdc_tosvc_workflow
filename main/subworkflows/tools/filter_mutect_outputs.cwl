@@ -12,20 +12,20 @@ requirements:
 baseCommand: [/usr/local/bin/filter_mutect_outputs.py]
 
 inputs:
-  - id: input_vcf
+  - id: input
     type: File
     inputBinding:
       position: 1
       prefix: --input_vcf
 
-  - id: output_vcf
+  - id: output
     type: string
     inputBinding:
       position: 2
       prefix: --output_vcf
 
 outputs:
-  - id: output_vcf_file
+  - id: output
     type: File
     outputBinding:
       glob: $(inputs.output_vcf)

@@ -11,7 +11,7 @@ requirements:
 inputs:
   - id: vcf
     type: File
-  - id: dict_main_file
+  - id: dict_main
     type: File
   - id: fa_name
     type: string
@@ -29,7 +29,7 @@ inputs:
     type: string
 
 outputs:
-  - id: output_vcf_file
+  - id: output
     type: File
     outputSource: vcfformatconverter/output
 
@@ -40,7 +40,7 @@ steps:
       - id: input
         source: vcf
       - id: sequence_dictionary
-        source: dict_main_file
+        source: dict_main
       - id: output
         source: vcf
         valueFrom: $(self.basename).updatedseqdict.vcf

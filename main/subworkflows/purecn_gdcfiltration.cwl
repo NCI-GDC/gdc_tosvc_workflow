@@ -70,8 +70,8 @@ steps:
   - id: call_somatic_variants
     run: call_somatic_variants.cwl
     in:
-      - id: sample_id
-        source: aliquot_id
+      - id: sampleid
+        source: aliquotid
       - id: fasta
         source: fasta
       - id: genome

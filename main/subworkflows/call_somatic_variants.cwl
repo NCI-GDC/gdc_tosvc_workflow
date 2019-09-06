@@ -36,78 +36,77 @@ inputs:
     type: long
 
 outputs:
-  []
-  # - id: var_vcf_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/var_vcf_file
+  - id: chromosomes_pdf
+    type: [File, "null"]
+    outputSource: purecn/chromosomes_pdf
 
-  # - id: var_csv_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/var_csv_file
+  - id: csv
+    type: [File, "null"]
+    outputSource: purecn/csv
 
-  # - id: metric_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/metric_file
+  - id: dnacopy_seg
+    type: [File, "null"]
+    outputSource: purecn/dnacopy_seg
 
-  # - id: dnacopy_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/dnacopy_file
+  - id: genes_csv
+    type: [File, "null"]
+    outputSource: purecn/genes_csv
 
-  # - id: segmentation_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/segmentation_file
+  - id: local_optima_pdf
+    type: [File, "null"]
+    outputSource: purecn/local_optima_pdf
 
-  # - id: loh_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/loh_file
+  - id: log
+    type: [File, "null"]
+    outputSource: purecn/log
 
-  # - id: chrome_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/chrome_file
+  - id: loh_csv
+    type: [File, "null"]
+    outputSource: purecn/loh_csv
 
-  # - id: genes_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/genes_file
+  - id: pdf
+    type: [File, "null"]
+    outputSource: purecn/pdf
 
-  # - id: local_optima_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/local_optima_file
+  - id: rds
+    type: [File, "null"]
+    outputSource: purecn/rds
 
-  # - id: rds_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/rds_file
+  - id: segmentation_file
+    type: [File, "null"]
+    outputSource: purecn/segmentation_pdf
 
-  # - id: info_pdf_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/info_pdf_file
+  - id: variants_csv
+    type: [File, "null"]
+    outputSource: purecn/variants_csv
 
-  # - id: log_file
-  #   type: [File, "null"]
-  #   outputSource: var_call/log_file
+  - id: vcf
+    type: [File, "null"]
+    outputSource: purecn/vcf
 
-  # - id: interval_file
-  #   type: File
-  #   outputSource: interval/interval_file
+  - id: interval_bed
+    type: File
+    outputSource: purecn_interval/bed
 
-  # - id: interval_bed_file
-  #   type: File
-  #   outputSource: interval/interval_bed_file
+  - id: interval_interval
+    type: File
+    outputSource: purecn_interval/interval
 
-  # - id: cov_file
-  #   type: File
-  #   outputSource: coverage/cov_file
+  - id: coverage_coverage
+    type: File
+    outputSource: purecn_coverage/coverage
 
-  # - id: loess_file
-  #   type: File
-  #   outputSource: coverage/loess_file
+  - id: coverage_loess_png
+    type: File
+    outputSource: purecn_coverage/loess_png
 
-  # - id: loess_png_file
-  #   type: File
-  #   outputSource: coverage/loess_png_file
+  - id: coverage_loess_qc_txt
+    type: File
+    outputSource: purecn_coverage/loess_qc_txt
 
-  # - id: loess_qc_file
-  #   type: File
-  #   outputSource: coverage/loess_qc_file
+  - id: coverage_loess_txt
+    type: File
+    outputSource: purecn_coverage/loess_txt
 
 steps:
   - id: purecn_interval
@@ -122,8 +121,8 @@ steps:
       - id: genome
         source: genome
     out:
-      - id: interval
       - id: bed
+      - id: interval
 
   - id: purecn_coverage
     run: tools/purecn_coverage.cwl
@@ -136,9 +135,9 @@ steps:
         source: thread_num
     out:
       - id: coverage
-      - id: loess_txt
       - id: loess_png
       - id: loess_qc_txt
+      - id: loess_txt
 
   - id: purecn
     run: tools/purecn.cwl

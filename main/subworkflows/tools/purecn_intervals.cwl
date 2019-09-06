@@ -14,12 +14,12 @@ inputs:
     inputBinding:
       prefix: --fasta
 
-  - id: bed
+  - id: infile
     type: File
     inputBinding:
       prefix: --infile
 
-  - id: bigwig
+  - id: mappability
     type: File
     inputBinding:
       prefix: --mappability

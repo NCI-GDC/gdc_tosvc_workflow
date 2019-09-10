@@ -201,29 +201,29 @@ steps:
       - id: var_prob_thres
         source: var_prob_thres
     out:
-      - id: vcf
-      - id: filtration_metric
       - id: dnacopy_seg
+      - id: filtration_metric
       - id: tar
+      - id: vcf
 
-  # - id: determine_purecn_gdcfiltration
-  #   run: tools/determine_purecn_gdcfiltration.cwl
-  #   in:
-  #     - id: no_normaldb_vcf_file
-  #       source: gdcfiltration/output_vcf_file
-  #     - id: normaldb_vcf_file
-  #       source: purecn_gdcfiltration/output_vcf_file
-  #     - id: filtration_metric_file
-  #       source: purecn_gdcfiltration/filtration_metric_file
-  #     - id: dnacopy_seg_file
-  #       source: purecn_gdcfiltration/dnacopy_seg_file
-  #     - id: archive_tar_file
-  #       source: purecn_gdcfiltration/archive_tar_file
-  #   out:
-  #     - id: output_vcf_file
-  #     - id: output_filtration_metric_file
-  #     - id: output_dnacopy_seg_file
-  #     - id: output_archive_tar_file
+  - id: determine_purecn_gdcfiltration
+    run: tools/determine_purecn_gdcfiltration.cwl
+    in:
+      - id: archive_tar_file
+        source: purecn_gdcfiltration/tar
+      - id: dnacopy_seg_file
+        source: purecn_gdcfiltration/dnacopy_seg
+      - id: filtration_metric_file
+        source: purecn_gdcfiltration/filtration_metric
+      - id: normaldb_vcf_file
+        source: purecn_gdcfiltration/vcf
+      - id: no_normaldb_vcf_file
+        source: filter_mutect_outputs/output
+    out:
+      - id: output_vcf_file
+      - id: output_filtration_metric_file
+      - id: output_dnacopy_seg_file
+      - id: output_archive_tar_file
 
   # - id: gdcreannotation
   #   run: gdcreannotation.cwl

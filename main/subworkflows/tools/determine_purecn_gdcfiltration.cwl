@@ -8,23 +8,27 @@ requirements:
 class: ExpressionTool
 
 inputs:
-  - id: normaldb_vcf_file
+  - id: archive_tar_file
     type:
       type: array
       items: ['null', File]
-  - id: no_normaldb_vcf_file
-    type:
-      type: array
-      items: ['null', File]
-  - id: filtration_metric_file
-    type:
-      type: array
-      items: ['null', File]
+
   - id: dnacopy_seg_file
     type:
       type: array
       items: ['null', File]
-  - id: archive_tar_file
+
+  - id: filtration_metric_file
+    type:
+      type: array
+      items: ['null', File]
+
+  - id: normaldb_vcf_file
+    type:
+      type: array
+      items: ['null', File]
+
+  - id: no_normaldb_vcf_file
     type:
       type: array
       items: ['null', File]

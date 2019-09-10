@@ -28,4 +28,4 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output_vcf)
+      glob: $(inputs.output)

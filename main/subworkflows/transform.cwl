@@ -13,25 +13,22 @@ requirements:
 
 inputs:
   #ref info
+  - id: aliquotid
+    type: string
+  - id: callerid
+    type: [string, "null"]
+  - id: caseid
+    type: string
+  - id: experimental_strategy
+    type: string
   - id: job_uuid
-    type: string
-  - id: case_id
-    type: string
-  - id: aliquot_id
     type: string
   - id: patient_barcode
     type: string
+  - id: projectid
+    type: [string, "null"]
   - id: sample_barcode
     type: string
-  - id: project_id
-    type: [string, "null"]
-    doc: GDC project id used for output filenames
-  - id: caller_id
-    type: [string, "null"]
-    doc: GDC caller id used for output filenames
-  - id: experimental_strategy
-    type: string
-    doc: GDC experimental strategy used for output filenames
 
   #full ref files
   - id: fasta
@@ -66,7 +63,7 @@ inputs:
     type: [File, "null"]
   - id: normaldb
     type: [File, "null"]
-  - id: target_weight
+  - id: intervalweightfile
     type: [File, "null"]
 
  #parameters
@@ -81,7 +78,7 @@ inputs:
     doc: reference version used by PureCN
 
   - id: thread_num
-    type: int
+    type: long
     default: 8
     doc: number of thread used by PureCN and some other tools
 
@@ -134,10 +131,10 @@ steps:
     in:
       - id: job_uuid
         source: job_uuid
-      - id: project_id
-        source: project_id
-      - id: caller_id
-        source: caller_id
+      - id: projectid
+        source: projectid
+      - id: callerid
+        source: callerid
       - id: experimental_strategy
         source: experimental_strategy
     out:
@@ -162,55 +159,52 @@ steps:
       - id: input
         source: remove_nonstandard_variants/output
       - id: output
-        source: 
+        source: remove_nonstandard_variants/output
+        valueFrom: $(self.basename).filtered_mutect.vcf
     out:
       - id: output
 
-  # - id: purecn_gdcfiltration
-  #   run: purecn_gdcfiltration.cwl
-  #   scatter: run_with_normaldb
-  #   in:
-  #     - id: run_with_normaldb
-  #       source: run_with_normaldb
-  #     - id: fa_file
-  #       source: get_inputs/fa_file
-  #     - id: fai_file
-  #       source: get_inputs/fai_file
-  #     - id: dict_file
-  #       source: get_inputs/dict_file
-  #     - id: dict_main_file
-  #       source: get_inputs/dict_main_file
-  #     - id: bam_file
-  #       source: get_inputs/bam_file
-  #     - id: bai_file
-  #       source: get_inputs/bai_file
-  #     - id: input_vcf_file
-  #       source: remove_nonstandard_variants/output
-  #     - id: fa_version
-  #       source: fa_version
-  #     - id: thread_num
-  #       source: thread_num
-  #     - id: var_prob_thres
-  #       source: var_prob_thres
-  #     - id: aliquot_id
-  #       source: aliquot_id
-  #     - id: filename_prefix
-  #       source: get_filename_prefix/output
-  #     - id: capture_kit
-  #       source: capture_kit
-  #     - id: bigwig
-  #       source: bigwig
-  #     - id: gemindex
-  #       source: gemindex
-  #     - id: normaldb
-  #       source: normaldb
-  #     - id: target_weight
-  #       source: target_weight
-  #   out:
-  #     - id: output_vcf_file
-  #     - id: filtration_metric_file
-  #     - id: dnacopy_seg_file
-  #     - id: archive_tar_file
+  - id: purecn_gdcfiltration
+    run: purecn_gdcfiltration.cwl
+    scatter: run_with_normaldb
+    in:
+      - id: run_with_normaldb
+        source: run_with_normaldb
+      - id: aliquotid
+        source: aliquotid
+      - id: bam
+        source: bam
+      - id: bigwig
+        source: bigwig
+      - id: capture_kit
+        source: capture_kit
+      - id: dict
+        source: dict
+      - id: dict_main
+        source: dict_main
+      - id: fasta
+        source: fasta
+      - id: fasta_version
+        source: fasta_version
+      - id: filename_prefix
+        source: get_filename_prefix/output
+      - id: gemindex
+        source: gemindex
+      - id: intervalweightfile
+        source: intervalweightfile
+      - id: normaldb
+        source: normaldb
+      - id: thread_num
+        source: thread_num
+      - id: vcf
+        source: vcf
+      - id: var_prob_thres
+        source: var_prob_thres
+    out:
+      - id: vcf
+      - id: filtration_metric
+      - id: dnacopy_seg
+      - id: tar
 
   # - id: determine_purecn_gdcfiltration
   #   run: tools/determine_purecn_gdcfiltration.cwl

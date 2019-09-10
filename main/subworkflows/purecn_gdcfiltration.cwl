@@ -11,9 +11,6 @@ requirements:
   - class: SubworkflowFeatureRequirement
 
 inputs:
-  - id: bioclient_config
-    type: File
-
   #ref data
   - id: fasta
     type: File
@@ -31,7 +28,11 @@ inputs:
     type: File
 
   #parameters
+  - id: aliquotid
+    type: string
   - id: fasta_version
+    type: string
+  - id: filename_prefix
     type: string
   - id: thread_num
     type: long
@@ -39,37 +40,32 @@ inputs:
   - id: var_prob_thres
     type: float
     default: 0.2
-  - id: aliquotid
-    type: string
-  - id: filename_prefix
-    type: string
 
   #GEM and PureCN ref files
-  - id: capture_kit
-    type: File
   - id: bigwig
+    type: File
+  - id: capture_kit
     type: File
   - id: gemindex
     type: File
-  - id: normaldb
-    type: File
   - id: intervalweightfile
+    type: File
+  - id: normaldb
     type: File
 
 outputs:
-  []
-  # - id: output_vcf
-  #   type: File
-  #   outputSource: determine_purecn_outputs/output_vcf
-  # - id: filtration_metric
-  #   type: [File, "null"]
-  #   outputSource: determine_purecn_outputs/filtration_metric
-  # - id: dnacopy_seg
-  #   type: [File, "null"]
-  #   outputSource: determine_purecn_outputs/dnacopy_seg
-  # - id: tar
-  #   type: [File, "null"]
-  #   outputSource: determine_purecn_outputs/tar
+  - id: vcf
+    type: File
+    outputSource: determine_purecn_outputs/vcf
+  - id: filtration_metric
+    type: [File, "null"]
+    outputSource: determine_purecn_outputs/filtration_metric
+  - id: dnacopy_seg
+    type: [File, "null"]
+    outputSource: determine_purecn_outputs/dnacopy_seg
+  - id: tar
+    type: [File, "null"]
+    outputSource: determine_purecn_outputs/tar
 
 steps:
   - id: call_somatic_variants
@@ -209,7 +205,7 @@ steps:
       - id: archive_tar_file
         source: postprocess_purecn/tar_purecn_output
     out:
-      - id: output_vcf_file
-      - id: output_filtration_metric_file
-      - id: output_dnacopy_seg_file
-      - id: output_archive_tar_file
+      - id: vcf
+      - id: filtration_metric
+      - id: dnacopy_seg
+      - id: tar

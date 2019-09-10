@@ -26,8 +26,8 @@ inputs:
     type: File
   - id: normaldb
     type: File
-  # - id: intervalweightfile
-  #   type: File
+  - id: intervalweightfile
+    type: File
   - id: genome
     type: string
   - id: sampleid
@@ -72,7 +72,7 @@ outputs:
     type: [File, "null"]
     outputSource: purecn/rds
 
-  - id: segmentation_file
+  - id: segmentation_pdf
     type: [File, "null"]
     outputSource: purecn/segmentation_pdf
 

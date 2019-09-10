@@ -19,33 +19,41 @@ requirements:
 class: CommandLineTool
 
 inputs:
-  - id: CREATE_INDEX
+  - id: create_index
     type: string
     default: "true"
     inputBinding:
       prefix: CREATE_INDEX=
       separate: false
 
-  - id: INPUT
-    type: File
+  - id: input
+    type:
+      type: array
+      items: File
     inputBinding:
       prefix: INPUT=
       separate: false
 
-  - id: OUTPUT
+  - id: output
     type: string
     inputBinding:
       prefix: OUTPUT=
       separate: false
 
-  - id: TMP_DIR
+  - id: sequence_dictionary
+    type: File
+    inputBinding:
+      prefix: SEQUENCE_DICTIONARY=
+      separate: false
+      
+  - id: tmp_dir
     type: string
     default: .
     inputBinding:
       prefix: TMP_DIR=
       separate: false
 
-  - id: VALIDATION_STRINGENCY
+  - id: validation_stringency
     type: string
     default: "STRICT"
     inputBinding:
@@ -53,7 +61,7 @@ inputs:
       separate: false
 
 outputs:
-  - id: SORTED_OUTPUT
+  - id: output
     type: File
     outputBinding:
       glob: $(inputs.OUTPUT)

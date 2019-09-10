@@ -15,177 +15,142 @@ inputs:
     type: string
   - id: var_prob_thres
     type: float
-  - id: aliquot_id
+  - id: aliquotid
     type: string
-  - id: fai_file
+  - id: fai
     type: File
-  - id: input_vcf_file
+  - id: vcf
     type: File
-  - id: var_vcf_file
+  - id: purecn_vcf
     type: File
-  - id: metric_file
+  - id: purecn_csv
     type: File
-  - id: dnacopy_file
+  - id: purecn_dnacopy_seg
     type: File
-  - id: segmentation_file
+  - id: purecn_segmentation_pdf
     type: File
-  - id: loh_file
+  - id: purecn_loh_csv
     type: File
-  - id: chrome_file
+  - id: purecn_chromosomes_pdf
     type: File
-  - id: genes_file
-    type: File?
-  - id: local_optima_file
+  - id: purecn_genes_csv
     type: File
-  - id: info_pdf_file
+  - id: purecn_local_optima_pdf
     type: File
-  - id: log_file
+  - id: purecn_pdf
     type: File
-  - id: interval_file
+  - id: purecn_log
     type: File
-  - id: interval_bed_file
+  - id: purecn_interval_interval
     type: File
-  - id: cov_file
+  - id: purecn_interval_bed
     type: File
-  - id: loess_file
+  - id: purecn_coverage_coverage
     type: File
-  - id: loess_png_file
+  - id: purecn_coverage_loess_png
     type: File
-  - id: loess_qc_file
+  - id: purecn_coverage_loess_qc_txt
+    type: File
+  - id: purecn_coverage_loess_txt
     type: File
 
 outputs:
-  - id: output_vcf_file
+  - id: vcf
     type: File
-    outputSource: filter_purecn_outputs/output_vcf_file
-  - id: filtration_metric_file
+    outputSource: filter_purecn_outputs/output
+  - id: filtration_metric
     type: File
-    outputSource: modify_purecn_outputs/output_filtration_metric_file
-  - id: dnacopy_seg_file
+    outputSource: modify_purecn_outputs/output_filtration_metric
+  - id: dnacopy_seg
     type: File
-    outputSource: modify_purecn_outputs/output_dnacopy_seg_file
-  - id: archive_tar_file
+    outputSource: modify_purecn_outputs/output_dnacopy_seg
+  - id: tar_purecn_output
     type: File
-    outputSource: archive_purecn_outputs/output_file
+    outputSource: tar_purecn/output
 
 steps:
   - id: picard_sortvcf
-    run: ../tools/picard_sortvcf.cwl
+    run: tools/picard_sortvcf.cwl
     in:
-      - id: INPUT
-        source: vcf
-      - id: OUTPUT
-        valueFrom: $(inputs.INPUT.basename).gz
+      - id: input
+        source: purecn_vcf
+      - id: output
+        valueFrom: $(inputs.input.basename).gz
     out:
-      - id: SORTED_OUTPUT
-
-  # - id: sort_purecn_vcf
-  #   run: ../auxiliary/sort_vcf_file.cwl
-  #   in:
-  #     - id: input_vcf_file
-  #       source: var_vcf_file
-  #     - id: output_vcf_filename
-  #       source: var_vcf_file
-  #       valueFrom: $(self.basename + ".gz")
-  #   out:
-  #     - id: output_vcf_file
+      - id: output
 
   - id: picard_mergevcfs
-    run: ../tools/picard_vcfs.cwl
+    run: tools/picard_mergevcfs.cwl
     in:
-      - id: INPUT
+      - id: input
         source: [
         vcf,
-        picard_sortvcf/SORTED_OUTPUT
+        picard_sortvcf/output
         ]
-      - id: OUTPUT
+      - id: output
         source: filename_prefix
         valueFrom: $(self).merged_mutect_purecn.vcf
+      - id: sequence_dictionary
+        source: fai
     out:
-      - id: MERGED_OUTPUT
-
-  # - id: merge_vcfs
-  #   run: ../auxiliary/merge_vcfs.cwl
-  #   in:
-  #     - id: input_vcf_file
-  #       source: [input_vcf_file, sort_purecn_vcf/output_vcf_file]
-  #     - id: seq_dict
-  #       source: fai_file
-  #     - id: output_vcf_filename
-  #       source: filename_prefix
-  #       valueFrom: $(self + ".merged_mutect_purecn.vcf")
-  #   out:
-  #     - id: output_vcf_file
+      - id: output
 
   - id: filter_purecn_outputs
-    run: ../gdcfiltration/filter_purecn_outputs.cwl
+    run: tools/filter_purecn_outputs.cwl
     in:
-      - id: input_vcf_file
-        source: merge_vcfs/output_vcf_file
+      - id: vcf
+        source: picard_mergevcfs/output
       - id: prob_thres
         source: var_prob_thres
-      - id: output_vcf_filename
+      - id: output
         source: filename_prefix
-        valueFrom: $(self + ".filtered_purecn.vcf")
+        valueFrom: $(self).filtered_purecn.vcf
     out:
-      - id: output_vcf_file
+      - id: output
 
   - id: modify_purecn_outputs
-    run: ../gdcfiltration/modify_purecn_outputs.cwl
+    run: tools/modify_purecn_outputs.cwl
     in:
-      - id: sample_id
-        source: aliquot_id
-      - id: metric_file
-        source: metric_file
-      - id: dnacopy_seg_file
-        source: dnacopy_file
-      - id: modified_metric_file
+      - id: sampleid
+        source: aliquotid
+      - id: purecn_csv
+        source: purecn_csv
+      - id: purecn_dnacopy_seg
+        source: purecn_dnacopy_seg
+      - id: modified_metric
         source: filename_prefix
-        valueFrom: $(self + ".filtration_metric.tsv")
-      - id: modified_seg_file
+        valueFrom: $(self).filtration_metric.tsv
+      - id: modified_seg
         source: filename_prefix
-        valueFrom: $(self + ".dnacopy_seg.tsv")
+        valueFrom: $(self).dnacopy_seg.tsv
     out:
-      - id: output_filtration_metric_file
-      - id: output_dnacopy_seg_file
+      - id: output_filtration_metric
+      - id: output_dnacopy_seg
 
-  - id: archive_purecn_outputs
-    run: ../auxiliary/archive_purecn_outputs.cwl
+  - id: tar_purecn
+    run: tools/tar_gz.cwl
     in:
-      - id: var_vcf_file
-        source: var_vcf_file
-      - id: metric_file
-        source: metric_file
-      - id: dnacopy_file
-        source: dnacopy_file
-      - id: segmentation_file
-        source: segmentation_file
-      - id: loh_file
-        source: loh_file
-      - id: chrome_file
-        source: chrome_file
-      - id: genes_file
-        source: genes_file
-      - id: local_optima_file
-        source: local_optima_file
-      - id: info_pdf_file
-        source: info_pdf_file
-      - id: log_file
-        source: log_file
-      - id: interval_file
-        source: interval_file
-      - id: interval_bed_file
-        source: interval_bed_file
-      - id: cov_file
-        source: cov_file
-      - id: loess_file
-        source: loess_file
-      - id: loess_png_file
-        source: loess_png_file
-      - id: loess_qc_file
-        source: loess_qc_file
-      - id: compress_file_name
+      - id: input
+        source: [
+          vcf,
+          purecn_csv,
+          purecn_dnacopy_seg,
+          purecn_segmentation_pdf,
+          purecn_loh_csv,
+          purecn_chromosomes_pdf,
+          purecn_genes_csv,
+          purecn_local_optima_pdf,
+          purecn_pdf,
+          purecn_log,
+          purecn_interval_interval,
+          purecn_interval_bed,
+          purecn_coverage_coverage,
+          purecn_coverage_loess_png,
+          purecn_coverage_loess_qc_txt,
+          purecn_coverage_loess_txt
+        ]
+      - id: file
         source: filename_prefix
-        valueFrom: $(self + ".variant_filtration_archive.tar.gz")
+        valueFrom: $(self).variant_filtration_archive.tar.gz
     out:
-      - id: output_file
+      - id: output

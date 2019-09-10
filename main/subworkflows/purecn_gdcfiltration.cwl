@@ -16,12 +16,16 @@ inputs:
   #ref data
   - id: fasta
     type: File
+    secondaryFiles:
+      - .fai
   - id: dict
     type: File
 
   #data for pipeline
   - id: bam
     type: File
+    secondaryFiles:
+      - ^.bai
   - id: vcf
     type: File
 
@@ -29,12 +33,12 @@ inputs:
   - id: fasta_version
     type: string
   - id: thread_num
-    type: int
+    type: long
     default: 8
   - id: var_prob_thres
     type: float
     default: 0.2
-  - id: aliquot_id
+  - id: aliquotid
     type: string
   - id: filename_prefix
     type: string
@@ -48,7 +52,7 @@ inputs:
     type: File
   - id: normaldb
     type: File
-  - id: target_weight
+  - id: intervalweightfile
     type: File
 
 outputs:
@@ -80,98 +84,99 @@ steps:
         source: bam
       - id: vcf
         source: vcf
-      - id: map
+      - id: bigwig
         source: bigwig
       - id: capture_kit
         source: capture_kit
       - id: normaldb
         source: normaldb
-      - id: target_weight
-        source: target_weight
+      - id: intervalweightfile
+        source: intervalweightfile
       - id: thread_num
         source: thread_num
     out:
-      - id: var_vcf
-      - id: var_csv
-      - id: metric
-      - id: dnacopy
-      - id: segmentation
-      - id: loh
-      - id: chrome
-      - id: genes
-      - id: local_optima
-      - id: rds
-      - id: info_pdf
+      - id: chromosomes_pdf
+      - id: csv
+      - id: dnacopy_seg
+      - id: genes_csv
+      - id: local_optima_pdf
       - id: log
-      - id: interval
+      - id: loh_csv
+      - id: pdf
+      - id: rds
+      - id: segmentation_pdf
+      - id: variants_csv
+      - id: vcf
       - id: interval_bed
-      - id: cov
-      - id: loess
-      - id: loess_png
-      - id: loess_qc
+      - id: interval_interval
+      - id: coverage_coverage
+      - id: coverage_loess_png
+      - id: coverage_loess_qc_txt
+      - id: coverage_loess_txt
 
-  # - id: determine_file_exists
-  #   run: ../tools/determine_file_exists.cwl
-  #   in:
-  #     - id: input
-  #       source: call_somatic_variants/var_vcf_file
-  #   out:
-  #     - id: success
-  #     - id: fail
+  - id: determine_file_exists
+    run: tools/determine_file_exists.cwl
+    in:
+      - id: input
+        source: call_somatic_variants/vcf
+    out:
+      - id: success
+      - id: fail
 
-  # - id: postprocess_purecn_outputs
-  #   run: ../purecn/postprocess_purecn_outputs.cwl
-  #   scatter: success_purecn
-  #   in:
-  #     - id: success_purecn
-  #       source: determine_file_exists/success
-  #     - id: aliquot_id
-  #       source: aliquot_id
-  #     - id: var_prob_thres
-  #       source: var_prob_thres
-  #     - id: fai_file
-  #       source: fai_file
-  #     - id: input_vcf_file
-  #       source: input_vcf_file
-  #     - id: var_vcf_file
-  #       source: call_somatic_variants/var_vcf_file
-  #     - id: metric_file
-  #       source: call_somatic_variants/metric_file
-  #     - id: dnacopy_file
-  #       source: call_somatic_variants/dnacopy_file
-  #     - id: segmentation_file
-  #       source: call_somatic_variants/segmentation_file
-  #     - id: loh_file
-  #       source: call_somatic_variants/loh_file
-  #     - id: chrome_file
-  #       source: call_somatic_variants/chrome_file
-  #     - id: genes_file
-  #       source: call_somatic_variants/genes_file
-  #     - id: local_optima_file
-  #       source: call_somatic_variants/local_optima_file
-  #     - id: info_pdf_file
-  #       source: call_somatic_variants/info_pdf_file
-  #     - id: log_file
-  #       source: call_somatic_variants/log_file
-  #     - id: interval_file
-  #       source: call_somatic_variants/interval_file
-  #     - id: interval_bed_file
-  #       source: call_somatic_variants/interval_bed_file
-  #     - id: cov_file
-  #       source: call_somatic_variants/cov_file
-  #     - id: loess_file
-  #       source: call_somatic_variants/loess_file
-  #     - id: loess_png_file
-  #       source: call_somatic_variants/loess_png_file
-  #     - id: loess_qc_file
-  #       source: call_somatic_variants/loess_qc_file
-  #     - id: filename_prefix
-  #       source: filename_prefix
-  #   out:
-  #     - id: output_vcf_file
-  #     - id: filtration_metric_file
-  #     - id: dnacopy_seg_file
-  #     - id: archive_tar_file
+  - id: postprocess_purecn
+    run: postprocess_purecn.cwl
+    scatter: success_purecn
+    in:
+      - id: success_purecn
+        source: determine_file_exists/success
+      - id: aliquotid
+        source: aliquotid
+      - id: fai
+        source: fasta
+        valueFrom: $(self.secondaryFiles[0])
+      - id: filename_prefix
+        source: filename_prefix
+      - id: var_prob_thres
+        source: var_prob_thres
+      - id: vcf
+        source: vcf
+      - id: purecn_chromosomes_pdf
+        source: call_somatic_variants/chromosomes_pdf
+      - id: purecn_csv
+        source: call_somatic_variants/csv
+      - id: purecn_dnacopy_seg
+        source: call_somatic_variants/dnacopy_seg
+      - id: purecn_genes_csv
+        source: call_somatic_variants/genes_csv
+      - id: purecn_local_optima_pdf
+        source: call_somatic_variants/local_optima_pdf
+      - id: purecn_log
+        source: call_somatic_variants/log
+      - id: purecn_loh_csv
+        source: call_somatic_variants/loh_csv
+      - id: purecn_pdf
+        source: call_somatic_variants/pdf
+      - id: purecn_segmentation_pdf
+        source: call_somatic_variants/segmentation_pdf
+      - id: purecn_vcf
+        source: call_somatic_variants/vcf
+      - id: purecn_interval_interval
+        source: call_somatic_variants/interval_interval
+      - id: purecn_interval_bed
+        source: call_somatic_variants/interval_bed
+      - id: purecn_coverage_coverage
+        source: call_somatic_variants/coverage_coverage
+      - id: purecn_coverage_loess_png
+        source: call_somatic_variants/coverage_loess_png
+      - id: purecn_coverage_loess_qc_txt
+        source: call_somatic_variants/coverage_loess_qc_txt
+      - id: purecn_coverage_loess_txt
+        source: call_somatic_variants/coverage_loess_txt
+    out:
+      - id: output_vcf_file
+      - id: filtration_metric_file
+      - id: dnacopy_seg_file
+      - id: archive_tar_file
 
   # - id: annot_fail_purecn_vcf
   #   run: ../gdcfiltration/annot_fail_purecn_vcf.cwl

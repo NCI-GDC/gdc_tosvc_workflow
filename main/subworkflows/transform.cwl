@@ -34,26 +34,26 @@ inputs:
     doc: GDC experimental strategy used for output filenames
 
   #full ref files
-  - id: fa
+  - id: fasta
     type: File
-  - id: fai
-    type: File
+    secondaryFiles:
+      - .fai
   - id: dict
     type: File
 
   #main ref files
-  - id: fa_main
+  - id: fasta_main
     type: File
-  - id: fai_main
-    type: File
+    secondaryFiles:
+      - .fai
   - id: dict_main
     type: File
 
   #input data for pipeline
   - id: bam
     type: File
-  - id: bai
-    type: File
+    secondaryFiles:
+      - ^.bai
   - id: vcf
     type: File
 
@@ -70,12 +70,12 @@ inputs:
     type: [File, "null"]
 
  #parameters
-  - id: fa_name
+  - id: fasta_name
     type: string
     default: "GRCh38.d1.vd1.fa"
     doc: reference name used in the VCF header
 
-  - id: fa_version
+  - id: fasta_version
     type: string
     default: "hg38"
     doc: reference version used by PureCN

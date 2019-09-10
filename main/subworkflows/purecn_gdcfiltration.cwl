@@ -5,8 +5,9 @@ class: Workflow
 
 requirements:
   - class: InlineJavascriptRequirement
-  - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
+  - class: ScatterFeatureRequirement
+  - class: StepInputExpressionRequirement
   - class: SubworkflowFeatureRequirement
 
 inputs:
@@ -173,26 +174,26 @@ steps:
       - id: purecn_coverage_loess_txt
         source: call_somatic_variants/coverage_loess_txt
     out:
-      - id: output_vcf_file
-      - id: filtration_metric_file
-      - id: dnacopy_seg_file
-      - id: archive_tar_file
+      - id: vcf
+      - id: filtration_metric
+      - id: dnacopy_seg
+      - id: tar_purecn_output
 
-  # - id: annot_fail_purecn_vcf
-  #   run: ../gdcfiltration/annot_fail_purecn_vcf.cwl
-  #   scatter: fail_purecn
-  #   in:
-  #     - id: fail_purecn
-  #       source: determine_purecn_postprocess/fail_purecn
-  #     - id: purecn_log_file
-  #       source: call_somatic_variants/log_file
-  #     - id: input_vcf_file
-  #       source: input_vcf_file
-  #     - id: output_vcf_filename
-  #       source: input_vcf_file
-  #       valueFrom: $(self.basename + ".annot_fail_purecn.vcf")
-  #   out:
-  #     - id: output_vcf_file
+  - id: annot_fail_purecn_vcf
+    run: tools/annot_fail_purecn_vcf.cwl
+    scatter: fail_purecn
+    in:
+      - id: fail_purecn
+        source: determine_file_exists/fail
+      - id: purecn_log
+        source: call_somatic_variants/log
+      - id: vcf
+        source: vcf
+      - id: output
+        source: vcf
+        valueFrom: $(self.basename).annot_fail_purecn.vcf
+    out:
+      - id: output
 
   # - id: determine_purecn_outputs
   #   run: ../auxiliary/determine_purecn_outputs.cwl

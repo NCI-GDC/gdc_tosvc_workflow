@@ -195,22 +195,21 @@ steps:
     out:
       - id: output
 
-  # - id: determine_purecn_outputs
-  #   run: ../auxiliary/determine_purecn_outputs.cwl
-  #   in:
-  #     - id: purecn_fail_vcf_file
-  #       source: annot_fail_purecn_vcf/output_vcf_file
-  #     - id: purecn_success_vcf_file
-  #       source: postprocess_purecn_outputs/output_vcf_file
-  #     - id: filtration_metric_file
-  #       source: postprocess_purecn_outputs/filtration_metric_file
-  #     - id: dnacopy_seg_file
-  #       source: postprocess_purecn_outputs/dnacopy_seg_file
-  #     - id: archive_tar_file
-  #       source: postprocess_purecn_outputs/archive_tar_file
-
-  #   out:
-  #     - id: output_vcf_file
-  #     - id: output_filtration_metric_file
-  #     - id: output_dnacopy_seg_file
-  #     - id: output_archive_tar_file
+  - id: determine_purecn_outputs
+    run: tools/determine_purecn_outputs.cwl
+    in:
+      - id: purecn_fail_vcf_file
+        source: annot_fail_purecn_vcf/output
+      - id: purecn_success_vcf_file
+        source: postprocess_purecn/vcf
+      - id: filtration_metric_file
+        source: postprocess_purecn/filtration_metric
+      - id: dnacopy_seg_file
+        source: postprocess_purecn/dnacopy_seg
+      - id: archive_tar_file
+        source: postprocess_purecn/tar_purecn_output
+    out:
+      - id: output_vcf_file
+      - id: output_filtration_metric_file
+      - id: output_dnacopy_seg_file
+      - id: output_archive_tar_file

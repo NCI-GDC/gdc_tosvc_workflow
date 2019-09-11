@@ -339,6 +339,11 @@ steps:
         source: extract_with_normaldb/normaldb
       - id: target_weight
         source: extract_with_normaldb/target_weight
+  out:
+    - id: vcf
+    - id: filtration_metric
+    - id: dnacopy_seg
+    - id: tar
 
   - id: load_vcf
     run: tools/bio_client_upload_pull_uuid.cwl

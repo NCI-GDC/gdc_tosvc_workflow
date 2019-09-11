@@ -110,22 +110,18 @@ inputs:
       items: int
 
 outputs:
-  []
-  # - id: filtered_vcf_uuid
-  #   type: string
-  #   outputSource: upload_outputs/filtered_vcf_uuid
-  # - id: filtered_vcf_index_uuid
-  #   type: string
-  #   outputSource: upload_outputs/filtered_vcf_index_uuid
-  # - id: filtration_metric_uuid
-  #   type: [string, "null"]
-  #   outputSource: upload_outputs/filtration_metric_uuid
-  # - id: dnacopy_seg_uuid
-  #   type: [string, "null"]
-  #   outputSource: upload_outputs/dnacopy_seg_uuid
-  # - id: archive_tar_uuid
-  #   type: [string, "null"]
-  #   outputSource: upload_outputs/archive_tar_uuid
+  - id: dnacopy_seg
+    type: [File, "null"]
+    outputSource: determine_purecn_gdcfiltration/dnacopy_seg
+  - id: filtration_metric
+    type: [File, "null"]
+    outputSource: determine_purecn_gdcfiltration/filtration_metric
+  - id: tar
+    type: [File, "null"]
+    outputSource: determine_purecn_gdcfiltration/tar
+  - id: vcf
+    type: File
+    outputSource: gdcreannotation/output
 
 steps:
   - id: get_filename_prefix
@@ -222,10 +218,10 @@ steps:
       - id: no_normaldb_vcf_file
         source: filter_mutect_outputs/output
     out:
-      - id: output_vcf_file
-      - id: output_filtration_metric_file
-      - id: output_dnacopy_seg_file
-      - id: output_archive_tar_file
+      - id: dnacopy_seg
+      - id: filtration_metric
+      - id: tar
+      - id: vcf
 
   - id: gdcreannotation
     run: gdcreannotation.cwl
@@ -247,6 +243,6 @@ steps:
       - id: sample_barcode
         source: sample_barcode
       - id: vcf
-        source: determine_purecn_gdcfiltration/output_vcf_file
+        source: determine_purecn_gdcfiltration/vcf
     out:
       - id: output

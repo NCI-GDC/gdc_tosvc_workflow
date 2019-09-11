@@ -34,13 +34,13 @@ inputs:
       items: ['null', File]
 
 outputs:
-  - id: output_vcf_file
+  - id: dnacopy_seg
     type: File
-  - id: output_filtration_metric_file
+  - id: filtration_metric
     type: File
-  - id: output_dnacopy_seg_file
+  - id: tar
     type: File
-  - id: output_archive_tar_file
+  - id: vcf
     type: File
 
 expression: |
@@ -59,6 +59,8 @@ expression: |
       else {
         throw "The case is unhandled";
       }
-      return {'output_vcf_file': output_vcf, 'output_filtration_metric_file': filtration_metric,
-              'output_dnacopy_seg_file': dnacopy_seg, 'output_archive_tar_file': archive_tar};
+      return {'vcf': output_vcf,
+              'filtration_metric': filtration_metric,
+              'dnacopy_seg': dnacopy_seg,
+              'tar': archive_tar};
     }

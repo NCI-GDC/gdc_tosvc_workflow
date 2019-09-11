@@ -26,7 +26,7 @@ inputs:
       prefix: --output_vcf
 
   - id: reference_name
-    type: string?
+    type: [string, "null"]
     default: GRCh38.d1.vd1.fa
     inputBinding:
       prefix: --reference_name
@@ -36,7 +36,7 @@ inputs:
     inputBinding:
       prefix: --patient_barcode
 
-  - id: case_id
+  - id: caseid
     type: string
     inputBinding:
       prefix: --case_id

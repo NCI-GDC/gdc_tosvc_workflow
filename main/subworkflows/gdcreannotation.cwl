@@ -9,24 +9,24 @@ requirements:
   - class: StepInputExpressionRequirement
 
 inputs:
-  - id: vcf
-    type: File
-  - id: dict_main
-    type: File
-  - id: fa_name
-    type: string
-  - id: patient_barcode
-    type: string
-  - id: case_id
-    type: string
-  - id: aliquot_id
+  - id: aliquotid
     type: string
   - id: bam_uuid
     type: string
-  - id: sample_barcode
+  - id: caseid
+    type: string
+  - id: dict_main
+    type: File
+  - id: fasta_name
     type: string
   - id: filename_prefix
     type: string
+  - id: patient_barcode
+    type: string
+  - id: sample_barcode
+    type: string
+  - id: vcf
+    type: File
 
 outputs:
   - id: output
@@ -67,15 +67,15 @@ steps:
         source: filter_contigs/output_vcf_file
         valueFrom: $(self.basename).gdcheader.vcf
       - id: reference_name
-        source: fa_name
+        source: fasta_name
       - id: patient_barcode
         source: patient_barcode
-      - id: case_id
-        source: case_id
+      - id: caseid
+        source: caseid
       - id: sample_barcode
         source: sample_barcode
       - id: aliquot_uuid
-        source: aliquot_id
+        source: aliquotid
       - id: bam_uuid
         source: bam_uuid
     out:

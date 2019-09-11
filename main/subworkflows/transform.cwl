@@ -15,6 +15,8 @@ inputs:
   #ref info
   - id: aliquotid
     type: string
+  - id: bam_uuid
+    type: string
   - id: callerid
     type: [string, "null"]
   - id: caseid
@@ -225,26 +227,26 @@ steps:
       - id: output_dnacopy_seg_file
       - id: output_archive_tar_file
 
-  # - id: gdcreannotation
-  #   run: gdcreannotation.cwl
-  #   in:
-  #     - id: vcf
-  #       source: determine_purecn_gdcfiltration/output_vcf_file
-  #     - id: dict_main
-  #       source: get_inputs/dict_main_file
-  #     - id: fa_name
-  #       source: fa_name
-  #     - id: patient_barcode
-  #       source: patient_barcode
-  #     - id: case_id
-  #       source: case_id
-  #     - id: aliquot_id
-  #       source: aliquot_id
-  #     - id: bam_uuid
-  #       source: bam_uuid
-  #     - id: sample_barcode
-  #       source: sample_barcode
-  #     - id: filename_prefix
-  #       source: get_filename_prefix/output
-  #   out:
-  #     - id: output
+  - id: gdcreannotation
+    run: gdcreannotation.cwl
+    in:
+      - id: aliquotid
+        source: aliquotid
+      - id: bam_uuid
+        source: bam_uuid
+      - id: caseid
+        source: caseid
+      - id: dict_main
+        source: dict_main
+      - id: fasta_name
+        source: fasta_name
+      - id: filename_prefix
+        source: get_filename_prefix/output
+      - id: patient_barcode
+        source: patient_barcode
+      - id: sample_barcode
+        source: sample_barcode
+      - id: vcf
+        source: determine_purecn_gdcfiltration/output_vcf_file
+    out:
+      - id: output

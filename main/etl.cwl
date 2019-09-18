@@ -154,7 +154,7 @@ outputs:
 
 steps:
   - id: extract_fa
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -166,7 +166,7 @@ steps:
       - id: output
 
   - id: extract_fai
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -178,7 +178,7 @@ steps:
       - id: output
 
   - id: extract_dict
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -190,7 +190,7 @@ steps:
       - id: output
 
   - id: extract_fa_main
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -202,7 +202,7 @@ steps:
       - id: output
 
   - id: extract_fai_main
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -214,7 +214,7 @@ steps:
       - id: output
 
   - id: extract_dict_main
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -226,7 +226,7 @@ steps:
       - id: output
 
   - id: extract_bam
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -238,7 +238,7 @@ steps:
       - id: output
 
   - id: extract_bai
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -250,7 +250,7 @@ steps:
       - id: output
 
   - id: extract_vcf
-    run: tools/bioclient_download.cwl
+    run: subworkflows/tools/bioclient_download.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -339,19 +339,19 @@ steps:
         source: extract_with_normaldb/normaldb
       - id: target_weight
         source: extract_with_normaldb/target_weight
-  out:
-    - id: vcf
-    - id: filtration_metric
-    - id: dnacopy_seg
-    - id: tar
+    out:
+      - id: vcf
+      - id: filtration_metric
+      - id: dnacopy_seg
+      - id: tar
 
   - id: load_vcf
-    run: tools/bio_client_upload_pull_uuid.cwl
+    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
     in:
       - id: config-file
         source: bioclient_config
       - id: input
-        source: transform/output_vcf
+        source: transform/vcf
       - id: upload-bucket
         source: bioclient_load_bucket
       - id: upload-key
@@ -363,12 +363,12 @@ steps:
       - id: output
 
   - id: load_vcf_index
-    run: tools/bio_client_upload_pull_uuid.cwl
+    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
     in:
       - id: config-file
         source: bioclient_config
       - id: input
-        source: transform/output_vcf
+        source: transform/vcf
         valueFrom: $(self.secondaryFiles[0])
       - id: upload-bucket
         source: bioclient_load_bucket
@@ -381,12 +381,12 @@ steps:
       - id: output
 
   - id: load_filtration_metric
-    run: tools/bio_client_upload_pull_uuid.cwl
+    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
     in:
       - id: config-file
         source: bioclient_config
       - id: input
-        source: transform/
+        source: transform/filtration_metric
       - id: upload-bucket
         source: bioclient_load_bucket
       - id: upload-key
@@ -396,12 +396,12 @@ steps:
         valueFrom: $(null)
 
   - id: load_dnacopy_seg
-    run: tools/bio_client_upload_pull_uuid.cwl
+    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
     in:
       - id: config-file
         source: bioclient_config
       - id: input
-        source: transform/
+        source: transform/dnacopy_seg
       - id: upload-bucket
         source: bioclient_load_bucket
       - id: upload-key
@@ -411,12 +411,12 @@ steps:
         valueFrom: $(null)
 
   - id: load_tar
-    run: tools/bio_client_upload_pull_uuid.cwl
+    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
     in:
       - id: config-file
         source: bioclient_config
       - id: input
-        source: transform/
+        source: transform/tar
       - id: upload-bucket
         source: bioclient_load_bucket
       - id: upload-key
@@ -426,7 +426,7 @@ steps:
         valueFrom: $(null)
 
   - id: emit_vcf_uuid
-    run: ../../tools/emit_json_value.cwl
+    run: subworkflows/tools/emit_json_value.cwl
     in:
       - id: input
         source: load_vcf/output
@@ -435,3 +435,42 @@ steps:
     out:
       - id: output
 
+  - id: emit_vcf_index_uuid
+    run: subworkflows/tools/emit_json_value.cwl
+    in:
+      - id: input
+        source: load_vcf_index/output
+      - id: key
+        valueFrom: did
+    out:
+      - id: output
+
+  - id: emit_filtration_metric_uuid
+    run: subworkflows/tools/emit_json_value.cwl
+    in:
+      - id: input
+        source: load_filtration_metric/output
+      - id: key
+        valueFrom: did
+    out:
+      - id: output
+
+  - id: emit_dnacopy_seg_uuid
+    run: subworkflows/tools/emit_json_value.cwl
+    in:
+      - id: input
+        source: load_dnacopy_seg/output
+      - id: key
+        valueFrom: did
+    out:
+      - id: output
+
+  - id: emit_tar_uuid
+    run: subworkflows/tools/emit_json_value.cwl
+    in:
+      - id: input
+        source: load_vcf/tar
+      - id: key
+        valueFrom: did
+    out:
+      - id: output

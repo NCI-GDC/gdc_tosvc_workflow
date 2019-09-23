@@ -24,6 +24,12 @@ inputs:
       - .fai
   - id: bigwig
     type: File
+  - id: genome
+    type: string
+  - id: project_id
+    type: string
+  - id: target_capture_kit
+    type: string
 
 outputs:
   - id: purecn_bed
@@ -88,3 +94,43 @@ steps:
       - id: png
       - id: rds
       - id: txt
+
+  - id: rename_bed
+    run: tools/rename.cwl
+    in:
+      - id: input
+        source: purecn_normaldb/bed
+      - id: filename
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).low_coverage_targets.bed
+    out:
+      - id: output
+
+  - id: rename_png
+    run: tools/rename.cwl
+    in:
+      - id: input
+        source: purecn_normaldb/png
+      - id: filename
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).interval_weights.png
+    out:
+      - id: output
+
+  - id: rename_rds
+    run: tools/rename.cwl
+    in:
+      - id: input
+        source: purecn_normaldb/rds
+      - id: filename
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).normalDB.rds
+    out:
+      - id: output
+
+  - id: rename_txt
+    run: tools/rename.cwl
+    in:
+      - id: input
+        source: purecn_normaldb/txt
+      - id: filename
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).interval_weights.txt
+    out:
+      - id: output

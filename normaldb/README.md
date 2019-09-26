@@ -1,4 +1,5 @@
 ### To add a new purecn normaldb
+* https://wiki.uchicago.edu/pages/viewpage.action?spaceKey=CDIS&title=Tumor-Only+Filtering+Workflow+Manual
 1. clone repo
    * `git@github.com:NCI-GDC/gdc_tosvc_workflow.git`
 1. cd `gdc_tosvc_workflow/normaldb`

@@ -50,7 +50,7 @@
 1. these files should be made available to biowcs and entered into indexd
    1. `git clone git@github.com:NCI-GDC/gdc_bed_liftover.git`
    1. Modify `gdc_bed_liftover/map_file_kit.ods` with `oocalc`
-      1. Find the row for the bait file of the target capture kit, and populate:
+      1. Find the row for the `bait` [2] file of the target capture kit, and populate:
          * `normaldb_rds` (column N)
          * `normaldb_txt` (column O)
          * one UUID values will need to be generated for each column, followed by a comma, and then the filename.
@@ -121,3 +121,11 @@ aws_access_key_id = xxx
 aws_access_key_id = xxx
 aws_secret_access_key = xxx
 ```
+
+[2]
+https://github.com/lima1/PureCN/blob/51718042e39fe2d24d76a2b6c9139c3c242f4a34/vignettes/PureCN.Rnw#L128-L133
+```
+Usually the manufacturer provides two files: the baits file containing the coordinates of the actual capture baits, and the target file containing the coordinates of the actual regions we want to capture. We recommend to use the baits file (and recognize the confusing nomenclature that we follow due to convention in established tools).
+```
+also see
+https://github.com/lima1/PureCN/blob/51718042e39fe2d24d76a2b6c9139c3c242f4a34/vignettes/Quick.Rmd#L109

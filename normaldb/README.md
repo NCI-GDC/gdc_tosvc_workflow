@@ -10,6 +10,8 @@
    * `etl.sureselectxthumanallexonv5,16.tcga-meso.hg38.yml`
    * `etl.xgenexomeresearchpanelv1.0.organoid-pancreatic.hg38.yml`
 1. input fields that must be modified for each new kit:
+   * `bed_uuid` (should be `bait`, not `target`. see [2])
+   * `bed_size`
    * `bam_uuids`
    * `bam_sizes`
    * `bam_index_uuids`
@@ -50,7 +52,7 @@
 1. these files should be made available to biowcs and entered into indexd
    1. `git clone git@github.com:NCI-GDC/gdc_bed_liftover.git`
    1. Modify `gdc_bed_liftover/map_file_kit.ods` with `oocalc`
-      1. Find the row for the `bait` [2] file of the target capture kit, and populate:
+      1. Find the row for the `bait` file of the target capture kit, and populate:
          * `normaldb_rds` (column N)
          * `normaldb_txt` (column O)
          * one UUID values will need to be generated for each column, followed by a comma, and then the filename.

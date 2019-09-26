@@ -66,8 +66,8 @@
          * Use the terminal to `mv map_file_kit.csv map_file_kit.tsv`.
          * `git commit -am "updated with new normaldb"`
    1. https://github.com/NCI-GDC/gdc_bed_liftover/blob/master/gdc_bed_liftover/create_enum_map.py
-     * creates biowcs `kit_enum_map.json`
-     * creates `indexd_records.json` for bioindexd update
+      * creates biowcs `kit_enum_map.json`
+      * creates `indexd_records.json` for bioindexd update
    1. `rsync -av --progress gdc_bed_liftover ${VM}:`
    1. from `${VM}`
    1. `python ~/gdc_bed_liftover/gdc_bed_liftover/create_enum_map.py --tsvfile ~/gdc_bed_liftover/gdc_bed_liftover/map_file_kit.tsv --existing_enum_map_json ~/gdc_bed_liftover/gdc_bed_liftover/kit_enum_map.json --kit_dir /mnt/scratch/run/ --s3_url_base s3://ceph.service.consul/capture-kits/auto/`

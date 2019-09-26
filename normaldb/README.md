@@ -21,7 +21,7 @@
 1. run workflow
    * `cd /mnt/scratch/`
    * `mkdir run && cd run/`
-   * `nohup cwltool --debug --cachedir $(pwd)/cache/ --tmpdir-prefix $(pwd)/tmp/ /mnt/scratch/gdc_tosvc_workflow/normaldb/etl.cwl /mnt/scratch/gdc_tosvc_workflow/normaldb/etl.xgenexomeresearchpanelv1.0.organoid-pancreatic.hg38.yml &`
+   * ```nohup cwltool --debug --cachedir $(pwd)/cache/ --tmpdir-prefix $(pwd)/tmp/ /mnt/scratch/gdc_tosvc_workflow/normaldb/etl.cwl /mnt/scratch/gdc_tosvc_workflow/normaldb/etl.xgenexomeresearchpanelv1.0.organoid-pancreatic.hg38.yml &```
 1. output will 4 files. in the above example:
    * `interval_weights.xgenexomeresearchpanelv1.0.organoid-pancreatic.hg38.png`
    * `interval_weights.xgenexomeresearchpanelv1.0.organoid-pancreatic.hg38.txt`

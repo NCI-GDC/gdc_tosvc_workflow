@@ -34,16 +34,16 @@ inputs:
 outputs:
   - id: purecn_bed
     type: [File, "null"]
-    outputSource: purecn_normaldb/bed
+    outputSource: rename_bed/output
   - id: purecn_png
     type: File
-    outputSource: purecn_normaldb/png
+    outputSource: rename_png/output
   - id: purecn_rds
     type: File
-    outputSource: purecn_normaldb/rds
+    outputSource: rename_rds/output
   - id: purecn_txt
     type: File
-    outputSource: purecn_normaldb/txt
+    outputSource: rename_txt/output
 
 steps:
   - id: purecn_intervals
@@ -101,7 +101,12 @@ steps:
       - id: input
         source: purecn_normaldb/bed
       - id: filename
-        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).low_coverage_targets.bed
+        source: [
+        target_capture_kit,
+        project_id,
+        genome
+        ]
+        valueFrom: low_coverage_targets.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).bed
     out:
       - id: output
 
@@ -111,7 +116,12 @@ steps:
       - id: input
         source: purecn_normaldb/png
       - id: filename
-        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).interval_weights.png
+        source: [
+        target_capture_kit,
+        project_id,
+        genome
+        ]
+        valueFrom: interval_weights.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).png
     out:
       - id: output
 
@@ -121,7 +131,12 @@ steps:
       - id: input
         source: purecn_normaldb/rds
       - id: filename
-        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).normalDB.rds
+        source: [
+        target_capture_kit,
+        project_id,
+        genome
+        ]
+        valueFrom: normalDB.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).rds
     out:
       - id: output
 
@@ -131,6 +146,11 @@ steps:
       - id: input
         source: purecn_normaldb/txt
       - id: filename
-        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).interval_weights.txt
+        source: [
+        target_capture_kit,
+        project_id,
+        genome
+        ]
+        valueFrom: interval_weights.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).txt
     out:
       - id: output

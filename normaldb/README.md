@@ -47,9 +47,6 @@
          aws s3 cp --profile ceph --endpoint-url http://gdc-cephb-objstore.osdc.io/ normalDB.*.rds s3://capture-kits/auto/
          ```
 1. these files should be made available to biowcs and entered into indexd
-   * https://github.com/NCI-GDC/gdc_bed_liftover/blob/master/gdc_bed_liftover/create_enum_map.py
-     * creates biowcs `kit_enum_map.json`
-     * creates `indexd_records.json` for bioindexd update
    1. `git clone git@github.com:NCI-GDC/gdc_bed_liftover.git`
    1. Modify `gdc_bed_liftover/map_file_kit.ods` with `oocalc`
       1. Find the row for the bait file of the target capture kit, and populate:
@@ -62,7 +59,25 @@
          * Quit `oocalc`
          * Use the terminal to `mv map_file_kit.csv map_file_kit.tsv`.
          * `git commit -am "updated with new normaldb"`
+   1. https://github.com/NCI-GDC/gdc_bed_liftover/blob/master/gdc_bed_liftover/create_enum_map.py
+     * creates biowcs `kit_enum_map.json`
+     * creates `indexd_records.json` for bioindexd update
+   1. `rsync -av --progress gdc_bed_liftover ${VM}:`
+   1. from `${VM}`
+   1. `python ~/gdc_bed_liftover/gdc_bed_liftover/create_enum_map.py --tsvfile ~/gdc_bed_liftover/gdc_bed_liftover/map_file_kit.tsv --existing_enum_map_json ~/gdc_bed_liftover/gdc_bed_liftover/kit_enum_map.json --kit_dir /mnt/scratch/run/ --s3_url_base s3://ceph.service.consul/capture-kits/auto/`
+      * two files will be output: `kit_enum_map.json` and `indexd_records.json`
+      * `kit_enum_map.json` will be placed in two repos. The first for record keeping, the second for biowcs deployment:
+        1. `cp kit_enum_map.json ~/gdc_bed_liftover/gdc_bed_liftover/ && cd ~/gdc_bed_liftover/ && git commit -am "update kit_enum_map.json" && git push && cd -`
+        1. `git clone git@github.com:NCI-GDC/biowcs.git && cd ~/biowcs && git checkout -b chore/update-kit_enum_map && cp -a ~/kit_enum_map.json ~/biowcs/biowcs/dynamic/resources/kit_enum_map.json && git commit -am "update kit_enum_map.json && git push --set-upstream origin chore/update-kit_enum_map" && cd -`
+               *. merge `chore/update-kit_enum_map` to `master` at http://github.com/NCI-GDC/biowcs
+      * `indexd_records.json` will be placed in one repo for record keeping:
+        1. `cp indexd_records.json ~/gdc_bed_liftover/gdc_bed_liftover/ && cd ~/gdc_bed_liftover/ && git commit -am "update indexd_records.json" && git push && cd -`
 
+1. update indexd records on dev and prod bioindexd:
+   1. transfer `indexd_records.json` to a VM
+   1. on VM copy to `${HOME}` https://github.com/NCI-GDC/workflow-deployment/blob/master/bamfastq_align/set_indexd_records.py
+     * see https://github.com/NCI-GDC/workflow-deployment/blob/master/bamfastq_align/README.md for requirements
+   1. `python set_indexd_records.py -c indexd.json -i indexd_records.json`
 
 
 [0]:

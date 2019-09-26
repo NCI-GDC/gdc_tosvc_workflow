@@ -19,6 +19,9 @@
    * `project_id`
    * `target_capture_kit`
 1. save, git commit and push
+1. Lately, there has been an issue on the VM with multiple protracted s3 pulls resulting in a premature exit, and workflow failure. To mitigate this, the etl input generated above may be use witht the `e.cwl` workflow to extract the BAM files.
+   1. The output of the `e.cwl` workflow can then be written as the input to `transform.cwl`
+      * example is `t.nexterarapidcaptureexomev1.2.cptac-3.hg38.yml`
 1. rsync repo to a VM
    * `rsync -av -progress gdc_tosvc_workflow ${VM}/mnt/scratch/`
 1. run workflow

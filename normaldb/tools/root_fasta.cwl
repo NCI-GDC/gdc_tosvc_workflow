@@ -4,7 +4,7 @@ cwlVersion: v1.0
 
 requirements:
   - class: DockerRequirement
-    dockerPull: ubuntu:bionic-20180426
+    dockerPull: ubuntu:disco-20190809
   - class: InitialWorkDirRequirement
     listing:
       - entryname: $(inputs.fasta.basename)

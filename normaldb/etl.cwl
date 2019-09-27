@@ -44,6 +44,12 @@ inputs:
     type: string
   - id: bigwig_size
     type: long
+  - id: genome
+    type: string
+  - id: project_id
+    type: string
+  - id: target_capture_kit
+    type: string
 
 outputs:
   - id: bed
@@ -147,6 +153,12 @@ steps:
         source: root_fasta/output
       - id: bigwig
         source: extract_bigwig/output
+      - id: genome
+        source: genome
+      - id: project_id
+        source: project_id
+      - id: target_capture_kit
+        source: target_capture_kit
     out:
       - id: purecn_bed
       - id: purecn_png

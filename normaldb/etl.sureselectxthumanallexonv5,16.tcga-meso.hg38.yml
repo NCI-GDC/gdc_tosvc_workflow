@@ -169,3 +169,6 @@ fasta_index_uuid: 10283433-bcec-46bc-bfd5-5215428853ea
 fasta_index_size: 129640
 bigwig_uuid: 37fc9497-3bcc-4dee-94b9-70a831e847f0
 bigwig_size: 1564896096
+genome: hg38
+project_id: TCGA-MESO
+target_capture_kit: SureSelectXT Human All Exon V5, 16

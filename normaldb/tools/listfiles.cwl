@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: ubuntu:disco-20190515
+    dockerPull: ubuntu:disco-20190809
   - class: InlineJavascriptRequirement
 
 inputs:

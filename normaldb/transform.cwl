@@ -8,6 +8,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: ScatterFeatureRequirement
   - class: StepInputExpressionRequirement
+  - class: MultipleInputFeatureRequirement
 
 inputs:
   - id: bams

@@ -9,11 +9,6 @@ requirements:
     dockerPull: quay.io/ncigdc/purecn:latest
 
 inputs:
-  - id: coveragefiles
-    type: File
-    inputBinding:
-      prefix: --coveragefiles
-
   - id: force
     type: boolean
     default: true

@@ -142,8 +142,6 @@ steps:
   - id: purecn
     run: tools/purecn.cwl
     in:
-      - id: coveragefiles
-        source: purecn_coverage/coverage
       - id: genome
         source: genome
       - id: intervals

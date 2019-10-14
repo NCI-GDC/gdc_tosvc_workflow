@@ -5,8 +5,9 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 requirements:
+  - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:latest
+    dockerPull: quay.io/ncigdc/purecn:develop
 
 inputs:
   - id: force
@@ -58,11 +59,10 @@ inputs:
     inputBinding:
       prefix: --outvcf
 
-  - id: parallel
-    type: boolean
-    default: true
+  - id: cores
+    type: long
     inputBinding:
-      prefix: --parallel
+      prefix: --cores
 
   - id: postoptimize
     type: boolean
@@ -92,63 +92,63 @@ inputs:
 
 outputs:
   - id: chromosomes_pdf
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id)_chromosomes.pdf
+      glob: $(inputs.sampleid + "_chromosomes.pdf")
 
   - id: csv
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id).csv
+      glob: $(inputs.sampleid + ".csv")
 
   - id: dnacopy_seg
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id)_dnacopy.seg
+      glob: $(inputs.sampleid + "_dnacopy.seg")
 
   - id: genes_csv
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id)_genes.csv
+      glob: $(inputs.sampleid + "_genes.csv")
 
   - id: local_optima_pdf
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id)_local_optima.pdf
+      glob: $(inputs.sampleid + "_local_optima.pdf")
 
   - id: log
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id).log
+      glob: $(inputs.sampleid + ".log")
 
   - id: loh_csv
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id)_loh.csv
+      glob: $(inputs.sampleid + "_loh.csv")
 
   - id: pdf
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id).pdf
+      glob: $(inputs.sampleid + ".pdf")
 
   - id: rds
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id).rds
+      glob: $(inputs.sampleid + ".rds")
 
   - id: segmentation_pdf
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id)_segmentation.pdf
+      glob: $(inputs.sampleid + "_segmentation.pdf")
 
   - id: variants_csv
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id)_variants.csv
+      glob: $(inputs.sampleid + "_variants.csv")
 
   - id: vcf
-    type: [File, "null"]
+    type: File?
     outputBinding:
-      glob: $(inputs.sample_id).vcf
+      glob: $(inputs.sampleid + ".vcf")
 
 baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/PureCN.R]

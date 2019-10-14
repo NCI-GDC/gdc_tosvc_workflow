@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:latest
+    dockerPull: quay.io/ncigdc/purecn:develop
 
 inputs:
   - id: fasta

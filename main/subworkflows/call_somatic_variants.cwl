@@ -154,6 +154,8 @@ steps:
         source: sampleid
       - id: vcf
         source: vcf
+      - id: cores
+        source: thread_num
     out:
       - id: chromosomes_pdf
       - id: csv

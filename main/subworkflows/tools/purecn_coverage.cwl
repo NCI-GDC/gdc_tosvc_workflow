@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:develop
+    dockerPull: quay.io/ncigdc/purecn:1.14.3
 
 inputs:
   - id: bam

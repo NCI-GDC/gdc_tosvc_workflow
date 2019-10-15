@@ -11,40 +11,33 @@ inputs:
   - id: purecn_fail_vcf_file
     type:
       type: array
-      items: [File, "null"]
-
+      items: ['null', File]
   - id: purecn_success_vcf_file
     type:
       type: array
-      items: [File, "null"]
-
+      items: ['null', File]
   - id: filtration_metric_file
     type:
       type: array
-      items: [File, "null"]
-
+      items: ['null', File]
   - id: dnacopy_seg_file
     type:
       type: array
-      items: [File, "null"]
-
+      items: ['null', File]
   - id: archive_tar_file
     type:
       type: array
-      items: [File, "null"]
+      items: ['null', File]
 
 outputs:
-  - id: vcf
+  - id: output_vcf_file
     type: File
-
-  - id: filtration_metric
-    type: [File, "null"]
-
-  - id: dnacopy_seg
-    type: [File, "null"]
-
-  - id: tar
-    type: [File, "null"]
+  - id: output_filtration_metric_file
+    type: File?
+  - id: output_dnacopy_seg_file
+    type: File?
+  - id: output_archive_tar_file
+    type: File?
 
 expression: |
    ${
@@ -62,6 +55,6 @@ expression: |
       else {
         throw "The case is unhandled";
       }
-      return {'vcf': output_vcf, 'filtration_metric': filtration_metric,
-              'dnacopy_seg': dnacopy_seg, 'tar': archive_tar};
+      return {'output_vcf_file': output_vcf, 'output_filtration_metric_file': filtration_metric,
+              'output_dnacopy_seg_file': dnacopy_seg, 'output_archive_tar_file': archive_tar};
     }

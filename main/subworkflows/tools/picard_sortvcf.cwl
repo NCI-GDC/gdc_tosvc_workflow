@@ -21,7 +21,7 @@ class: CommandLineTool
 inputs:
   - id: create_index
     type: string
-    default: true
+    default: "TRUE"
     inputBinding:
       prefix: CREATE_INDEX=
       separate: false

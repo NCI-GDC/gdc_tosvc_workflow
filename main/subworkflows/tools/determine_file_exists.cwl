@@ -8,29 +8,28 @@ requirements:
 class: ExpressionTool
 
 inputs:
-  - id: input
-    type: [File, "null"]
+  - id: purecn_vcf_file
+    type: File?
 
 outputs:
-  - id: success
+  - id: success_purecn
     type:
       type: array
       items: int
-
-  - id: fail
+  - id: fail_purecn 
     type:
       type: array
       items: int
 
 expression: |
    ${
-      if (inputs.input != null) {
-        var success_array = [1];
-        var fail_array = [];
+      if (inputs.purecn_vcf_file != null) {
+        var success_purecn_array = [1];
+        var fail_purecn_array = [];
       } else {
-        var success_array = [];
-        var fail_array = [1];
+        var success_purecn_array = [];
+        var fail_purecn_array = [1];
       }
-      return {'success_purecn': success_array,
-              'fail_purecn': fail_array};
+      return {'success_purecn': success_purecn_array,
+              'fail_purecn': fail_purecn_array};
     }

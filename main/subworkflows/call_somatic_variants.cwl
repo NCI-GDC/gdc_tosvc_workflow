@@ -34,6 +34,8 @@ inputs:
     type: string
   - id: thread_num
     type: long
+  - id: seed
+    type: long
 
 outputs:
   - id: chromosomes_pdf
@@ -156,6 +158,8 @@ steps:
         source: vcf
       - id: cores
         source: thread_num
+      - id: seed 
+        source: seed
     out:
       - id: chromosomes_pdf
       - id: csv

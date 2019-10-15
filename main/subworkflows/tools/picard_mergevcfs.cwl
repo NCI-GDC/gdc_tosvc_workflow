@@ -11,10 +11,10 @@ requirements:
     coresMax: 1
     ramMin: 10000
     ramMax: 10000
-    tmpdirMin: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
-    tmpdirMax: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
-    outdirMin: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
-    outdirMax: $(Math.ceil(1.2 * inputs.INPUT.size / 1048576))
+    tmpdirMin: $(Math.ceil(1.2 * inputs.input.size / 1048576))
+    tmpdirMax: $(Math.ceil(1.2 * inputs.input.size / 1048576))
+    outdirMin: $(Math.ceil(1.2 * inputs.input.size / 1048576))
+    outdirMax: $(Math.ceil(1.2 * inputs.input.size / 1048576))
 
 class: CommandLineTool
 
@@ -30,9 +30,9 @@ inputs:
     type:
       type: array
       items: File
-    inputBinding:
-      prefix: INPUT=
-      separate: false
+      inputBinding:
+        prefix: INPUT=
+        separate: false
 
   - id: output
     type: string
@@ -64,7 +64,7 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.OUTPUT)
+      glob: $(inputs.output)
     secondaryFiles:
       - .tbi
 

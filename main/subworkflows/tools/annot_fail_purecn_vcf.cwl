@@ -32,6 +32,6 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output )
+      glob: $(inputs.output)
 
 baseCommand: [python, /gdc_tosvc_tools/annot_fail_purecn_vcf.py]

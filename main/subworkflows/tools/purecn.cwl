@@ -8,6 +8,9 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/purecn:1.14.3
+successCodes:
+  - 0
+  - 1
 
 inputs:
   - id: force
@@ -89,6 +92,11 @@ inputs:
     type: File
     inputBinding:
       prefix: --vcf
+  
+  - id: seed
+    type: long
+    inputBinding:
+      prefix: --seed
 
 outputs:
   - id: chromosomes_pdf

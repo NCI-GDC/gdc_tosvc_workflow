@@ -23,7 +23,7 @@ inputs:
   patient_barcode: string
   sample_barcode: string
   # Parameter
-  run_without_normaldb: 
+  run_without_normaldb:
     type:
       type: array
       items: int
@@ -32,9 +32,10 @@ inputs:
       type: array
       items: int
   fasta_version: string
+  fasta_name: string
   thread_num: long
   seed: long
-  var_prob_thres: 
+  var_prob_thres:
     type: float
     default: 0.2
   # Inputs
@@ -121,7 +122,7 @@ steps:
       bam_uuid: bam_uuid
       caseid: case_id
       dict_main: main_dict
-      fasta_name: fasta_version
+      fasta_name: fasta_name
       filename_prefix: get_prefix/output
       patient_barcode: patient_barcode
       sample_barcode: sample_barcode
@@ -139,5 +140,5 @@ outputs:
     type: File?
     outputSource: determine_filtration/tar
   annotated_vcf:
-    type: File?
+    type: File
     outputSource: annotation/output

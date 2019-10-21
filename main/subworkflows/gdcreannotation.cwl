@@ -43,7 +43,7 @@ steps:
         source: dict_main
       - id: output
         source: vcf
-        valueFrom: $(self.basename).updatedseqdict.vcf
+        valueFrom: $(self.basename + ".updatedseqdict.vcf")
     out:
       - id: output
 
@@ -54,7 +54,7 @@ steps:
         source: update_dictionary/output
       - id: output_vcf
         source: update_dictionary/output
-        valueFrom: $(self.basename).filtered_contigs.vcf
+        valueFrom: $(self.basename + ".filtered_contigs.vcf")
     out:
       - id: output_vcf_file
 
@@ -65,7 +65,7 @@ steps:
         source: filter_contigs/output_vcf_file
       - id: output_vcf
         source: filter_contigs/output_vcf_file
-        valueFrom: $(self.basename).gdcheader.vcf
+        valueFrom: $(self.basename + ".gdcheader.vcf")
       - id: reference_name
         source: fasta_name
       - id: patient_barcode
@@ -88,7 +88,7 @@ steps:
         source: format_header/output_vcf_file
       - id: output
         source: format_header/output_vcf_file
-        valueFrom: $(self.basename).gz
+        valueFrom: $(self.basename + ".gz")
     out:
       - id: output
 
@@ -112,6 +112,6 @@ steps:
         source: rename_sample/output
       - id: output
         source: filename_prefix
-        valueFrom: $(self).variant_filtration.vcf.gz
+        valueFrom: $(self + ".variant_filtration.vcf.gz")
     out:
       - id: output

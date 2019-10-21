@@ -12,7 +12,7 @@ requirements:
 inputs:
   - id: create_index
     type: string
-    default: true
+    default: "true"
     inputBinding:
       prefix: CREATE_INDEX=
       separate: false
@@ -31,7 +31,7 @@ inputs:
 
   - id: require_index
     type: string
-    default: false
+    default: "false"
     inputBinding:
       prefix: REQUIRE_INDEX=
       separate: false

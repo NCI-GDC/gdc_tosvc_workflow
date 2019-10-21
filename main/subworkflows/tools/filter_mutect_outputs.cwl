@@ -9,8 +9,6 @@ requirements:
     dockerPull: quay.io/ncigdc/gdc_tosvc_tools:53aa36674ecf31cfdf3c853046010b6593488d6a
   - class: InlineJavascriptRequirement
 
-baseCommand: [/usr/local/bin/filter_mutect_outputs.py]
-
 inputs:
   - id: input
     type: File
@@ -29,3 +27,5 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output)
+
+baseCommand: ['python', '/gdc_tosvc_tools/filter_mutect_outputs.py']

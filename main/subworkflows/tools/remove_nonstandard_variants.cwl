@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/gdc-biasfilter:de5a941fe830deea0ff2544fbbe521a783cf629f988277786720e66e3a4dbb13
+    dockerPull: quay.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
   - class: InlineJavascriptRequirement
 
 inputs:
@@ -24,6 +24,6 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output_filename)
+      glob: $(inputs.output)
 
-baseCommand: [/usr/local/bin/RemoveNonStandardVariants.py]
+baseCommand: [python, /opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py]

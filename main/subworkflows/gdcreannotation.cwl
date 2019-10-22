@@ -29,7 +29,7 @@ inputs:
     type: File
 
 outputs:
-  - id: output
+  - id: anno_output
     type: File
     outputSource: vcfformatconverter/output
 

@@ -12,237 +12,133 @@ requirements:
   - class: ScatterFeatureRequirement
 
 inputs:
-  #ref info
-  - id: aliquotid
-    type: string
-  - id: bam_uuid
-    type: string
-  - id: callerid
-    type: [string, "null"]
-  - id: caseid
-    type: string
-  - id: experimental_strategy
-    type: string
-  - id: job_uuid
-    type: string
-  - id: patient_barcode
-    type: string
-  - id: projectid
-    type: [string, "null"]
-  - id: sample_barcode
-    type: string
-
-  #full ref files
-  - id: fasta
-    type: File
-    secondaryFiles:
-      - .fai
-  - id: dict
-    type: File
-
-  #main ref files
-  - id: fasta_main
-    type: File
-    secondaryFiles:
-      - .fai
-  - id: dict_main
-    type: File
-
-  #input data for pipeline
-  - id: bam
-    type: File
-    secondaryFiles:
-      - ^.bai
-  - id: vcf
-    type: File
-
-  #GEM and PureCN ref files (optional)
-  - id: capture_kit
-    type: [File, "null"]
-  - id: bigwig
-    type: [File, "null"]
-  - id: gemindex
-    type: [File, "null"]
-  - id: normaldb
-    type: [File, "null"]
-  - id: intervalweightfile
-    type: [File, "null"]
-
- #parameters
-  - id: fasta_name
-    type: string
-    default: "GRCh38.d1.vd1.fa"
-    doc: reference name used in the VCF header
-
-  - id: fasta_version
-    type: string
-    default: "hg38"
-    doc: reference version used by PureCN
-
-  - id: thread_num
-    type: long
-    default: 8
-    doc: number of thread used by PureCN and some other tools
-
-  - id: var_prob_thres
+  # Metadata
+  job_uuid: string
+  experimental_strategy: string
+  project_id: string?
+  caller_id: string?
+  aliquot_id: string
+  case_id: string
+  bam_uuid: string
+  patient_barcode: string
+  sample_barcode: string
+  # Parameter
+  run_without_normaldb:
+    type:
+      type: array
+      items: int
+  run_with_normaldb:
+    type:
+      type: array
+      items: int
+  fasta_version: string
+  fasta_name: string
+  thread_num: long
+  seed: long
+  var_prob_thres:
     type: float
     default: 0.2
-    doc: threshold for posterior probability of somatic variants calculated by PureCN |
-         this threshold is used in the filtering step
-
-  - id: gem_max_mismatch
-    type: int
-    default: 2
-
-  - id: gem_max_edit
-    type: int
-    default: 2
-
-  #conditional inputs
-  - id: run_with_normaldb
-    type:
-      type: array
-      items: int
-
-  - id: run_without_normaldb
-    type:
-      type: array
-      items: int
-
-outputs:
-  - id: dnacopy_seg
-    type: [File, "null"]
-    outputSource: determine_purecn_gdcfiltration/dnacopy_seg
-  - id: filtration_metric
-    type: [File, "null"]
-    outputSource: determine_purecn_gdcfiltration/filtration_metric
-  - id: tar
-    type: [File, "null"]
-    outputSource: determine_purecn_gdcfiltration/tar
-  - id: vcf
+  # Inputs
+  raw_vcf:
     type: File
-    outputSource: gdcreannotation/output
+    secondaryFiles: [.tbi]
+  reference:
+    type: File
+    secondaryFiles: [.fai, ^.dict]
+  main_dict: File
+  tumor_bam:
+    type: File
+    secondaryFiles: [^.bai]
+  bigwig: File
+  capture_kit: File
+  gemindex: File
+  intervalweightfile: File
+  normaldb: File
 
 steps:
-  - id: get_filename_prefix
+  get_prefix:
     run: tools/make_file_prefix.cwl
     in:
-      - id: job_uuid
-        source: job_uuid
-      - id: projectid
-        source: projectid
-      - id: callerid
-        source: callerid
-      - id: experimental_strategy
-        source: experimental_strategy
-    out:
-      - id: output
+      job_uuid: job_uuid
+      experimental_strategy: experimental_strategy
+      projectid: project_id
+      callerid: caller_id
+    out: [ output ]
 
-  - id: remove_nonstandard_variants
+  remove_nonstandard_variants:
     run: tools/remove_nonstandard_variants.cwl
     in:
-      - id: input
-        source: vcf
-      - id: output
+      input: raw_vcf
+      output:
         valueFrom: "std.vcf"
-    out:
-      - id: output
+    out: [ output ]
 
-  - id: filter_mutect_outputs
+  filter_mutect_no_normaldb:
     run: tools/filter_mutect_outputs.cwl
     scatter: run_without_normaldb
     in:
-      - id: run_without_normaldb
-        source: run_without_normaldb
-      - id: input
+      run_without_normaldb: run_without_normaldb
+      input: remove_nonstandard_variants/output
+      output:
         source: remove_nonstandard_variants/output
-      - id: output
-        source: remove_nonstandard_variants/output
-        valueFrom: $(self.basename).filtered_mutect.vcf
-    out:
-      - id: output
+        valueFrom: $(self.basename + ".filtered_mutect.vcf")
+    out: [ output ]
 
-  - id: purecn_gdcfiltration
+  purecn_with_normaldb:
     run: purecn_gdcfiltration.cwl
     scatter: run_with_normaldb
     in:
-      - id: run_with_normaldb
-        source: run_with_normaldb
-      - id: aliquotid
-        source: aliquotid
-      - id: bam
-        source: bam
-      - id: bigwig
-        source: bigwig
-      - id: capture_kit
-        source: capture_kit
-      - id: dict
-        source: dict
-      - id: dict_main
-        source: dict_main
-      - id: fasta
-        source: fasta
-      - id: fasta_version
-        source: fasta_version
-      - id: filename_prefix
-        source: get_filename_prefix/output
-      - id: gemindex
-        source: gemindex
-      - id: intervalweightfile
-        source: intervalweightfile
-      - id: normaldb
-        source: normaldb
-      - id: thread_num
-        source: thread_num
-      - id: vcf
-        source: vcf
-      - id: var_prob_thres
-        source: var_prob_thres
-    out:
-      - id: dnacopy_seg
-      - id: filtration_metric
-      - id: tar
-      - id: vcf
+      run_with_normaldb: run_with_normaldb
+      fasta: reference
+      bam: tumor_bam
+      vcf: raw_vcf
+      seed: seed
+      aliquotid: aliquot_id
+      fasta_version: fasta_version
+      filename_prefix: get_prefix/output
+      thread_num: thread_num
+      var_prob_thres: var_prob_thres
+      bigwig: bigwig
+      capture_kit: capture_kit
+      gemindex: gemindex
+      intervalweightfile: intervalweightfile
+      normaldb: normaldb
+    out: [ purecn_vcf, filtration_metric, dnacopy_seg, tar ]
 
-  - id: determine_purecn_gdcfiltration
+  determine_filtration:
     run: tools/determine_purecn_gdcfiltration.cwl
     in:
-      - id: archive_tar_file
-        source: purecn_gdcfiltration/tar
-      - id: dnacopy_seg_file
-        source: purecn_gdcfiltration/dnacopy_seg
-      - id: filtration_metric_file
-        source: purecn_gdcfiltration/filtration_metric
-      - id: normaldb_vcf_file
-        source: purecn_gdcfiltration/vcf
-      - id: no_normaldb_vcf_file
-        source: filter_mutect_outputs/output
-    out:
-      - id: dnacopy_seg
-      - id: filtration_metric
-      - id: tar
-      - id: vcf
+      archive_tar_file: purecn_with_normaldb/tar
+      dnacopy_seg_file: purecn_with_normaldb/dnacopy_seg
+      filtration_metric_file: purecn_with_normaldb/filtration_metric
+      normaldb_vcf_file: purecn_with_normaldb/purecn_vcf
+      no_normaldb_vcf_file: filter_mutect_no_normaldb/output
+    out: [ dnacopy_seg, filtration_metric, tar, vcf ]
 
-  - id: gdcreannotation
+  annotation:
     run: gdcreannotation.cwl
     in:
-      - id: aliquotid
-        source: aliquotid
-      - id: bam_uuid
-        source: bam_uuid
-      - id: caseid
-        source: caseid
-      - id: dict_main
-        source: dict_main
-      - id: fasta_name
-        source: fasta_name
-      - id: filename_prefix
-        source: get_filename_prefix/output
-      - id: patient_barcode
-        source: patient_barcode
-      - id: sample_barcode
-        source: sample_barcode
-      - id: vcf
-        source: determine_purecn_gdcfiltration/vcf
-    out:
-      - id: output
+      aliquotid: aliquot_id
+      bam_uuid: bam_uuid
+      caseid: case_id
+      dict_main: main_dict
+      fasta_name: fasta_name
+      filename_prefix: get_prefix/output
+      patient_barcode: patient_barcode
+      sample_barcode: sample_barcode
+      vcf: determine_filtration/vcf
+    out: [ output ]
+
+outputs:
+  purecn_dnacopy_seg:
+    type: File?
+    outputSource: determine_filtration/dnacopy_seg
+  purecn_filtration_metric:
+    type: File?
+    outputSource: determine_filtration/filtration_metric
+  purecn_tar:
+    type: File?
+    outputSource: determine_filtration/tar
+  annotated_vcf:
+    type: File
+    outputSource: annotation/output

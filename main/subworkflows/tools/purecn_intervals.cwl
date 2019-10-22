@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:5d5ac8fca6399ae8ff1587b2678d32449249d44fa132498ed9231286bbea2c97
+    dockerPull: quay.io/ncigdc/purecn:1.14.3
 
 inputs:
   - id: fasta
@@ -43,11 +43,11 @@ inputs:
       prefix: --offtarget
 
 arguments:
-  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).txt
+  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).txt
     prefix: --outfile
     separate: true
 
-  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).$(inputs.infile.nameext)
+  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).bed
     prefix: --export
     separate: true
 
@@ -55,11 +55,11 @@ outputs:
   - id: interval
     type: File
     outputBinding:
-      glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).txt
+      glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).txt
 
   - id: bed
     type: File
     outputBinding:
-      glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot).$(inputs.genome).$(inputs.infile.nameext)
+      glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).bed
 
 baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/IntervalFile.R]

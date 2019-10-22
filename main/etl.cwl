@@ -11,466 +11,156 @@ requirements:
   - class: SubworkflowFeatureRequirement
 
 inputs:
-  #ref info
-  - id: bioclient_config
-    type: File
-  - id: bioclient_upload_bucket
+  # BIOCLIENT
+  bioclient_config: File
+  bioclient_upload_bucket: string
+  # INPUT
+  tumor_bam_gdc_id: string
+  tumor_index_gdc_id: string
+  raw_vcf_gdc_id: string
+  raw_vcf_index_gdc_id: string
+  reference_fa_gdc_id: string
+  reference_fai_gdc_id: string
+  reference_dict_gdc_id: string
+  reference_main_dict_gdc_id: string
+  bigwig_gdc_id: string
+  capture_kit_gdc_id: string
+  gemindex_gdc_id: string
+  intervalweightfile_gdc_id: string
+  normaldb_gdc_id: string
+  # GRAPH
+  job_uuid: string
+  experimental_strategy: string
+  project_id: string?
+  caller_id:
     type: string
-  - id: job_uuid
-    type: string
-  - id: case_id
-    type: string
-  - id: aliquot_id
-    type: string
-  - id: patient_barcode
-    type: string
-  - id: sample_barcode
-    type: string
-  - id: project_id
-    type: string?
-    doc: GDC project id used for output filenames
-  - id: caller_id
-    type: string?
-    doc: GDC caller id used for output filenames
-  - id: experimental_strategy
-    type: string
-    doc: GDC experimental strategy used for output filenames
-
-  #full ref files
-  - id: fa_uuid
-    type: string
-  - id: fa_filesize
-    type: long
-  - id: fai_uuid
-    type: string
-  - id: fai_filesize
-    type: long
-  - id: dict_uuid
-    type: string
-  - id: dict_filesize
-    type: long
-
-  #main ref files
-  - id: fa_main_uuid
-    type: string
-  - id: fa_main_filesize
-    type: long
-  - id: fai_main_uuid
-    type: string
-  - id: fai_main_filesize
-    type: long
-  - id: dict_main_uuid
-    type: string
-  - id: dict_main_filesize
-    type: long
-
-  #input data for pipeline
-  - id: bam_uuid
-    type: string
-  - id: bam_filesize
-    type: long
-  - id: bai_uuid
-    type: string
-  - id: bai_filesize
-    type: long
-  - id: input_vcf_uuid
-    type: string
-  - id: input_vcf_filesize
-    type: long
-
-  #GEM and PureCN ref files (optional)
-  - id: capture_kit_uuid
-    type: string?
-  - id: capture_kit_filesize
-    type: long?
-  - id: bigwig_uuid
-    type: string?
-  - id: bigwig_filesize
-    type: long?
-  - id: gemindex_uuid
-    type: string?
-  - id: gemindex_filesize
-    type: long?
-  - id: normaldb_uuid
-    type: string?
-  - id: normaldb_filesize
-    type: long?
-  - id: target_weight_uuid
-    type: string?
-  - id: target_weight_filesize
-    type: long?
-
- #parameters
-  - id: fa_name
+    default: "tosvf"
+  aliquot_id: string
+  case_id: string
+  bam_uuid: string
+  patient_barcode: string
+  sample_barcode: string
+  # PARAMETER
+  run_with_normaldb:
+    type:
+      type: array
+      items: int
+  run_without_normaldb:
+    type:
+      type: array
+      items: int
+  fasta_name:
     type: string
     default: "GRCh38.d1.vd1.fa"
-    doc: reference name used in the VCF header
-  - id: fa_version
+  fasta_version:
     type: string
     default: "hg38"
-    doc: reference version used by PureCN
-  - id: thread_num
-    type: int
+  thread_num:
+    type: long
     default: 8
-    doc: number of thread used by PureCN and some other tools
-  - id: var_prob_thres
+  seed:
+    type: long
+    default: 123
+  var_prob_thres:
     type: float
     default: 0.2
-    doc: threshold for posterior probability of somatic variants calculated by PureCN |
-         this threshold is used in the filtering step
-  - id: gem_max_mismatch
-    type: int
-    default: 2
-  - id: gem_max_edit
-    type: int
-    default: 2
-
-  #conditional inputs
-  - id: run_with_normaldb
-    type:
-      type: array
-      items: int
-  - id: run_without_normaldb
-    type:
-      type: array
-      items: int
-
-outputs:
-  - id: filtered_vcf_uuid
-    type: string
-    outputSource: upload_outputs/filtered_vcf_uuid
-  - id: filtered_vcf_index_uuid
-    type: string
-    outputSource: upload_outputs/filtered_vcf_index_uuid
-  - id: filtration_metric_uuid
-    type: string?
-    outputSource: upload_outputs/filtration_metric_uuid
-  - id: dnacopy_seg_uuid
-    type: string?
-    outputSource: upload_outputs/dnacopy_seg_uuid
-  - id: archive_tar_uuid
-    type: string?
-    outputSource: upload_outputs/archive_tar_uuid
 
 steps:
-  - id: extract_fa
-    run: subworkflows/tools/bioclient_download.cwl
+  extract:
+    run: subworkflows/extract.cwl
     in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: fa_uuid
-      - id: file_size
-        source: fa_filesize
-    out:
-      - id: output
+      bioclient_config: bioclient_config
+      tumor_bam_gdc_id: tumor_bam_gdc_id
+      tumor_index_gdc_id: tumor_index_gdc_id
+      raw_vcf_gdc_id: raw_vcf_gdc_id
+      raw_vcf_index_gdc_id: raw_vcf_index_gdc_id
+      reference_fa_gdc_id: reference_fa_gdc_id
+      reference_fai_gdc_id: reference_fai_gdc_id
+      reference_dict_gdc_id: reference_dict_gdc_id
+      reference_main_dict_gdc_id: reference_main_dict_gdc_id
+      bigwig_gdc_id: bigwig_gdc_id
+      capture_kit_gdc_id: capture_kit_gdc_id
+      gemindex_gdc_id: gemindex_gdc_id
+      intervalweightfile_gdc_id: intervalweightfile_gdc_id
+      normaldb_gdc_id: normaldb_gdc_id
+    out: [
+      tumor_with_index,
+      raw_vcf_with_index,
+      reference_with_index,
+      main_reference_dict,
+      bigwig,
+      capture_kit,
+      gemindex,
+      intervalweightfile,
+      normaldb
+    ]
 
-  - id: extract_fai
-    run: subworkflows/tools/bioclient_download.cwl
+  transform:
+    run: subworkflows/transform.cwl
     in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: fai_uuid
-      - id: file_size
-        source: fai_filesize
-    out:
-      - id: output
+      job_uuid: job_uuid
+      experimental_strategy: experimental_strategy
+      project_id: project_id
+      caller_id: caller_id
+      aliquot_id: aliquot_id
+      case_id: case_id
+      bam_uuid: bam_uuid
+      patient_barcode: patient_barcode
+      sample_barcode: sample_barcode
+      run_without_normaldb: run_without_normaldb
+      run_with_normaldb: run_with_normaldb
+      fasta_version: fasta_version
+      fasta_name: fasta_name
+      thread_num: thread_num
+      seed: seed
+      var_prob_thres: var_prob_thres
+      tumor_bam: extract/tumor_with_index
+      raw_vcf: extract/raw_vcf_with_index
+      reference: extract/reference_with_index
+      main_dict: extract/main_reference_dict
+      bigwig: extract/bigwig
+      capture_kit: extract/capture_kit
+      gemindex: extract/gemindex
+      intervalweightfile: extract/intervalweightfile
+      normaldb: extract/normaldb
+    out: [
+      purecn_dnacopy_seg,
+      purecn_filtration_metric,
+      purecn_tar,
+      annotated_vcf
+    ]
 
-  - id: extract_dict
-    run: subworkflows/tools/bioclient_download.cwl
+  load:
+    run: subworkflows/load.cwl
     in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: dict_uuid
-      - id: file_size
-        source: dict_filesize
-    out:
-      - id: output
+      bioclient_config: bioclient_config
+      bioclient_upload_bucket: bioclient_upload_bucket
+      job_uuid: job_uuid
+      filtered_vcf_file: transform/annotated_vcf
+      filtration_metric_file: transform/purecn_filtration_metric
+      dnacopy_seg_file: transform/purecn_dnacopy_seg
+      archive_tar_file: transform/purecn_tar
+    out: [
+      filtered_vcf_uuid,
+      filtered_vcf_index_uuid,
+      filtration_metric_uuid,
+      dnacopy_seg_uuid,
+      archive_tar_uuid
+    ]
 
-  - id: extract_fa_main
-    run: subworkflows/tools/bioclient_download.cwl
-    in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: fa_main_uuid
-      - id: file_size
-        source: fa_main_filesize
-    out:
-      - id: output
-
-  - id: extract_fai_main
-    run: subworkflows/tools/bioclient_download.cwl
-    in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: fai_main_uuid
-      - id: file_size
-        source: fai_main_filesize
-    out:
-      - id: output
-
-  - id: extract_dict_main
-    run: subworkflows/tools/bioclient_download.cwl
-    in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: dict_main_uuid
-      - id: file_size
-        source: dict_main_filesize
-    out:
-      - id: output
-
-  - id: extract_bam
-    run: subworkflows/tools/bioclient_download.cwl
-    in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: bam_uuid
-      - id: file_size
-        source: bam_filesize
-    out:
-      - id: output
-
-  - id: extract_bai
-    run: subworkflows/tools/bioclient_download.cwl
-    in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: bai_uuid
-      - id: file_size
-        source: bai_filesize
-    out:
-      - id: output
-
-  - id: extract_vcf
-    run: subworkflows/tools/bioclient_download.cwl
-    in:
-      - id: config_file
-        source: bioclient_config
-      - id: download_handle
-        source: vcf_uuid
-      - id: file_size
-        source: vcf_filesize
-    out:
-      - id: output
-
-  - id: extract_with_normaldb
-    run: subworkflows/extract_with_normaldb.cwl
-    scatter: run_with_normaldb
-    in:
-      - id: run_with_normaldb
-        source: run_with_normaldb
-      - id: bioclient_config
-        source: bioclient_config
-      - id: capture_kit_uuid
-        source: capture_kit_uuid
-      - id: capture_kit_filesize
-        source: capture_kit_filesize
-      - id: bigwig_uuid
-        source: bigwig_uuid
-      - id: bigwig_filesize
-        source: bigwig_filesize
-      - id: gemindex_uuid
-        source: gemindex_uuid
-      - id: gemindex_filesize
-        source: gemindex_filesize
-      - id: normaldb_uuid
-        source: normaldb_uuid
-      - id: target_weight_uuid
-        source: target_weight_uuid
-      - id: target_weight_filesize
-        source: target_weight_filesize
-    out:
-      - id: bigwig
-      - id: capture_kit
-      - id: gemindex
-      - id: normaldb
-      - id: target_weight
-        
-  - id: transform
-    run: transform.cwl
-    in:
-      - id: fa
-        source: extract_fa/output
-      - id: fai
-        source: extract_fai/output
-      - id: dict
-        source: extract_dict/output
-      - id: fa_main
-        source: extract_fa_main/output
-      - id: fai_main
-        source: extract_fai_main/output
-      - id: dict_main
-        source: extract_dict_main/output
-      - id: bam
-        source: extract_bam/output
-      - id: bai
-        source: extract_bai/output
-      - id: vcf
-        source: extract_vcf/output
-      - id: job_uuid
-        source: job_uuid
-      - id: aliquot_id
-        source: aliquot_id
-      - id: case_id
-        source: case_id
-      - id: project_id
-        source: project_id
-      - id: caller_id
-        source: caller_id
-      - id: experimental_strategy
-        source: experimental_strategy
-      - id: run_with_normaldb
-        source: run_with_normaldb
-      - id: capture_kit
-        source: extract_with_normaldb/capture_kit
-      - id: bigwig
-        source: extract_with_normaldb/bigwig
-      - id: gemindex
-        source: extract_with_normaldb/gemindex
-      - id: normaldb
-        source: extract_with_normaldb/normaldb
-      - id: target_weight
-        source: extract_with_normaldb/target_weight
-    out:
-      - id: vcf
-      - id: filtration_metric
-      - id: dnacopy_seg
-      - id: tar
-
-  - id: load_vcf
-    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
-    in:
-      - id: config-file
-        source: bioclient_config
-      - id: input
-        source: transform/vcf
-      - id: upload-bucket
-        source: bioclient_load_bucket
-      - id: upload-key
-        valueFrom: $(inputs.job_uuid)/$(inputs.input.basename)
-      - id: job_uuid
-        source: job_uuid
-        valueFrom: $(null)
-    out:
-      - id: output
-
-  - id: load_vcf_index
-    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
-    in:
-      - id: config-file
-        source: bioclient_config
-      - id: input
-        source: transform/vcf
-        valueFrom: $(self.secondaryFiles[0])
-      - id: upload-bucket
-        source: bioclient_load_bucket
-      - id: upload-key
-        valueFrom: $(inputs.job_uuid)/$(inputs.input.secondaryFiles[0])
-      - id: job_uuid
-        source: job_uuid
-        valueFrom: $(null)
-    out:
-      - id: output
-
-  - id: load_filtration_metric
-    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
-    in:
-      - id: config-file
-        source: bioclient_config
-      - id: input
-        source: transform/filtration_metric
-      - id: upload-bucket
-        source: bioclient_load_bucket
-      - id: upload-key
-        valueFrom: $(inputs.job_uuid)/$(inputs.input.basename)
-      - id: job_uuid
-        source: job_uuid
-        valueFrom: $(null)
-
-  - id: load_dnacopy_seg
-    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
-    in:
-      - id: config-file
-        source: bioclient_config
-      - id: input
-        source: transform/dnacopy_seg
-      - id: upload-bucket
-        source: bioclient_load_bucket
-      - id: upload-key
-        valueFrom: $(inputs.job_uuid)/$(inputs.input.basename)
-      - id: job_uuid
-        source: job_uuid
-        valueFrom: $(null)
-
-  - id: load_tar
-    run: subworkflows/tools/bio_client_upload_pull_uuid.cwl
-    in:
-      - id: config-file
-        source: bioclient_config
-      - id: input
-        source: transform/tar
-      - id: upload-bucket
-        source: bioclient_load_bucket
-      - id: upload-key
-        valueFrom: $(inputs.job_uuid)/$(inputs.input.basename)
-      - id: job_uuid
-        source: job_uuid
-        valueFrom: $(null)
-
-  - id: emit_vcf_uuid
-    run: subworkflows/tools/emit_json_value.cwl
-    in:
-      - id: input
-        source: load_vcf/output
-      - id: key
-        valueFrom: did
-    out:
-      - id: output
-
-  - id: emit_vcf_index_uuid
-    run: subworkflows/tools/emit_json_value.cwl
-    in:
-      - id: input
-        source: load_vcf_index/output
-      - id: key
-        valueFrom: did
-    out:
-      - id: output
-
-  - id: emit_filtration_metric_uuid
-    run: subworkflows/tools/emit_json_value.cwl
-    in:
-      - id: input
-        source: load_filtration_metric/output
-      - id: key
-        valueFrom: did
-    out:
-      - id: output
-
-  - id: emit_dnacopy_seg_uuid
-    run: subworkflows/tools/emit_json_value.cwl
-    in:
-      - id: input
-        source: load_dnacopy_seg/output
-      - id: key
-        valueFrom: did
-    out:
-      - id: output
-
-  - id: emit_tar_uuid
-    run: subworkflows/tools/emit_json_value.cwl
-    in:
-      - id: input
-        source: load_vcf/tar
-      - id: key
-        valueFrom: did
-    out:
-      - id: output
+outputs:
+  annotated_vcf_uuid:
+    type: string
+    outputSource: load/filtered_vcf_uuid
+  annotated_vcf_index_uuid:
+    type: string
+    outputSource: load/filtered_vcf_index_uuid
+  filtration_metric_uuid:
+    type: string?
+    outputSource: load/filtration_metric_uuid
+  dnacopy_seg_uuid:
+    type: string?
+    outputSource: load/dnacopy_seg_uuid
+  archive_tar_uuid:
+    type: string?
+    outputSource: load/archive_tar_uuid

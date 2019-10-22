@@ -32,6 +32,6 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output_filename)
+      glob: $(inputs.output)
 
 baseCommand: [java, -jar, /usr/local/bin/picard.jar, UpdateVcfSequenceDictionary]

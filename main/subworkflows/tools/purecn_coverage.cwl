@@ -6,7 +6,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:5d5ac8fca6399ae8ff1587b2678d32449249d44fa132498ed9231286bbea2c97
+    dockerPull: quay.io/ncigdc/purecn:1.14.3
 
 inputs:
   - id: bam
@@ -37,7 +37,7 @@ inputs:
     type: long
     default: 24
     inputBinding:
-      prefix: --cpu
+      prefix: --cores
 
 outputs:
   - id: coverage

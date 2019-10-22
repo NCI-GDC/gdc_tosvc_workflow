@@ -60,10 +60,10 @@ outputs:
     outputSource: filter_purecn_outputs/output
   - id: filtration_metric
     type: File
-    outputSource: modify_purecn_outputs/output_filtration_metric
+    outputSource: modify_purecn_outputs/output_filtration_metric_file
   - id: dnacopy_seg
     type: File
-    outputSource: modify_purecn_outputs/output_dnacopy_seg
+    outputSource: modify_purecn_outputs/output_dnacopy_seg_file
   - id: tar_purecn_output
     type: File
     outputSource: tar_purecn/output
@@ -83,13 +83,10 @@ steps:
     run: tools/picard_mergevcfs.cwl
     in:
       - id: input
-        source: [
-        vcf,
-        picard_sortvcf/output
-        ]
+        source: [ vcf, picard_sortvcf/output ]
       - id: output
         source: filename_prefix
-        valueFrom: $(self).merged_mutect_purecn.vcf
+        valueFrom: $(self + ".merged_mutect_purecn.vcf")
       - id: sequence_dictionary
         source: fai
     out:
@@ -104,28 +101,28 @@ steps:
         source: var_prob_thres
       - id: output
         source: filename_prefix
-        valueFrom: $(self).filtered_purecn.vcf
+        valueFrom: $(self + ".filtered_purecn.vcf")
     out:
       - id: output
 
   - id: modify_purecn_outputs
     run: tools/modify_purecn_outputs.cwl
     in:
-      - id: sampleid
+      - id: sample_id
         source: aliquotid
-      - id: purecn_csv
+      - id: metric_file
         source: purecn_csv
-      - id: purecn_dnacopy_seg
+      - id: dnacopy_seg_file
         source: purecn_dnacopy_seg
-      - id: modified_metric
+      - id: modified_metric_file
         source: filename_prefix
-        valueFrom: $(self).filtration_metric.tsv
-      - id: modified_seg
+        valueFrom: $(self + ".filtration_metric.tsv")
+      - id: modified_seg_file
         source: filename_prefix
-        valueFrom: $(self).dnacopy_seg.tsv
+        valueFrom: $(self + ".dnacopy_seg.tsv")
     out:
-      - id: output_filtration_metric
-      - id: output_dnacopy_seg
+      - id: output_filtration_metric_file
+      - id: output_dnacopy_seg_file
 
   - id: tar_purecn
     run: tools/tar_gz.cwl
@@ -151,6 +148,6 @@ steps:
         ]
       - id: file
         source: filename_prefix
-        valueFrom: $(self).variant_filtration_archive.tar.gz
+        valueFrom: $(self + ".variant_filtration_archive.tar.gz")
     out:
       - id: output

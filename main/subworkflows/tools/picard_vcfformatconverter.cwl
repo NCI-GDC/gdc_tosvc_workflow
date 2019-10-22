@@ -23,7 +23,7 @@ inputs:
       prefix: INPUT=
       separate: false
 
-  - id: output
+  - id: output_filename
     type: string
     inputBinding:
       prefix: OUTPUT=
@@ -40,7 +40,7 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output)
+      glob: $(inputs.output_filename)
     secondaryFiles:
       - ".tbi"
 

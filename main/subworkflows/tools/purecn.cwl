@@ -11,6 +11,7 @@ requirements:
 successCodes:
   - 0
   - 1
+  - 9
 
 inputs:
   - id: force
@@ -88,11 +89,11 @@ inputs:
     inputBinding:
       prefix: --tumor
 
-  - id: vcf
+  - id: raw_vcf
     type: File
     inputBinding:
       prefix: --vcf
-  
+
   - id: seed
     type: long
     inputBinding:
@@ -154,7 +155,7 @@ outputs:
     outputBinding:
       glob: $(inputs.sampleid + "_variants.csv")
 
-  - id: vcf
+  - id: out_vcf
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + ".vcf")

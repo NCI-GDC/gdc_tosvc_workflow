@@ -20,7 +20,7 @@ inputs:
   bam:
     type: File
     secondaryFiles: [^.bai]
-  vcf: File
+  raw_vcf: File
 
   #parameters
   seed: long
@@ -40,7 +40,7 @@ inputs:
   normaldb: File
 
 outputs:
-  purecn_vcf:
+  filtered_vcf:
     type: File
     outputSource: determine_purecn_outputs/output_vcf_file
   filtration_metric:
@@ -52,6 +52,9 @@ outputs:
   tar:
     type: File?
     outputSource: determine_purecn_outputs/output_archive_tar_file
+  output_suffix:
+    type: string
+    outputSource: determine_purecn_outputs/suffix
 
 steps:
   call_somatic_variants:
@@ -61,7 +64,7 @@ steps:
       fasta: fasta
       genome: fasta_version
       bam: bam
-      vcf: vcf
+      raw_vcf: raw_vcf
       bigwig: bigwig
       capture_kit: capture_kit
       normaldb: normaldb
@@ -80,7 +83,7 @@ steps:
       rds,
       segmentation_pdf,
       variants_csv,
-      vcf,
+      purecn_vcf,
       interval_bed,
       interval_interval,
       coverage_coverage,
@@ -92,7 +95,7 @@ steps:
   determine_file_exists:
     run: tools/determine_file_exists.cwl
     in:
-      purecn_vcf_file: call_somatic_variants/vcf
+      purecn_vcf_file: call_somatic_variants/purecn_vcf
     out: [ success_purecn, fail_purecn ]
 
   postprocess_purecn:
@@ -106,7 +109,7 @@ steps:
         valueFrom: $(self.secondaryFiles[0])
       filename_prefix: filename_prefix
       var_prob_thres: var_prob_thres
-      vcf: vcf
+      raw_vcf: raw_vcf
       purecn_chromosomes_pdf: call_somatic_variants/chromosomes_pdf
       purecn_csv: call_somatic_variants/csv
       purecn_dnacopy_seg: call_somatic_variants/dnacopy_seg
@@ -116,14 +119,14 @@ steps:
       purecn_loh_csv: call_somatic_variants/loh_csv
       purecn_pdf: call_somatic_variants/pdf
       purecn_segmentation_pdf: call_somatic_variants/segmentation_pdf
-      purecn_vcf: call_somatic_variants/vcf
+      purecn_vcf: call_somatic_variants/purecn_vcf
       purecn_interval_interval: call_somatic_variants/interval_interval
       purecn_interval_bed: call_somatic_variants/interval_bed
       purecn_coverage_coverage: call_somatic_variants/coverage_coverage
       purecn_coverage_loess_png: call_somatic_variants/coverage_loess_png
       purecn_coverage_loess_qc_txt: call_somatic_variants/coverage_loess_qc_txt
       purecn_coverage_loess_txt: call_somatic_variants/coverage_loess_txt
-    out: [ vcf, filtration_metric, dnacopy_seg, tar_purecn_output ]
+    out: [ out_vcf, filtration_metric, dnacopy_seg, tar_purecn_output ]
 
   annot_fail_purecn_vcf:
     run: tools/annot_fail_purecn_vcf.cwl
@@ -131,9 +134,9 @@ steps:
     in:
       fail_purecn: determine_file_exists/fail_purecn
       purecn_log: call_somatic_variants/log
-      vcf: vcf
-      output:
-        source: vcf
+      vcf: raw_vcf
+      output_filename:
+        source: raw_vcf
         valueFrom: $(self.basename + ".annot_fail_purecn.vcf")
     out: [ output ]
 
@@ -141,8 +144,14 @@ steps:
     run: tools/determine_purecn_outputs.cwl
     in:
       purecn_fail_vcf_file: annot_fail_purecn_vcf/output
-      purecn_success_vcf_file: postprocess_purecn/vcf
+      purecn_success_vcf_file: postprocess_purecn/out_vcf
       filtration_metric_file: postprocess_purecn/filtration_metric
       dnacopy_seg_file: postprocess_purecn/dnacopy_seg
       archive_tar_file: postprocess_purecn/tar_purecn_output
-    out: [ output_vcf_file, output_filtration_metric_file, output_dnacopy_seg_file, output_archive_tar_file ]
+    out: [
+      output_vcf_file,
+      output_filtration_metric_file,
+      output_dnacopy_seg_file,
+      output_archive_tar_file,
+      suffix
+    ]

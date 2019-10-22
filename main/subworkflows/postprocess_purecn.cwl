@@ -19,7 +19,7 @@ inputs:
     type: string
   - id: fai
     type: File
-  - id: vcf
+  - id: raw_vcf
     type: File
   - id: purecn_vcf
     type: File
@@ -55,7 +55,7 @@ inputs:
     type: File
 
 outputs:
-  - id: vcf
+  - id: out_vcf
     type: File
     outputSource: filter_purecn_outputs/output
   - id: filtration_metric
@@ -74,7 +74,7 @@ steps:
     in:
       - id: input
         source: purecn_vcf
-      - id: output
+      - id: output_filename
         valueFrom: $(inputs.input.basename).gz
     out:
       - id: output
@@ -83,8 +83,8 @@ steps:
     run: tools/picard_mergevcfs.cwl
     in:
       - id: input
-        source: [ vcf, picard_sortvcf/output ]
-      - id: output
+        source: [ raw_vcf, picard_sortvcf/output ]
+      - id: output_filename
         source: filename_prefix
         valueFrom: $(self + ".merged_mutect_purecn.vcf")
       - id: sequence_dictionary
@@ -99,7 +99,7 @@ steps:
         source: picard_mergevcfs/output
       - id: prob_thres
         source: var_prob_thres
-      - id: output
+      - id: output_filename
         source: filename_prefix
         valueFrom: $(self + ".filtered_purecn.vcf")
     out:
@@ -129,7 +129,7 @@ steps:
     in:
       - id: input
         source: [
-          vcf,
+          raw_vcf,
           purecn_csv,
           purecn_dnacopy_seg,
           purecn_segmentation_pdf,

@@ -41,7 +41,7 @@ steps:
         source: vcf
       - id: sequence_dictionary
         source: dict_main
-      - id: output
+      - id: output_filename
         source: vcf
         valueFrom: $(self.basename + ".updatedseqdict.vcf")
     out:
@@ -86,7 +86,7 @@ steps:
     in:
       - id: input
         source: format_header/output_vcf_file
-      - id: output
+      - id: output_filename
         source: format_header/output_vcf_file
         valueFrom: $(self.basename + ".gz")
     out:
@@ -99,7 +99,7 @@ steps:
         source: sortvcf/output
       - id: new_sample_name
         valueFrom: "TUMOR"
-      - id: output
+      - id: output_filename
         source: sortvcf/output
         valueFrom: $(self.basename)
     out:
@@ -110,7 +110,7 @@ steps:
     in:
       - id: input
         source: rename_sample/output
-      - id: output
+      - id: output_filename
         source: filename_prefix
         valueFrom: $(self + ".variant_filtration.vcf.gz")
     out:

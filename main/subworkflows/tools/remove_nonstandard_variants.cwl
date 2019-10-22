@@ -15,7 +15,7 @@ inputs:
     inputBinding:
       position: 0
 
-  - id: output
+  - id: output_filename
     type: string
     inputBinding:
         position: 1
@@ -24,6 +24,6 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output)
+      glob: $(inputs.output_filename)
 
 baseCommand: [python, /opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py]

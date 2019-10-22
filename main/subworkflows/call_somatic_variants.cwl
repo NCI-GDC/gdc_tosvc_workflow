@@ -18,7 +18,7 @@ inputs:
     type: File
     secondaryFiles:
       - ^.bai
-  - id: vcf
+  - id: raw_vcf
     type: File
   - id: capture_kit
     type: File
@@ -82,9 +82,9 @@ outputs:
     type: [File, "null"]
     outputSource: purecn/variants_csv
 
-  - id: vcf
+  - id: purecn_vcf
     type: [File, "null"]
-    outputSource: purecn/vcf
+    outputSource: purecn/out_vcf
 
   - id: interval_bed
     type: File
@@ -154,11 +154,11 @@ steps:
         source: purecn_coverage/loess_txt
       - id: sampleid
         source: sampleid
-      - id: vcf
-        source: vcf
+      - id: raw_vcf
+        source: raw_vcf
       - id: cores
         source: thread_num
-      - id: seed 
+      - id: seed
         source: seed
     out:
       - id: chromosomes_pdf
@@ -172,4 +172,4 @@ steps:
       - id: rds
       - id: segmentation_pdf
       - id: variants_csv
-      - id: vcf
+      - id: out_vcf

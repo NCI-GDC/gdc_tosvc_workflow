@@ -16,7 +16,7 @@ inputs:
       position: 1
       prefix: --input_vcf
 
-  - id: output
+  - id: output_filename
     type: string
     inputBinding:
       position: 2
@@ -26,6 +26,6 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output)
+      glob: $(inputs.output_filename)
 
 baseCommand: ['python', '/gdc_tosvc_tools/filter_mutect_outputs.py']

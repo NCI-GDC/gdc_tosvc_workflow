@@ -63,13 +63,14 @@ steps:
       experimental_strategy: experimental_strategy
       projectid: project_id
       callerid: caller_id
+      run_with_normaldb: run_with_normaldb
     out: [ output ]
 
   remove_nonstandard_variants:
     run: tools/remove_nonstandard_variants.cwl
     in:
       input: raw_vcf
-      output:
+      output_filename:
         valueFrom: "std.vcf"
     out: [ output ]
 
@@ -79,7 +80,7 @@ steps:
     in:
       run_without_normaldb: run_without_normaldb
       input: remove_nonstandard_variants/output
-      output:
+      output_filename:
         source: remove_nonstandard_variants/output
         valueFrom: $(self.basename + ".filtered_mutect.vcf")
     out: [ output ]
@@ -91,7 +92,7 @@ steps:
       run_with_normaldb: run_with_normaldb
       fasta: reference
       bam: tumor_bam
-      vcf: raw_vcf
+      raw_vcf: raw_vcf
       seed: seed
       aliquotid: aliquot_id
       fasta_version: fasta_version
@@ -103,7 +104,7 @@ steps:
       gemindex: gemindex
       intervalweightfile: intervalweightfile
       normaldb: normaldb
-    out: [ purecn_vcf, filtration_metric, dnacopy_seg, tar ]
+    out: [ filtered_vcf, filtration_metric, dnacopy_seg, tar, output_suffix ]
 
   determine_filtration:
     run: tools/determine_purecn_gdcfiltration.cwl
@@ -111,7 +112,7 @@ steps:
       archive_tar_file: purecn_with_normaldb/tar
       dnacopy_seg_file: purecn_with_normaldb/dnacopy_seg
       filtration_metric_file: purecn_with_normaldb/filtration_metric
-      normaldb_vcf_file: purecn_with_normaldb/purecn_vcf
+      normaldb_vcf_file: purecn_with_normaldb/filtered_vcf
       no_normaldb_vcf_file: filter_mutect_no_normaldb/output
     out: [ dnacopy_seg, filtration_metric, tar, vcf ]
 
@@ -123,11 +124,13 @@ steps:
       caseid: case_id
       dict_main: main_dict
       fasta_name: fasta_name
-      filename_prefix: get_prefix/output
+      filename_prefix:
+        source: [ get_prefix/output, purecn_with_normaldb/output_suffix ]
+        valueFrom: $(self[0] + self[1])
       patient_barcode: patient_barcode
       sample_barcode: sample_barcode
       vcf: determine_filtration/vcf
-    out: [ output ]
+    out: [ anno_output ]
 
 outputs:
   purecn_dnacopy_seg:
@@ -141,4 +144,4 @@ outputs:
     outputSource: determine_filtration/tar
   annotated_vcf:
     type: File
-    outputSource: annotation/output
+    outputSource: annotation/anno_output

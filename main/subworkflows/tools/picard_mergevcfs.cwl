@@ -34,7 +34,7 @@ inputs:
         prefix: INPUT=
         separate: false
 
-  - id: output
+  - id: output_filename
     type: string
     inputBinding:
       prefix: OUTPUT=
@@ -45,7 +45,7 @@ inputs:
     inputBinding:
       prefix: SEQUENCE_DICTIONARY=
       separate: false
-      
+
   - id: tmp_dir
     type: string
     default: .
@@ -64,7 +64,7 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output)
+      glob: $(inputs.output_filename)
     secondaryFiles:
       - .tbi
 

@@ -16,6 +16,8 @@ inputs:
     type: [string, "null"]
   - id: callerid
     type: [string, "null"]
+  - id: run_with_normaldb
+    type: int[]?
 
 outputs:
   - id: output
@@ -26,6 +28,11 @@ expression: |
      var exp = inputs.experimental_strategy.toLowerCase().replace(/[\-]/g, " ").replace(/\s+/g, '_');
      var pid = inputs.projectid ? inputs.projectid + '.': '';
      var cid = inputs.callerid ? '.' + inputs.callerid.replace(/[\-]/g, " ").replace(/\s+/g, '_') : '';
-     var pfx = pid + inputs.job_uuid + '.' + exp + cid; 
+     if (Array.isArray(inputs.run_with_normaldb) && inputs.run_with_normaldb.length == 1){
+       var ndb = ".with_normaldb"
+     } else {
+       var ndb = ".no_normaldb"
+     }
+     var pfx = pid + inputs.job_uuid + '.' + exp + cid + ndb;
      return {'output': pfx};
    }

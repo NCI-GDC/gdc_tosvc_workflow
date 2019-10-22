@@ -23,7 +23,7 @@ inputs:
       position: 3
       prefix: --prob_thres
 
-  - id: output
+  - id: output_filename
     type: string
     inputBinding:
       position: 2
@@ -33,6 +33,6 @@ outputs:
   - id: output
     type: File
     outputBinding:
-      glob: $(inputs.output)
+      glob: $(inputs.output_filename)
 
 baseCommand: [python, /gdc_tosvc_tools/filter_purecn_outputs.py]

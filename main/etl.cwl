@@ -34,7 +34,7 @@ inputs:
   project_id: string?
   caller_id:
     type: string
-    default: "tosvf"
+    default: "purecn"
   aliquot_id: string
   case_id: string
   bam_uuid: string

@@ -37,7 +37,6 @@ inputs:
     default: "purecn"
   aliquot_id: string
   case_id: string
-  bam_uuid: string
   patient_barcode: string
   sample_barcode: string
   # PARAMETER
@@ -104,7 +103,7 @@ steps:
       caller_id: caller_id
       aliquot_id: aliquot_id
       case_id: case_id
-      bam_uuid: bam_uuid
+      bam_uuid: tumor_bam_gdc_id
       patient_barcode: patient_barcode
       sample_barcode: sample_barcode
       run_without_normaldb: run_without_normaldb

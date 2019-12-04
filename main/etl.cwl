@@ -148,10 +148,10 @@ steps:
     ]
 
 outputs:
-  annotated_vcf_uuid:
+  filtered_vcf_uuid:
     type: string
     outputSource: load/filtered_vcf_uuid
-  annotated_vcf_index_uuid:
+  filtered_vcf_index_uuid:
     type: string
     outputSource: load/filtered_vcf_index_uuid
   filtration_metric_uuid:

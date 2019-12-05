@@ -42,6 +42,12 @@ inputs:
     inputBinding:
       prefix: --offtarget
 
+  - id: mintargetwidth
+    type: int
+    default: 100
+    inputBinding:
+      prefix: --mintargetwidth
+
 arguments:
   - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).txt
     prefix: --outfile

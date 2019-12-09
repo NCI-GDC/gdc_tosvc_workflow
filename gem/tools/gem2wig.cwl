@@ -1,12 +1,12 @@
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: gem to wig
 requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/gem2wig:latest
   - class: InlineJavascriptRequirement
+doc: |
+  convert gem to wig
 
 inputs:
   - id: indexfile

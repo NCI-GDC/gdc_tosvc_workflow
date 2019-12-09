@@ -1,18 +1,13 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: get_readlen
 requirements:
   - class: DockerRequirement
     dockerPull: biocontainers/samtools
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
-
-stdout: readlen.txt
-
-baseCommand: ["samtools", "view"]
+doc: |
+  get read length
 
 inputs:
   - id: bam
@@ -25,6 +20,10 @@ inputs:
 outputs:
   - id: readlen
     type: stdout
+
+stdout: readlen.txt
+
+baseCommand: ["samtools", "view"]
 
 arguments:
   - valueFrom: "|"

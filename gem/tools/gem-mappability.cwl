@@ -1,12 +1,12 @@
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: gem mappability
 requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/gem-mappability:latest
   - class: InlineJavascriptRequirement
+doc: |
+  create gem mappability file
 
 inputs:
   - id: indexfile

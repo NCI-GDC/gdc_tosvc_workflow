@@ -1,13 +1,12 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: gem indexer
 requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/gem-indexer:latest
   - class: InlineJavascriptRequirement
+doc: |
+  index gem file
 
 inputs:
   - id: thread_num

@@ -1,8 +1,6 @@
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: extract_wig_size
 requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/gdc_tosvc_tools:latest
@@ -11,8 +9,8 @@ requirements:
     listing:
       - $(inputs.wig_file)
       - $(inputs.size_file)
-
-baseCommand: [python, /gdc_tosvc_tools/extract_wig_size.py]
+doc: |
+  extract wig size
 
 inputs:
   - id: wig_file
@@ -37,3 +35,5 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.size_file.basename + '.trim.tsv')
+
+baseCommand: [python, /gdc_tosvc_tools/extract_wig_size.py]

@@ -1,8 +1,6 @@
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: wig2bigwig
 requirements:
   - class: DockerRequirement
     dockerPull: namsyvo/wig2bigwig:latest
@@ -11,6 +9,8 @@ requirements:
     listing:
       - $(inputs.wigfile)
       - $(inputs.sizefile)
+doc: |
+  convert wig to bigwig
 
 inputs:
   - id: wigfile

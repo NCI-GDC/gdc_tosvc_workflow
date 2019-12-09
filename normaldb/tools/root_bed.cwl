@@ -1,7 +1,6 @@
-#!/usr/bin/env cwl-runner
-
+class: CommandLineTool
 cwlVersion: v1.0
-
+id: root_bed
 requirements:
   - class: DockerRequirement
     dockerPull: ubuntu:disco-20190809
@@ -21,8 +20,8 @@ requirements:
     tmpdirMax: 1
     outdirMin: 1
     outdirMax: 1
-
-class: CommandLineTool
+doc: |
+  root bed
 
 inputs:
   - id: bed

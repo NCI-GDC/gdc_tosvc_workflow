@@ -1,18 +1,18 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: purecn_intervals
 requirements:
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/purecn:latest
+doc: |
+  purecn intervals
 
 inputs:
   - id: fasta
     type: File
     inputBinding:
       prefix: --fasta
+    secondaryFiles: [.fai]
 
   - id: bed
     type: File
@@ -41,6 +41,11 @@ inputs:
     default: true
     inputBinding:
       prefix: --force
+
+  - id: mintargetwidth
+    type: int
+    inputBinding:
+      prefix: --mintargetwidth
 
 arguments:
   - valueFrom: $(inputs.bed.nameroot)

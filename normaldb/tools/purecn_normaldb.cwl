@@ -1,9 +1,6 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: purecn_normaldb
 requirements:
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/purecn:latest
@@ -20,6 +17,8 @@ requirements:
         return inputlist;
       }
   - class: InlineJavascriptRequirement
+doc: |
+  purecn normalDB
 
 inputs:
   - id: inputcoveragefiles
@@ -60,12 +59,12 @@ outputs:
     type: File
     outputBinding:
       glob: "interval_weights_*.png"
-      
+
   - id: rds
     type: File
     outputBinding:
       glob: "normalDB_*.rds"
-      
+
   - id: txt
     type: File
     outputBinding:

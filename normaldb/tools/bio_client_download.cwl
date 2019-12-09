@@ -1,8 +1,6 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: CommandLineTool
+cwlVersion: v1.0
+id: bio_client_download
 requirements:
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/bio-client:latest
@@ -16,6 +14,8 @@ requirements:
     tmpdirMax: $(Math.ceil (inputs.file_size / 1048576))
     outdirMin: $(Math.ceil (inputs.file_size / 1048576))
     outdirMax: $(Math.ceil (inputs.file_size / 1048576))
+doc: |
+  bioclient download
 
 inputs:
   - id: config-file
@@ -51,5 +51,5 @@ outputs:
     type: File
     outputBinding:
       glob: "*"
-    
+
 baseCommand: [/usr/local/bin/bio_client.py]

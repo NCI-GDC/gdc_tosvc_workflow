@@ -1,12 +1,11 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: CommandLineTool
-
+cwlVersion: v1.0
+id: purecn_coverage
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:latest
+    dockerPull: quay.io/ncigdc/purecn:1.14.3
+doc: |
+  purecn coverage
 
 inputs:
   - id: bam
@@ -37,7 +36,7 @@ inputs:
     type: long
     default: 24
     inputBinding:
-      prefix: --cpu
+      prefix: --cores
 
 outputs:
   - id: coverage

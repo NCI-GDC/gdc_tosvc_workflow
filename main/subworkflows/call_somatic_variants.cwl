@@ -1,13 +1,12 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: call_somatic_variants
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
+doc: |
+  call somatic variants
 
 inputs:
   - id: fasta
@@ -112,7 +111,7 @@ outputs:
 
 steps:
   - id: purecn_interval
-    run: tools/purecn_intervals.cwl
+    run: ../tools/purecn_intervals.cwl
     in:
       - id: fasta
         source: fasta
@@ -127,7 +126,7 @@ steps:
       - id: interval
 
   - id: purecn_coverage
-    run: tools/purecn_coverage.cwl
+    run: ../tools/purecn_coverage.cwl
     in:
       - id: bam
         source: bam
@@ -142,7 +141,7 @@ steps:
       - id: loess_txt
 
   - id: purecn
-    run: tools/purecn.cwl
+    run: ../tools/purecn.cwl
     in:
       - id: genome
         source: genome

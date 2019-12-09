@@ -1,15 +1,14 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: transform
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement
+doc: |
+  main transform workflow
 
 inputs:
   # Metadata
@@ -57,7 +56,7 @@ inputs:
 
 steps:
   get_prefix:
-    run: tools/make_file_prefix.cwl
+    run: ../tools/make_file_prefix.cwl
     in:
       job_uuid: job_uuid
       experimental_strategy: experimental_strategy
@@ -67,7 +66,7 @@ steps:
     out: [ output ]
 
   remove_nonstandard_variants:
-    run: tools/remove_nonstandard_variants.cwl
+    run: ../tools/remove_nonstandard_variants.cwl
     in:
       input: raw_vcf
       output_filename:
@@ -75,7 +74,7 @@ steps:
     out: [ output ]
 
   filter_mutect_no_normaldb:
-    run: tools/filter_mutect_outputs.cwl
+    run: ../tools/filter_mutect_outputs.cwl
     scatter: run_without_normaldb
     in:
       run_without_normaldb: run_without_normaldb
@@ -107,7 +106,7 @@ steps:
     out: [ filtered_vcf, filtration_metric, dnacopy_seg, tar, output_suffix ]
 
   determine_filtration:
-    run: tools/determine_purecn_gdcfiltration.cwl
+    run: ../tools/determine_purecn_gdcfiltration.cwl
     in:
       archive_tar_file: purecn_with_normaldb/tar
       dnacopy_seg_file: purecn_with_normaldb/dnacopy_seg

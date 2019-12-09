@@ -1,8 +1,0 @@
-metric_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall/TCGA-FF-8046-01A-11D-2210-10.csv
-dnacopy_seg_file:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall/TCGA-FF-8046-01A-11D-2210-10_dnacopy.seg
-modified_metric_file: TCGA-FF-8046-01A-11D-2210-10.gdc.csv
-modified_seg_file: TCGA-FF-8046-01A-11D-2210-10_dnacopy.gdc.seg

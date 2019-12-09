@@ -1,14 +1,13 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: postprocess_purecn
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
   - class: SubworkflowFeatureRequirement
+doc: |
+  post-process purecn
 
 inputs:
   - id: filename_prefix
@@ -70,7 +69,7 @@ outputs:
 
 steps:
   - id: picard_sortvcf
-    run: tools/picard_sortvcf.cwl
+    run: ../tools/picard_sortvcf.cwl
     in:
       - id: input
         source: purecn_vcf
@@ -80,7 +79,7 @@ steps:
       - id: output
 
   - id: picard_mergevcfs
-    run: tools/picard_mergevcfs.cwl
+    run: ../tools/picard_mergevcfs.cwl
     in:
       - id: input
         source: [ raw_vcf, picard_sortvcf/output ]
@@ -93,7 +92,7 @@ steps:
       - id: output
 
   - id: filter_purecn_outputs
-    run: tools/filter_purecn_outputs.cwl
+    run: ../tools/filter_purecn_outputs.cwl
     in:
       - id: vcf
         source: picard_mergevcfs/output
@@ -106,7 +105,7 @@ steps:
       - id: output
 
   - id: modify_purecn_outputs
-    run: tools/modify_purecn_outputs.cwl
+    run: ../tools/modify_purecn_outputs.cwl
     in:
       - id: sample_id
         source: aliquotid
@@ -125,7 +124,7 @@ steps:
       - id: output_dnacopy_seg_file
 
   - id: tar_purecn
-    run: tools/tar_gz.cwl
+    run: ../tools/tar_gz.cwl
     in:
       - id: input
         source: [

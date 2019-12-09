@@ -1,13 +1,12 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: load
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
+doc: |
+  upload results
 
 inputs:
   - id: bioclient_config
@@ -44,7 +43,7 @@ outputs:
 
 steps:
   - id: upload_filtered_vcf_file
-    run: tools/bioclient_cond_upload.cwl
+    run: ../tools/bioclient_cond_upload.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -59,7 +58,7 @@ steps:
       - id: output_file_uuid
 
   - id: upload_filtered_vcf_index_file
-    run: tools/bioclient_cond_upload.cwl
+    run: ../tools/bioclient_cond_upload.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -75,7 +74,7 @@ steps:
       - id: output_file_uuid
 
   - id: upload_filtration_metric_file
-    run: tools/bioclient_cond_upload.cwl
+    run: ../tools/bioclient_cond_upload.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -97,7 +96,7 @@ steps:
       - id: output_file_uuid
 
   - id: upload_dnacopy_seg_file
-    run: tools/bioclient_cond_upload.cwl
+    run: ../tools/bioclient_cond_upload.cwl
     in:
       - id: config_file
         source: bioclient_config
@@ -119,7 +118,7 @@ steps:
       - id: output_file_uuid
 
   - id: upload_archive_tar_file
-    run: tools/bioclient_cond_upload.cwl
+    run: ../tools/bioclient_cond_upload.cwl
     in:
       - id: config_file
         source: bioclient_config

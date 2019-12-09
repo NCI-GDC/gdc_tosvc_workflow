@@ -1,1 +1,0 @@
-cwltool --debug --tmpdir-prefix /mnt/tmp/ --tmp-outdir-prefix /mnt/tmp/ --outdir /mnt/data/DLBC37/PureCN_cwl/cwl_test_cond/ gdc_mutect_purecn_filtration_workflow.cwl gdc_mutect_purecn_filtration_workflow_normaldb_tcgadlbc.yaml  2>/mnt/data/DLBC37/PureCN_cwl/cwl_test_cond/gdc_mutect_purecn_filtration_workflow_normaldb_tcgadlbc.log &

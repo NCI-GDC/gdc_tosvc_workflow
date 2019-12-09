@@ -1,13 +1,12 @@
-#!/usr/bin/env cwl-runner
-
+class: Workflow
 cwlVersion: v1.0
-
+id: stage
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
-
-class: Workflow
+doc: |
+  stage input data
 
 inputs:
   tumor_bam: File
@@ -20,7 +19,7 @@ inputs:
 
 steps:
   standardize_tumor_bai:
-    run: tools/rename_file.cwl
+    run: ../tools/rename_file.cwl
     in:
       input_file: tumor_bai
       output_filename:
@@ -34,7 +33,7 @@ steps:
     out: [ out_file ]
 
   make_tumor_bam:
-    run: tools/make_secondary.cwl
+    run: ../tools/make_secondary.cwl
     in:
       parent_file: tumor_bam
       children:
@@ -43,7 +42,7 @@ steps:
     out: [ output ]
 
   make_reference:
-    run: tools/make_secondary.cwl
+    run: ../tools/make_secondary.cwl
     in:
       parent_file: reference_fa
       children:
@@ -52,7 +51,7 @@ steps:
     out: [ output ]
 
   make_raw_vcf:
-    run: tools/make_secondary.cwl
+    run: ../tools/make_secondary.cwl
     in:
       parent_file: raw_vcf
       children:

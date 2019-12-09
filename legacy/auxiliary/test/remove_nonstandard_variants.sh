@@ -1,1 +1,0 @@
-cwltool --debug --tmpdir-prefix /mnt/tmp/ --tmp-outdir-prefix /mnt/tmp/ --outdir /mnt/data/DLBC37/PureCN_cwl/cwl_test/ remove_nonstandard_variants.cwl remove_nonstandard_variants.yaml  2>/mnt/data/DLBC37/PureCN_cwl/cwl_test/remove_nonstandard_variants.log

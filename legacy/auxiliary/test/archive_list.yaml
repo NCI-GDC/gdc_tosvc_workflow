@@ -1,9 +1,0 @@
-input_files:
-  - class: File
-    path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10.csv
-  - class: File
-    path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_dnacopy.seg
-  - class: File
-    path: /mnt/data/DLBC37/PureCN_cwl/tumor_varcall_test1/TCGA-FA-8693-01A-11D-2397-10_genes.csv
-
-output_archive_name: test.tar.gz

@@ -1,8 +1,0 @@
-{
-    "config_file": {
-        "class": "File",
-        "path": "/mnt/scripts/tosvc_workflow/inout/bioclient.json"
-    },
-    "download_handle": "ade45def-94ef-4284-81af-979488542af3",
-    "file_size": 4414051216
-}

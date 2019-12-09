@@ -1,8 +1,0 @@
-normaldir:
-  class: Directory
-  path: /mnt/data/DLBC37/PureCN/normaldb_capture_cwltest/
-covfile:
-  class: File
-  path: /mnt/data/DLBC37/PureCN/normaldb_capture_cwltest/normal_capture.list
-genome: hg38
-outdir: .

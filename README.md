@@ -1,3 +1,9 @@
-# TOSVC_Workflow
-* https://wiki.uchicago.edu/pages/viewpage.action?spaceKey=CDIS&title=Mutect2-PureCN-GDCFiltration
-* https://docs.google.com/document/d/1TCsYuJTygPk-XE18-JU6kRHa-jQQXF3sQBcRoEwWJgs/edit
+# GDC Tumor only PureCN filtration workflow
+
+## External Users
+
+The entrypoint CWL workflows for external users are:
+*   Generation of mappability track: gem/workflows/generate_track_data.cwl
+*   Generation of capture kit specific NormalDB: normaldb/transform.cwl
+*   Tumor only PureCN filtration workflow: main/subworkflows/transform.cwl
+

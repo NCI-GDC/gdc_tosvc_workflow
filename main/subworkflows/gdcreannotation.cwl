@@ -1,12 +1,11 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: gdc_reannotation
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
+doc: |
+  gdc re-annotation
 
 inputs:
   - id: aliquotid
@@ -35,7 +34,7 @@ outputs:
 
 steps:
   - id: update_dictionary
-    run: tools/picard_updatevcfsequencedictionary.cwl
+    run: ../tools/picard_updatevcfsequencedictionary.cwl
     in:
       - id: input
         source: vcf
@@ -48,7 +47,7 @@ steps:
       - id: output
 
   - id: filter_contigs
-    run: tools/gdc_variant_filtration_tool.cwl
+    run: ../tools/gdc_variant_filtration_tool.cwl
     in:
       - id: input_vcf
         source: update_dictionary/output
@@ -59,7 +58,7 @@ steps:
       - id: output_vcf_file
 
   - id: format_header
-    run: tools/gdc_format_vcf_header.cwl
+    run: ../tools/gdc_format_vcf_header.cwl
     in:
       - id: input_vcf
         source: filter_contigs/output_vcf_file
@@ -82,7 +81,7 @@ steps:
       - id: output_vcf_file
 
   - id: sortvcf
-    run: tools/picard_sortvcf.cwl
+    run: ../tools/picard_sortvcf.cwl
     in:
       - id: input
         source: format_header/output_vcf_file
@@ -93,7 +92,7 @@ steps:
       - id: output
 
   - id: rename_sample
-    run: tools/picard_renamesampleinvcf.cwl
+    run: ../tools/picard_renamesampleinvcf.cwl
     in:
       - id: input
         source: sortvcf/output
@@ -106,7 +105,7 @@ steps:
       - id: output
 
   - id: vcfformatconverter
-    run: tools/picard_vcfformatconverter.cwl
+    run: ../tools/picard_vcfformatconverter.cwl
     in:
       - id: input
         source: rename_sample/output

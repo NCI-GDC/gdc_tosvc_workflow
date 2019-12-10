@@ -1,14 +1,13 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: extract
 requirements:
   - class: InlineJavascriptRequirement
   - class: ScatterFeatureRequirement
   - class: SubworkflowFeatureRequirement
-    
+doc: |
+  extract
+
 inputs:
   - id: bioclient_config
     type: File
@@ -63,7 +62,7 @@ outputs:
   - id: bigwig
     type: File
     outputSource: extract_bigwig/output
-  
+
 steps:
   - id: extract_bams
     run: extract_bam.cwl

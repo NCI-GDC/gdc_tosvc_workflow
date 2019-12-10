@@ -1,7 +1,6 @@
-#!/usr/bin/env cwl-runner
-
+class: CommandLineTool
 cwlVersion: v1.0
-
+id: rename
 requirements:
   - class: DockerRequirement
     dockerPull: ubuntu:disco-20190913
@@ -10,8 +9,8 @@ requirements:
       - entryname: $(inputs.filename)
         entry: $(inputs.input)
   - class: InlineJavascriptRequirement
-
-class: CommandLineTool
+doc: |
+  rename file
 
 inputs:
   - id: input

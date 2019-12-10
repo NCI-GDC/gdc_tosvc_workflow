@@ -1,14 +1,14 @@
-#!/usr/bin/env cwl-runner
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: purecn_gdcfiltration
 requirements:
   - class: InlineJavascriptRequirement
   - class: MultipleInputFeatureRequirement
   - class: ScatterFeatureRequirement
   - class: StepInputExpressionRequirement
   - class: SubworkflowFeatureRequirement
+doc: |
+  purecn gdc filtration
 
 inputs:
   #ref data
@@ -24,6 +24,7 @@ inputs:
 
   #parameters
   seed: long
+  exclude_chrM: int[]
   aliquotid: string
   fasta_version: string
   filename_prefix: string
@@ -71,6 +72,7 @@ steps:
       intervalweightfile: intervalweightfile
       thread_num: thread_num
       seed: seed
+      exclude_chrM: exclude_chrM
     out: [
       chromosomes_pdf,
       csv,
@@ -93,7 +95,7 @@ steps:
     ]
 
   determine_file_exists:
-    run: tools/determine_file_exists.cwl
+    run: ../tools/determine_file_exists.cwl
     in:
       purecn_vcf_file: call_somatic_variants/purecn_vcf
     out: [ success_purecn, fail_purecn ]
@@ -129,7 +131,7 @@ steps:
     out: [ out_vcf, filtration_metric, dnacopy_seg, tar_purecn_output ]
 
   annot_fail_purecn_vcf:
-    run: tools/annot_fail_purecn_vcf.cwl
+    run: ../tools/annot_fail_purecn_vcf.cwl
     scatter: fail_purecn
     in:
       fail_purecn: determine_file_exists/fail_purecn
@@ -141,7 +143,7 @@ steps:
     out: [ output ]
 
   determine_purecn_outputs:
-    run: tools/determine_purecn_outputs.cwl
+    run: ../tools/determine_purecn_outputs.cwl
     in:
       purecn_fail_vcf_file: annot_fail_purecn_vcf/output
       purecn_success_vcf_file: postprocess_purecn/out_vcf

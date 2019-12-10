@@ -1,9 +1,9 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-    
+cwlVersion: v1.0
+id: extract_bam
+doc: |
+  extract bam files
+
 inputs:
   - id: bioclient_config
     type: File
@@ -20,7 +20,7 @@ outputs:
   - id: output
     type: File
     outputSource: root_bam/output
-    
+
 steps:
   - id: extract_bam
     run: tools/bio_client_download.cwl

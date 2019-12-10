@@ -1,14 +1,13 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: etl
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
   - class: SubworkflowFeatureRequirement
+doc: |
+  extract transform load
 
 inputs:
   # BIOCLIENT
@@ -60,6 +59,11 @@ inputs:
   seed:
     type: long
     default: 123
+  exclude_chrM:
+    type:
+      type: array
+      items: int
+    default: []
   var_prob_thres:
     type: float
     default: 0.2
@@ -112,6 +116,7 @@ steps:
       fasta_name: fasta_name
       thread_num: thread_num
       seed: seed
+      exclude_chrM: exclude_chrM
       var_prob_thres: var_prob_thres
       tumor_bam: extract/tumor_with_index
       raw_vcf: extract/raw_vcf_with_index

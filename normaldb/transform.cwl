@@ -1,14 +1,12 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: transform
 requirements:
   - class: InlineJavascriptRequirement
   - class: ScatterFeatureRequirement
   - class: StepInputExpressionRequirement
-  - class: MultipleInputFeatureRequirement
+doc: |
+  transform
 
 inputs:
   - id: bams
@@ -31,20 +29,22 @@ inputs:
     type: string
   - id: target_capture_kit
     type: string
+  - id: mintargetwidth
+    type: int
 
 outputs:
   - id: purecn_bed
     type: [File, "null"]
-    outputSource: rename_bed/output
+    outputSource: purecn_normaldb/bed
   - id: purecn_png
     type: File
-    outputSource: rename_png/output
+    outputSource: purecn_normaldb/png
   - id: purecn_rds
     type: File
-    outputSource: rename_rds/output
+    outputSource: purecn_normaldb/rds
   - id: purecn_txt
     type: File
-    outputSource: rename_txt/output
+    outputSource: purecn_normaldb/txt
 
 steps:
   - id: purecn_intervals
@@ -56,6 +56,8 @@ steps:
         source: fasta
       - id: bigwig
         source: bigwig
+      - id: mintargetwidth
+        source: mintargetwidth
     out:
       - id: output
 
@@ -102,12 +104,7 @@ steps:
       - id: input
         source: purecn_normaldb/bed
       - id: filename
-        source: [
-        target_capture_kit,
-        project_id,
-        genome
-        ]
-        valueFrom: low_coverage_targets.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).bed
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).low_coverage_targets.bed
     out:
       - id: output
 
@@ -117,12 +114,7 @@ steps:
       - id: input
         source: purecn_normaldb/png
       - id: filename
-        source: [
-        target_capture_kit,
-        project_id,
-        genome
-        ]
-        valueFrom: interval_weights.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).png
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).interval_weights.png
     out:
       - id: output
 
@@ -132,12 +124,7 @@ steps:
       - id: input
         source: purecn_normaldb/rds
       - id: filename
-        source: [
-        target_capture_kit,
-        project_id,
-        genome
-        ]
-        valueFrom: normalDB.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).rds
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).normalDB.rds
     out:
       - id: output
 
@@ -147,11 +134,6 @@ steps:
       - id: input
         source: purecn_normaldb/txt
       - id: filename
-        source: [
-        target_capture_kit,
-        project_id,
-        genome
-        ]
-        valueFrom: interval_weights.$(self[0].replace(/\s/g, '').toLowerCase()).$(self[1].toLowerCase()).$(self[2]).txt
+        valueFrom: $(inputs.target_capture_kit.replace(/\s/g, '').toLowerCase()).$(inputs.project_id.toLowerCase()).$(inputs.genome).interval_weights.txt
     out:
       - id: output

@@ -1,14 +1,13 @@
-#!/usr/bin/env cwl-runner
-
-cwlVersion: v1.0
-
 class: Workflow
-
+cwlVersion: v1.0
+id: etl
 requirements:
   - class: InlineJavascriptRequirement
   - class: ScatterFeatureRequirement
   - class: SubworkflowFeatureRequirement
-    
+doc: |
+  extract transform load
+
 inputs:
   - id: bioclient_config
     type: File
@@ -50,6 +49,8 @@ inputs:
     type: string
   - id: target_capture_kit
     type: string
+  - id: mintargetwidth
+    type: int
 
 outputs:
   - id: bed
@@ -64,7 +65,7 @@ outputs:
   - id: txt
     type: File
     outputSource: transform/purecn_txt
-  
+
 steps:
   - id: extract_bams
     run: extract_bam.cwl
@@ -159,6 +160,8 @@ steps:
         source: project_id
       - id: target_capture_kit
         source: target_capture_kit
+      - id: mintargetwidth
+        source: mintargetwidth
     out:
       - id: purecn_bed
       - id: purecn_png

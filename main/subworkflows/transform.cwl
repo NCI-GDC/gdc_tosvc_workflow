@@ -34,6 +34,7 @@ inputs:
   fasta_name: string
   thread_num: long
   seed: long
+  exclude_chrM: int[]
   var_prob_thres:
     type: float
     default: 0.2
@@ -93,6 +94,7 @@ steps:
       bam: tumor_bam
       raw_vcf: raw_vcf
       seed: seed
+      exclude_chrM: exclude_chrM
       aliquotid: aliquot_id
       fasta_version: fasta_version
       filename_prefix: get_prefix/output

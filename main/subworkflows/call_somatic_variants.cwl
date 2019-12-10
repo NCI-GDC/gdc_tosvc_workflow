@@ -35,6 +35,8 @@ inputs:
     type: long
   - id: seed
     type: long
+  - id: exclude_chrM
+    type: int[]
 
 outputs:
   - id: chromosomes_pdf
@@ -110,13 +112,30 @@ outputs:
     outputSource: purecn_coverage/loess_txt
 
 steps:
+  - id: exclude_baits_chrM
+    run: ../tools/modify_baitsfile.cwl
+    scatter: exclude_chrM
+    in:
+      exclude_chrM: exclude_chrM
+      input_baits: capture_kit
+    out:
+      - id: modified_baits
+
+  - id: determine_baitsfile
+    run: ../tools/determine_baitsfile.cwl
+    in:
+      origin: capture_kit
+      modified: exclude_baits_chrM/modified_baits
+    out:
+      - id: baits_bed
+
   - id: purecn_interval
     run: ../tools/purecn_intervals.cwl
     in:
       - id: fasta
         source: fasta
       - id: infile
-        source: capture_kit
+        source: determine_baitsfile/baits_bed
       - id: mappability
         source: bigwig
       - id: genome

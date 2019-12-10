@@ -24,6 +24,7 @@ inputs:
 
   #parameters
   seed: long
+  exclude_chrM: int[]
   aliquotid: string
   fasta_version: string
   filename_prefix: string
@@ -71,6 +72,7 @@ steps:
       intervalweightfile: intervalweightfile
       thread_num: thread_num
       seed: seed
+      exclude_chrM: exclude_chrM
     out: [
       chromosomes_pdf,
       csv,

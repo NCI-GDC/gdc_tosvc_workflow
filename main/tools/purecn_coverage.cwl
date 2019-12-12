@@ -2,6 +2,7 @@ class: CommandLineTool
 cwlVersion: v1.0
 id: purecn_coverage
 requirements:
+  - class: InlineJavascriptRequirement
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/purecn:1.14.3
 doc: |

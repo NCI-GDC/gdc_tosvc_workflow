@@ -2,6 +2,7 @@ class: CommandLineTool
 cwlVersion: v1.0
 id: purecn_intervals
 requirements:
+  - class: InlineJavascriptRequirement
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/purecn:1.14.3
 doc: |
@@ -12,6 +13,7 @@ inputs:
     type: File
     inputBinding:
       prefix: --fasta
+    secondaryFiles: [.fai, ^.dict]
 
   - id: force
     type: boolean

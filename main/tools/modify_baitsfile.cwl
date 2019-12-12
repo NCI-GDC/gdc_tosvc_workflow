@@ -16,10 +16,10 @@ outputs:
   modified_baits:
     type: File
     outputBinding:
-      glob: '*.no_chrM'
+      glob: '*.no_chrM.bed'
 baseCommand: []
 arguments:
   - position: 0
     shellQuote: false
     valueFrom: >-
-      zcat $(inputs.input_baits.path) | grep -v chrM > $(inputs.input_baits.nameroot + '.no_chrM')
+      zcat $(inputs.input_baits.path) | grep -v chrM > $(inputs.input_baits.nameroot + '.no_chrM.bed')

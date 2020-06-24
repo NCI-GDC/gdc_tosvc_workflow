@@ -9,51 +9,51 @@ doc: |
   Format VCF header for GDC tumor-only variant calling pipeline
 
 inputs:
-  - id: input_vcf
+  input_vcf:
     type: File
     doc: "input vcf file"
     inputBinding:
       prefix: --input_vcf
 
-  - id: output_vcf
+  output_vcf:
     type: string
     doc: output basename of vcf
     inputBinding:
       prefix: --output_vcf
 
-  - id: reference_name
+  reference_name:
     type: [string, "null"]
     default: GRCh38.d1.vd1.fa
     inputBinding:
       prefix: --reference_name
 
-  - id: patient_barcode
+  patient_barcode:
     type: string
     inputBinding:
       prefix: --patient_barcode
 
-  - id: caseid
+  caseid:
     type: string
     inputBinding:
       prefix: --case_id
 
-  - id: sample_barcode
+  sample_barcode:
     type: string
     inputBinding:
       prefix: --sample_barcode
 
-  - id: aliquot_uuid
+  aliquot_uuid:
     type: string
     inputBinding:
       prefix: --aliquot_uuid
 
-  - id: bam_uuid
+  bam_uuid:
     type: string
     inputBinding:
       prefix: --bam_uuid
 
 outputs:
-  - id: output_vcf_file
+  output_vcf_file:
     type: File
     outputBinding:
       glob: $(inputs.output_vcf)

@@ -19,7 +19,6 @@ inputs:
   reference_main_dict_gdc_id: string
   bigwig_gdc_id: string
   capture_kit_gdc_id: string
-  gemindex_gdc_id: string
   intervalweightfile_gdc_id: string
   normaldb_gdc_id: string
 
@@ -84,12 +83,6 @@ steps:
       config_file: bioclient_config
       download_handle: capture_kit_gdc_id
     out: [ output ]
-  gemindex_download:
-    run: ../tools/bio_client_download.cwl
-    in:
-      config_file: bioclient_config
-      download_handle: gemindex_gdc_id
-    out: [ output ]
   intervalweight_download:
     run: ../tools/bio_client_download.cwl
     in:
@@ -133,9 +126,6 @@ outputs:
   capture_kit:
     type: File
     outputSource: capture_kit_download/output
-  gemindex:
-    type: File
-    outputSource: gemindex_download/output
   intervalweightfile:
     type: File
     outputSource: intervalweight_download/output

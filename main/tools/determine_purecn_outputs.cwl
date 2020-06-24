@@ -7,38 +7,33 @@ doc: |
   determine purecn outputs
 
 inputs:
-  - id: purecn_fail_vcf_file
+  purecn_fail_vcf_file:
     type:
       type: array
       items: ['null', File]
-  - id: purecn_success_vcf_file
+  purecn_success_vcf_file:
     type:
       type: array
       items: ['null', File]
-  - id: filtration_metric_file
+  filtration_metric_file:
     type:
       type: array
       items: ['null', File]
-  - id: dnacopy_seg_file
+  dnacopy_seg_file:
     type:
       type: array
       items: ['null', File]
-  - id: archive_tar_file
+  archive_tar_file:
     type:
       type: array
       items: ['null', File]
 
 outputs:
-  - id: output_vcf_file
-    type: File
-  - id: output_filtration_metric_file
-    type: File?
-  - id: output_dnacopy_seg_file
-    type: File?
-  - id: output_archive_tar_file
-    type: File?
-  - id: suffix
-    type: string
+  output_vcf_file: File
+  output_filtration_metric_file: File?
+  output_dnacopy_seg_file: File?
+  output_archive_tar_file: File?
+  suffix: string
 
 expression: |
    ${

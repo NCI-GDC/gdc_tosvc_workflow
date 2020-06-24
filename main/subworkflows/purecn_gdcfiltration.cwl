@@ -32,11 +32,11 @@ inputs:
   var_prob_thres:
     type: float
     default: 0.2
+  mintargetwidth: int?
 
-  #GEM and PureCN ref files
+  #PureCN ref files
   bigwig: File
   capture_kit: File
-  gemindex: File
   intervalweightfile: File
   normaldb: File
 
@@ -69,10 +69,11 @@ steps:
       bigwig: bigwig
       capture_kit: capture_kit
       normaldb: normaldb
-      intervalweightfile: intervalweightfile
       thread_num: thread_num
       seed: seed
       exclude_chrM: exclude_chrM
+      mintargetwidth: mintargetwidth
+      intervalweightfile: intervalweightfile
     out: [
       chromosomes_pdf,
       csv,

@@ -7,15 +7,14 @@ doc: |
   determine if file exists
 
 inputs:
-  - id: purecn_vcf_file
-    type: File?
+  purecn_vcf_file: File?
 
 outputs:
-  - id: success_purecn
+  success_purecn:
     type:
       type: array
       items: int
-  - id: fail_purecn
+  fail_purecn:
     type:
       type: array
       items: int

@@ -8,153 +8,153 @@ requirements:
 successCodes:
   - 0
   - 1
-  - 9
+
 doc: |
   purecn
 
 inputs:
-  - id: force
-    type: boolean
-    default: true
+  sampleid:
+    type: string
     inputBinding:
-      prefix: --force
+      prefix: --sampleid
 
-  - id: genome
+  tumor:
+    type: File
+    inputBinding:
+      prefix: --tumor
+
+  raw_vcf:
+    type: File
+    inputBinding:
+      prefix: --vcf
+
+  intervals:
+    type: File
+    inputBinding:
+      prefix: --intervals
+
+  normaldb:
+    type: File
+    inputBinding:
+      prefix: --normaldb
+
+  intervalweightfile:
+    type: File?
+    inputBinding:
+      prefix: --intervalweightfile
+
+  genome:
     type: string
     default: hg38
     inputBinding:
       prefix: --genome
 
-  - id: intervals
-    type: File
+  cores:
+    type: long
     inputBinding:
-      prefix: --intervals
+      prefix: --cores
 
-  - id: intervalweightfile
-    type: [File, "null"]
+  seed:
+    type: long
     inputBinding:
-      prefix: --intervalweightfile
+      prefix: --seed
 
-  - id: normal
-    type: [File, "null"]
+  force:
+    type: boolean
+    default: true
+    inputBinding:
+      prefix: --force
+
+  normal:
+    type: File?
     inputBinding:
       prefix: --normal
 
-  - id: normal_panel
-    type: [File, "null"]
+  normal_panel:
+    type: File?
     inputBinding:
       prefix: --normal_panel
 
-  - id: normaldb
-    type: File
-    inputBinding:
-      prefix: --normaldb
-
-  - id: out
-    type: string
-    default: .
-    inputBinding:
-      prefix: --out
-
-  - id: outvcf
+  outvcf:
     type: boolean
     default: true
     inputBinding:
       prefix: --outvcf
 
-  - id: cores
-    type: long
-    inputBinding:
-      prefix: --cores
-
-  - id: postoptimize
+  postoptimize:
     type: boolean
     default: true
     inputBinding:
       prefix: --postoptimize
 
-  - id: sampleid
-    type: string
-    inputBinding:
-      prefix: --sampleid
-
-  - id: statsfile
-    type: [File, "null"]
+  statsfile:
+    type: File?
     inputBinding:
       prefix: --statsfile
 
-  - id: tumor
-    type: File
+  output_dir:
+    type: string
+    default: .
     inputBinding:
-      prefix: --tumor
-
-  - id: raw_vcf
-    type: File
-    inputBinding:
-      prefix: --vcf
-
-  - id: seed
-    type: long
-    inputBinding:
-      prefix: --seed
+      prefix: --out
 
 outputs:
-  - id: chromosomes_pdf
+  chromosomes_pdf:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + "_chromosomes.pdf")
 
-  - id: csv
+  csv:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + ".csv")
 
-  - id: dnacopy_seg
+  dnacopy_seg:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + "_dnacopy.seg")
 
-  - id: genes_csv
+  genes_csv:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + "_genes.csv")
 
-  - id: local_optima_pdf
+  local_optima_pdf:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + "_local_optima.pdf")
 
-  - id: log
+  log:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + ".log")
 
-  - id: loh_csv
+  loh_csv:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + "_loh.csv")
 
-  - id: pdf
+  pdf:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + ".pdf")
 
-  - id: rds
+  rds:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + ".rds")
 
-  - id: segmentation_pdf
+  segmentation_pdf:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + "_segmentation.pdf")
 
-  - id: variants_csv
+  variants_csv:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + "_variants.csv")
 
-  - id: out_vcf
+  out_vcf:
     type: File?
     outputBinding:
       glob: $(inputs.sampleid + ".vcf")

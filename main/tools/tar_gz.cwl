@@ -9,27 +9,27 @@ doc: |
   create tar gz
 
 inputs:
-  - id: create
+  create:
     type: boolean
     default: true
     inputBinding:
       prefix: --create
       position: 0
 
-  - id: file
+  file:
     type: string
     inputBinding:
       prefix: --file
       position: 1
 
-  - id: --gzip
+  gzip:
     type: boolean
     default: true
     inputBinding:
       prefix: --gzip
       position: 2
 
-  - id: input
+  input:
     type:
       type: array
       items: File
@@ -37,7 +37,7 @@ inputs:
       position: 3
 
 outputs:
-  - id: output
+  output:
     type: File
     outputBinding:
       glob: $(inputs.file)

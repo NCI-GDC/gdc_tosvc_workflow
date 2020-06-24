@@ -38,6 +38,7 @@ inputs:
   var_prob_thres:
     type: float
     default: 0.2
+  mintargetwidth: int?
   # Inputs
   raw_vcf:
     type: File
@@ -51,7 +52,6 @@ inputs:
     secondaryFiles: [^.bai]
   bigwig: File
   capture_kit: File
-  gemindex: File
   intervalweightfile: File
   normaldb: File
 
@@ -100,9 +100,9 @@ steps:
       filename_prefix: get_prefix/output
       thread_num: thread_num
       var_prob_thres: var_prob_thres
+      mintargetwidth: mintargetwidth
       bigwig: bigwig
       capture_kit: capture_kit
-      gemindex: gemindex
       intervalweightfile: intervalweightfile
       normaldb: normaldb
     out: [ filtered_vcf, filtration_metric, dnacopy_seg, tar, output_suffix ]

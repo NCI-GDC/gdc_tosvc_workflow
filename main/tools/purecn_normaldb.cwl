@@ -21,51 +21,51 @@ doc: |
   purecn normalDB
 
 inputs:
-  - id: inputcoveragefiles
+  inputcoveragefiles:
     type:
       type: array
       items: File
 
-  - id: coveragefiles
+  coveragefiles:
     type: File
     inputBinding:
       prefix: --coveragefiles
 
-  - id: force
+  force:
     type: boolean
     default: true
     inputBinding:
       prefix: --force
 
-  - id: genome
+  genome:
     type: string
     default: hg38
     inputBinding:
       prefix: --genome
 
-  - id: outdir
+  outdir:
     type: string
     default: .
     inputBinding:
       prefix: --outdir
 
 outputs:
-  - id: bed
-    type: [File, "null"]
+  bed:
+    type: File?
     outputBinding:
       glob: "low_coverage_targets_*.bed"
 
-  - id: png
+  png:
     type: File
     outputBinding:
       glob: "interval_weights_*.png"
 
-  - id: rds
+  rds:
     type: File
     outputBinding:
       glob: "normalDB_*.rds"
 
-  - id: txt
+  txt:
     type: File
     outputBinding:
       glob: "interval_weights_*.txt"

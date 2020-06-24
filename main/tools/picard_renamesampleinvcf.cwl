@@ -8,7 +8,7 @@ requirements:
 doc: |
   picard RenameSampleInVcf
 inputs:
-  - id: input
+  input:
     type: File
     inputBinding:
       prefix: "INPUT="
@@ -16,20 +16,20 @@ inputs:
     secondaryFiles:
       - ".tbi"
 
-  - id: new_sample_name
+  new_sample_name:
     type: string
     inputBinding:
       prefix: "NEW_SAMPLE_NAME="
       separate: false
 
-  - id: output_filename
+  output_filename:
     type: string
     inputBinding:
       prefix: "OUTPUT="
       separate: false
 
 outputs:
-  - id: output
+  output:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)

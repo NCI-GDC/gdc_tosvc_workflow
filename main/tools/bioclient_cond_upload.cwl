@@ -9,17 +9,17 @@ doc: |
   bioclient conditional upload
 
 inputs:
-  - id: config_file
+  config_file:
     type: File?
-  - id: upload_bucket
+  upload_bucket:
     type: string?
-  - id: upload_key
+  upload_key:
     type: string?
-  - id: input_file
+  input_file:
     type: File?
 
 outputs:
-  - id: output_file_uuid
+  output_file_uuid:
     type: string?
     outputBinding:
       glob: "*_upload.json"

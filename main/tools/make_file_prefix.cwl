@@ -7,20 +7,15 @@ doc: |
   make file name prefix
 
 inputs:
-  - id: job_uuid
-    type: string
-  - id: experimental_strategy
-    type: string
-  - id: projectid
-    type: [string, "null"]
-  - id: callerid
-    type: [string, "null"]
-  - id: run_with_normaldb
+  job_uuid: string
+  experimental_strategy: string
+  projectid: string?
+  callerid: string?
+  run_with_normaldb:
     type: int[]?
 
 outputs:
-  - id: output
-    type: string
+  output: string
 
 expression: |
   ${

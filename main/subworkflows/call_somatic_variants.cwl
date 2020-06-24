@@ -9,185 +9,164 @@ doc: |
   call somatic variants
 
 inputs:
-  - id: fasta
+  fasta:
     type: File
     secondaryFiles:
       - .fai
-  - id: bam
+  bam:
     type: File
     secondaryFiles:
       - ^.bai
-  - id: raw_vcf
-    type: File
-  - id: capture_kit
-    type: File
-  - id: bigwig
-    type: File
-  - id: normaldb
-    type: File
-  - id: intervalweightfile
-    type: File
-  - id: genome
-    type: string
-  - id: sampleid
-    type: string
-  - id: thread_num
-    type: long
-  - id: seed
-    type: long
-  - id: exclude_chrM
-    type: int[]
+  raw_vcf: File
+  capture_kit: File
+  bigwig: File
+  normaldb: File
+  intervalweightfile: File?
+  genome: string
+  sampleid: string
+  thread_num: long
+  seed: long
+  exclude_chrM: int[]
+  mintargetwidth: int?
 
 outputs:
-  - id: chromosomes_pdf
-    type: [File, "null"]
+  chromosomes_pdf:
+    type: File?
     outputSource: purecn/chromosomes_pdf
 
-  - id: csv
-    type: [File, "null"]
+  csv:
+    type: File?
     outputSource: purecn/csv
 
-  - id: dnacopy_seg
-    type: [File, "null"]
+  dnacopy_seg:
+    type: File?
     outputSource: purecn/dnacopy_seg
 
-  - id: genes_csv
-    type: [File, "null"]
+  genes_csv:
+    type: File?
     outputSource: purecn/genes_csv
 
-  - id: local_optima_pdf
-    type: [File, "null"]
+  local_optima_pdf:
+    type: File?
     outputSource: purecn/local_optima_pdf
 
-  - id: log
-    type: [File, "null"]
+  log:
+    type: File?
     outputSource: purecn/log
 
-  - id: loh_csv
-    type: [File, "null"]
+  loh_csv:
+    type: File?
     outputSource: purecn/loh_csv
 
-  - id: pdf
-    type: [File, "null"]
+  pdf:
+    type: File?
     outputSource: purecn/pdf
 
-  - id: rds
-    type: [File, "null"]
+  rds:
+    type: File?
     outputSource: purecn/rds
 
-  - id: segmentation_pdf
-    type: [File, "null"]
+  segmentation_pdf:
+    type: File?
     outputSource: purecn/segmentation_pdf
 
-  - id: variants_csv
-    type: [File, "null"]
+  variants_csv:
+    type: File?
     outputSource: purecn/variants_csv
 
-  - id: purecn_vcf
-    type: [File, "null"]
+  purecn_vcf:
+    type: File?
     outputSource: purecn/out_vcf
 
-  - id: interval_bed
+  interval_bed:
     type: File
     outputSource: purecn_interval/bed
 
-  - id: interval_interval
+  interval_interval:
     type: File
     outputSource: purecn_interval/interval
 
-  - id: coverage_coverage
+  coverage_coverage:
     type: File
     outputSource: purecn_coverage/coverage
 
-  - id: coverage_loess_png
+  coverage_loess_png:
     type: File
     outputSource: purecn_coverage/loess_png
 
-  - id: coverage_loess_qc_txt
+  coverage_loess_qc_txt:
     type: File
     outputSource: purecn_coverage/loess_qc_txt
 
-  - id: coverage_loess_txt
+  coverage_loess_txt:
     type: File
     outputSource: purecn_coverage/loess_txt
 
 steps:
-  - id: exclude_baits_chrM
+  exclude_baits_chrM:
     run: ../tools/modify_baitsfile.cwl
     scatter: exclude_chrM
     in:
       exclude_chrM: exclude_chrM
       input_baits: capture_kit
-    out:
-      - id: modified_baits
+    out: [modified_baits]
 
-  - id: determine_baitsfile
+  determine_baitsfile:
     run: ../tools/determine_baitsfile.cwl
     in:
       origin: capture_kit
       modified: exclude_baits_chrM/modified_baits
-    out:
-      - id: baits_bed
+    out: [baits_bed]
 
-  - id: purecn_interval
+  purecn_interval:
     run: ../tools/purecn_intervals.cwl
     in:
-      - id: fasta
-        source: fasta
-      - id: infile
-        source: determine_baitsfile/baits_bed
-      - id: mappability
-        source: bigwig
-      - id: genome
-        source: genome
-    out:
-      - id: bed
-      - id: interval
+      fasta: fasta
+      infile: determine_baitsfile/baits_bed
+      mappability: bigwig
+      genome: genome
+      mintargetwidth: mintargetwidth
+    out: [
+      bed,
+      interval
+    ]
 
-  - id: purecn_coverage
+  purecn_coverage:
     run: ../tools/purecn_coverage.cwl
     in:
-      - id: bam
-        source: bam
-      - id: interval
-        source: purecn_interval/interval
-      - id: threads
-        source: thread_num
-    out:
-      - id: coverage
-      - id: loess_png
-      - id: loess_qc_txt
-      - id: loess_txt
+      bam: bam
+      interval: purecn_interval/interval
+      threads: thread_num
+    out: [
+      coverage,
+      loess_png,
+      loess_qc_txt,
+      loess_txt
+    ]
 
-  - id: purecn
+  purecn:
     run: ../tools/purecn.cwl
     in:
-      - id: genome
-        source: genome
-      - id: intervals
-        source: purecn_interval/interval
-      - id: normaldb
-        source: normaldb
-      - id: tumor
-        source: purecn_coverage/loess_txt
-      - id: sampleid
-        source: sampleid
-      - id: raw_vcf
-        source: raw_vcf
-      - id: cores
-        source: thread_num
-      - id: seed
-        source: seed
-    out:
-      - id: chromosomes_pdf
-      - id: csv
-      - id: dnacopy_seg
-      - id: genes_csv
-      - id: local_optima_pdf
-      - id: log
-      - id: loh_csv
-      - id: pdf
-      - id: rds
-      - id: segmentation_pdf
-      - id: variants_csv
-      - id: out_vcf
+      sampleid: sampleid
+      tumor: purecn_coverage/loess_txt
+      raw_vcf: raw_vcf
+      intervals: purecn_interval/interval
+      normaldb: normaldb
+      intervalweightfile: intervalweightfile
+      genome: genome
+      cores: thread_num
+      seed: seed
+    out: [
+      chromosomes_pdf,
+      csv,
+      dnacopy_seg,
+      genes_csv,
+      local_optima_pdf,
+      log,
+      loh_csv,
+      pdf,
+      rds,
+      segmentation_pdf,
+      variants_csv,
+      out_vcf
+    ]

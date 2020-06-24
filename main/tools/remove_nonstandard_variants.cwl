@@ -5,24 +5,24 @@ requirements:
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
   - class: InlineJavascriptRequirement
+  - class: ShellCommandRequirement
 doc: |
   remove nonstandard variants
 
 inputs:
-  - id: input
-    type: File
-    inputBinding:
-      position: 0
+  input: File
 
-  - id: output_filename
-    type: string
-    inputBinding:
-        position: 1
+  output_filename: string
 
 outputs:
-  - id: output
+  output:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [python, /opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py]
+baseCommand: []
+arguments:
+  - position: 0
+    shellQuote: false
+    valueFrom: >-
+      python /opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py $(inputs.input.path) $(inputs.output_filename)

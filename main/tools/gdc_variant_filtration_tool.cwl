@@ -9,20 +9,20 @@ doc: |
     Reduce VCF to contigs present in header
 
 inputs:
-  - id: input_vcf
+  input_vcf:
     type: File
     doc: "input vcf file"
     inputBinding:
       prefix: --input_vcf
 
-  - id: output_vcf
+  output_vcf:
     type: string
     doc: output basename of vcf
     inputBinding:
       prefix: --output_vcf
 
 outputs:
-  - id: output_vcf_file
+  output_vcf_file:
     type: File
     outputBinding:
       glob: $(inputs.output_vcf)

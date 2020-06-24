@@ -9,26 +9,26 @@ doc: |
   picard UpdateVcfSequenceDictionary
 
 inputs:
-  - id: input
+  input:
     type: File
     inputBinding:
       prefix: "INPUT="
       separate: false
 
-  - id: sequence_dictionary
+  sequence_dictionary:
     type: File
     inputBinding:
       prefix: SEQUENCE_DICTIONARY=
       separate: false
 
-  - id: output_filename
+  output_filename:
     type: string
     inputBinding:
       prefix: "OUTPUT="
       separate: false
 
 outputs:
-  - id: output
+  output:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)

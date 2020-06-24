@@ -7,40 +7,36 @@ doc: |
   determine if purecn done gdcfiltration
 
 inputs:
-  - id: archive_tar_file
+  archive_tar_file:
     type:
       type: array
       items: ['null', File]
 
-  - id: dnacopy_seg_file
+  dnacopy_seg_file:
     type:
       type: array
       items: ['null', File]
 
-  - id: filtration_metric_file
+  filtration_metric_file:
     type:
       type: array
       items: ['null', File]
 
-  - id: normaldb_vcf_file
+  normaldb_vcf_file:
     type:
       type: array
       items: ['null', File]
 
-  - id: no_normaldb_vcf_file
+  no_normaldb_vcf_file:
     type:
       type: array
       items: ['null', File]
 
 outputs:
-  - id: dnacopy_seg
-    type: File
-  - id: filtration_metric
-    type: File
-  - id: tar
-    type: File
-  - id: vcf
-    type: File
+  dnacopy_seg: File
+  filtration_metric: File
+  tar: File
+  vcf: File
 
 expression: |
    ${

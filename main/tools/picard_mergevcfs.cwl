@@ -18,14 +18,14 @@ doc: |
   picard merge vcfs
 
 inputs:
-  - id: create_index
+  create_index:
     type: string
     default: "true"
     inputBinding:
       prefix: CREATE_INDEX=
       separate: false
 
-  - id: input
+  input:
     type:
       type: array
       items: File
@@ -33,26 +33,26 @@ inputs:
         prefix: INPUT=
         separate: false
 
-  - id: output_filename
+  output_filename:
     type: string
     inputBinding:
       prefix: OUTPUT=
       separate: false
 
-  - id: sequence_dictionary
+  sequence_dictionary:
     type: File
     inputBinding:
       prefix: SEQUENCE_DICTIONARY=
       separate: false
 
-  - id: tmp_dir
+  tmp_dir:
     type: string
     default: .
     inputBinding:
       prefix: TMP_DIR=
       separate: false
 
-  - id: validation_stringency
+  validation_stringency:
     type: string
     default: "STRICT"
     inputBinding:
@@ -60,7 +60,7 @@ inputs:
       separate: false
 
 outputs:
-  - id: output
+  output:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)

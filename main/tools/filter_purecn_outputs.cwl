@@ -9,27 +9,27 @@ doc: |
   filter purecn outputs
 
 inputs:
-  - id: vcf
+  vcf:
     type: File
     inputBinding:
       position: 1
       prefix: --input_vcf
 
-  - id: prob_thres
+  prob_thres:
     type: float
     default: 0.2
     inputBinding:
       position: 3
       prefix: --prob_thres
 
-  - id: output_filename
+  output_filename:
     type: string
     inputBinding:
       position: 2
       prefix: --output_vcf
 
 outputs:
-  - id: output
+  output:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)

@@ -9,26 +9,26 @@ doc: |
   annotate fail purecn vcf
 
 inputs:
-  - id: purecn_log
+  purecn_log:
     type: File
     inputBinding:
       position: 1
       prefix: --purecn_log
 
-  - id: vcf
+  vcf:
     type: File
     inputBinding:
       position: 1
       prefix: --input_vcf
 
-  - id: output_filename
+  output_filename:
     type: string
     inputBinding:
       position: 2
       prefix: --output_vcf
 
 outputs:
-  - id: output
+  output:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)

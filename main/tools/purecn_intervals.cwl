@@ -3,70 +3,78 @@ cwlVersion: v1.0
 id: purecn_intervals
 requirements:
   - class: InlineJavascriptRequirement
+  - class: ShellCommandRequirement
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/purecn:1.14.3
 doc: |
   purecn intervals
 
 inputs:
-  - id: fasta
+  fasta:
     type: File
-    inputBinding:
-      prefix: --fasta
     secondaryFiles: [.fai, ^.dict]
 
-  - id: force
-    type: boolean
-    default: true
-    inputBinding:
-      prefix: --force
-
-  - id: genome
+  genome:
     type: string
     default: hg38
-    inputBinding:
-      prefix: --genome
 
-  - id: infile
-    type: File
-    inputBinding:
-      prefix: --infile
+  infile: File
 
-  - id: mappability
-    type: File
-    inputBinding:
-      prefix: --mappability
+  mappability: File
 
-  - id: offtarget
+  force:
     type: boolean
     default: true
-    inputBinding:
-      prefix: --offtarget
 
-  - id: mintargetwidth
-    type: int
-    default: 100
-    inputBinding:
-      prefix: --mintargetwidth
+  offtarget:
+    type: boolean
+    default: true
 
-arguments:
-  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).txt
-    prefix: --outfile
-    separate: true
-
-  - valueFrom: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).bed
-    prefix: --export
-    separate: true
+  mintargetwidth: int?
 
 outputs:
-  - id: interval
+  interval:
     type: File
     outputBinding:
       glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).txt
 
-  - id: bed
+  bed:
     type: File
     outputBinding:
       glob: $(inputs.fasta.nameroot).$(inputs.infile.nameroot.split('.')[0]).$(inputs.genome).bed
 
-baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/IntervalFile.R]
+baseCommand: []
+arguments:
+  - position: 0
+    shellQuote: false
+    valueFrom: |-
+      ${
+        var cmd = [
+          "Rscript",
+          "/usr/local/lib/R/site-library/PureCN/extdata/IntervalFile.R",
+          "--fasta",
+          inputs.fasta.path,
+          "--genome",
+          inputs.genome,
+          "--infile",
+          inputs.infile.path,
+          "--mappability",
+          inputs.mappability.path,
+          "--outfile",
+          inputs.fasta.nameroot + "." + inputs.infile.nameroot.split('.')[0] + "." + inputs.genome + ".txt",
+          "--export",
+          inputs.fasta.nameroot + "." + inputs.infile.nameroot.split('.')[0] + "." + inputs.genome + ".bed"
+        ]
+        if ( inputs.force ) {
+          cmd.push("--force")
+        }
+        if ( inputs.offtarget ) {
+          cmd.push("--offtarget")
+        }
+        if ( inputs.mintargetwidth ) {
+          cmd.push("--mintargetwidth")
+          cmd.push(inputs.mintargetwidth)
+        }
+        return(cmd.join(' '))
+      }
+

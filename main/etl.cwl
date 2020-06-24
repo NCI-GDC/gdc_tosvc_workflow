@@ -24,7 +24,6 @@ inputs:
   reference_main_dict_gdc_id: string
   bigwig_gdc_id: string
   capture_kit_gdc_id: string
-  gemindex_gdc_id: string
   intervalweightfile_gdc_id: string
   normaldb_gdc_id: string
   # GRAPH
@@ -67,6 +66,7 @@ inputs:
   var_prob_thres:
     type: float
     default: 0.2
+  mintargetwidth: int?
 
 steps:
   extract:
@@ -83,7 +83,6 @@ steps:
       reference_main_dict_gdc_id: reference_main_dict_gdc_id
       bigwig_gdc_id: bigwig_gdc_id
       capture_kit_gdc_id: capture_kit_gdc_id
-      gemindex_gdc_id: gemindex_gdc_id
       intervalweightfile_gdc_id: intervalweightfile_gdc_id
       normaldb_gdc_id: normaldb_gdc_id
     out: [
@@ -93,7 +92,6 @@ steps:
       main_reference_dict,
       bigwig,
       capture_kit,
-      gemindex,
       intervalweightfile,
       normaldb
     ]
@@ -118,13 +116,13 @@ steps:
       seed: seed
       exclude_chrM: exclude_chrM
       var_prob_thres: var_prob_thres
+      mintargetwidth: mintargetwidth
       tumor_bam: extract/tumor_with_index
       raw_vcf: extract/raw_vcf_with_index
       reference: extract/reference_with_index
       main_dict: extract/main_reference_dict
       bigwig: extract/bigwig
       capture_kit: extract/capture_kit
-      gemindex: extract/gemindex
       intervalweightfile: extract/intervalweightfile
       normaldb: extract/normaldb
     out: [

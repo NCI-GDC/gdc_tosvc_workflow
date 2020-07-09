@@ -50,10 +50,10 @@ inputs:
   tumor_bam:
     type: File
     secondaryFiles: [^.bai]
-  bigwig: File
-  capture_kit: File
-  intervalweightfile: File
-  normaldb: File
+  bigwig: File?
+  capture_kit: File?
+  intervalweightfile: File?
+  normaldb: File?
 
 steps:
   get_prefix:

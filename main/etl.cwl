@@ -22,10 +22,10 @@ inputs:
   reference_fai_gdc_id: string
   reference_dict_gdc_id: string
   reference_main_dict_gdc_id: string
-  bigwig_gdc_id: string
-  capture_kit_gdc_id: string
-  intervalweightfile_gdc_id: string
-  normaldb_gdc_id: string
+  bigwig_gdc_id: string?
+  capture_kit_gdc_id: string?
+  intervalweightfile_gdc_id: string?
+  normaldb_gdc_id: string?
   # GRAPH
   job_uuid: string
   experimental_strategy: string

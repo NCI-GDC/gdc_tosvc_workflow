@@ -17,10 +17,10 @@ inputs:
   reference_fai_gdc_id: string
   reference_dict_gdc_id: string
   reference_main_dict_gdc_id: string
-  bigwig_gdc_id: string
-  capture_kit_gdc_id: string
-  intervalweightfile_gdc_id: string
-  normaldb_gdc_id: string
+  bigwig_gdc_id: string?
+  capture_kit_gdc_id: string?
+  intervalweightfile_gdc_id: string?
+  normaldb_gdc_id: string?
 
 steps:
   tumor_bam_download:
@@ -72,25 +72,25 @@ steps:
       download_handle: reference_main_dict_gdc_id
     out: [ output ]
   bigwig_download:
-    run: ../tools/bio_client_download.cwl
+    run: ../tools/bioclient_cond_download.cwl
     in:
       config_file: bioclient_config
       download_handle: bigwig_gdc_id
     out: [ output ]
   capture_kit_download:
-    run: ../tools/bio_client_download.cwl
+    run: ../tools/bioclient_cond_download.cwl
     in:
       config_file: bioclient_config
       download_handle: capture_kit_gdc_id
     out: [ output ]
   intervalweight_download:
-    run: ../tools/bio_client_download.cwl
+    run: ../tools/bioclient_cond_download.cwl
     in:
       config_file: bioclient_config
       download_handle: intervalweightfile_gdc_id
     out: [ output ]
   normaldb_download:
-    run: ../tools/bio_client_download.cwl
+    run: ../tools/bioclient_cond_download.cwl
     in:
       config_file: bioclient_config
       download_handle: normaldb_gdc_id
@@ -121,14 +121,14 @@ outputs:
     type: File
     outputSource: main_dict_download/output
   bigwig:
-    type: File
+    type: File?
     outputSource: bigwig_download/output
   capture_kit:
-    type: File
+    type: File?
     outputSource: capture_kit_download/output
   intervalweightfile:
-    type: File
+    type: File?
     outputSource: intervalweight_download/output
   normaldb:
-    type: File
+    type: File?
     outputSource: normaldb_download/output

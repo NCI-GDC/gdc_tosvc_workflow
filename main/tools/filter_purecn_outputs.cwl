@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: filter_purecn_outputs
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/gdc_tosvc_tools:53aa36674ecf31cfdf3c853046010b6593488d6a
+    dockerPull: quay.io/ncigdc/gdc_tosvc_tools:ea2405fdcc260d1e617216824a903b16508774f1
   - class: InlineJavascriptRequirement
 doc: |
   filter purecn outputs

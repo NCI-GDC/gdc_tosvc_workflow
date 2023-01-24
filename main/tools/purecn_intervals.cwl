@@ -5,7 +5,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:1.14.3
+    dockerPull: quay.io/ncigdc/purecn_docker:2.2.0
 doc: |
   purecn intervals
 

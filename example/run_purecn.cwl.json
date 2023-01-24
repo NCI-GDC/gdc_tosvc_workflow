@@ -1,0 +1,31 @@
+{
+    "job_uuid": "8bbd09aa-6d2b-4c8a-ad9b-8d7575a99f4a",
+    "experimental_strategy": "wxs",
+    "aliquot_id": "cfb7c4bb-0af6-46ce-857e-f032fd7524e7",
+    "case_id": "d606031e-bf2a-42ee-ba4a-7230b3901208",
+    "bam_uuid": "c640f7d5-b314-4fb9-b702-64170c7e3c93",
+    "patient_barcode": "MATCH-Z1A-B4TT",
+    "sample_barcode": "Z1A-EAV520464-TDNA",
+    "run_without_normaldb": [1],
+    "run_with_normaldb": [],
+    "fasta_version": "hg38",
+    "fasta_name": "GRCh38.d1.vd1.fa",
+    "thread_num": 32,
+    "seed": 150,
+    "reference": {
+        "class": "File",
+        "path": "/mnt/SCRATCH/purecn/reference/GRCh38.d1.vd1.fa"
+    },
+    "tumor_bam": {
+        "class": "File",
+        "path": "/mnt/SCRATCH/purecn/xgen-exome/cwl_nopurecn_full/cfb7c4bb-0af6-46ce-857e-f032fd7524e7_wxs_gdc_realn.bam"
+    },
+    "raw_vcf": {
+        "class": "File",
+        "path": "/mnt/SCRATCH/purecn/xgen-exome/cwl_nopurecn_full/MATCH-Z1A.0e271a36-07cb-4c4f-b7ac-5db69d438e26.wxs.tumor_only.gatk4_mutect2.raw_somatic_mutation.vcf.gz"
+    },
+    "main_dict": {
+        "class": "File",
+        "path": "/mnt/SCRATCH/purecn/reference/GRCh38.d1.vd1.dict"
+    }
+}

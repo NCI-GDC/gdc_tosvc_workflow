@@ -4,7 +4,7 @@ id: purecn_coverage
 requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:1.14.3
+    dockerPull: quay.io/ncigdc/purecn_docker:2.2.0
 doc: |
   purecn coverage
 
@@ -31,7 +31,7 @@ inputs:
     type: string
     default: "."
     inputBinding:
-      prefix: --outdir
+      prefix: --out-dir
 
   threads:
     type: long
@@ -43,12 +43,12 @@ outputs:
   coverage:
     type: File
     outputBinding:
-      glob: "*coverage.txt"
+      glob: "*coverage.txt.gz"
 
   loess_txt:
     type: File
     outputBinding:
-      glob: "*coverage_loess.txt"
+      glob: "*coverage_loess.txt.gz"
 
   loess_png:
     type: File

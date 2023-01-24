@@ -22,9 +22,7 @@ inputs:
   reference_fai_gdc_id: string
   reference_dict_gdc_id: string
   reference_main_dict_gdc_id: string
-  bigwig_gdc_id: string?
-  capture_kit_gdc_id: string?
-  intervalweightfile_gdc_id: string?
+  capture_interval_gdc_id: string?
   normaldb_gdc_id: string?
   # GRAPH
   job_uuid: string
@@ -58,19 +56,13 @@ inputs:
   seed:
     type: long
     default: 123
-  exclude_chrM:
-    type:
-      type: array
-      items: int
-    default: []
   var_prob_thres:
     type: float
     default: 0.2
-  mintargetwidth: int?
 
 steps:
   extract:
-    run: subworkflows/extract.cwl
+    run: ../main/subworkflows/extract.cwl
     in:
       bioclient_config: bioclient_config
       tumor_bam_gdc_id: tumor_bam_gdc_id
@@ -81,23 +73,19 @@ steps:
       reference_fai_gdc_id: reference_fai_gdc_id
       reference_dict_gdc_id: reference_dict_gdc_id
       reference_main_dict_gdc_id: reference_main_dict_gdc_id
-      bigwig_gdc_id: bigwig_gdc_id
-      capture_kit_gdc_id: capture_kit_gdc_id
-      intervalweightfile_gdc_id: intervalweightfile_gdc_id
+      capture_interval_gdc_id: capture_interval_gdc_id
       normaldb_gdc_id: normaldb_gdc_id
     out: [
       tumor_with_index,
       raw_vcf_with_index,
       reference_with_index,
       main_reference_dict,
-      bigwig,
-      capture_kit,
-      intervalweightfile,
+      capture_interval,
       normaldb
     ]
 
   transform:
-    run: subworkflows/transform.cwl
+    run: ../main/subworkflows/transform.cwl
     in:
       job_uuid: job_uuid
       experimental_strategy: experimental_strategy
@@ -114,17 +102,13 @@ steps:
       fasta_name: fasta_name
       thread_num: thread_num
       seed: seed
-      exclude_chrM: exclude_chrM
       var_prob_thres: var_prob_thres
-      mintargetwidth: mintargetwidth
+      reference: extract/reference_with_index
       tumor_bam: extract/tumor_with_index
       raw_vcf: extract/raw_vcf_with_index
-      reference: extract/reference_with_index
-      main_dict: extract/main_reference_dict
-      bigwig: extract/bigwig
-      capture_kit: extract/capture_kit
-      intervalweightfile: extract/intervalweightfile
+      capture_interval: extract/capture_interval
       normaldb: extract/normaldb
+      main_dict: extract/main_reference_dict
     out: [
       purecn_dnacopy_seg,
       purecn_filtration_metric,
@@ -133,7 +117,7 @@ steps:
     ]
 
   load:
-    run: subworkflows/load.cwl
+    run: ../main/subworkflows/load.cwl
     in:
       bioclient_config: bioclient_config
       bioclient_upload_bucket: bioclient_upload_bucket

@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: tar_gz
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/xz:b8f105f87b8d69a0414f8997bd5b586e502d9a1aa74d429314ec97cbddd81ff8
+    dockerPull: docker.osdc.io/ncigdc/bio-alpine:base
   - class: InlineJavascriptRequirement
 doc: |
   create tar gz

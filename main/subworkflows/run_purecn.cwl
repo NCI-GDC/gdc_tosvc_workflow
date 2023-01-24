@@ -1,33 +1,25 @@
 class: Workflow
 cwlVersion: v1.0
-id: call_somatic_variants
+id: run_purecn
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: MultipleInputFeatureRequirement
 doc: |
-  call somatic variants
+  run purecn
 
 inputs:
-  fasta:
-    type: File
-    secondaryFiles:
-      - .fai
   bam:
     type: File
     secondaryFiles:
       - ^.bai
   raw_vcf: File
-  capture_kit: File
-  bigwig: File
+  capture_interval: File
   normaldb: File
-  intervalweightfile: File?
   genome: string
   sampleid: string
   thread_num: long
   seed: long
-  exclude_chrM: int[]
-  mintargetwidth: int?
 
 outputs:
   chromosomes_pdf:
@@ -78,14 +70,6 @@ outputs:
     type: File?
     outputSource: purecn/out_vcf
 
-  interval_bed:
-    type: File
-    outputSource: purecn_interval/bed
-
-  interval_interval:
-    type: File
-    outputSource: purecn_interval/interval
-
   coverage_coverage:
     type: File
     outputSource: purecn_coverage/coverage
@@ -103,39 +87,11 @@ outputs:
     outputSource: purecn_coverage/loess_txt
 
 steps:
-  exclude_baits_chrM:
-    run: ../tools/modify_baitsfile.cwl
-    scatter: exclude_chrM
-    in:
-      exclude_chrM: exclude_chrM
-      input_baits: capture_kit
-    out: [modified_baits]
-
-  determine_baitsfile:
-    run: ../tools/determine_baitsfile.cwl
-    in:
-      origin: capture_kit
-      modified: exclude_baits_chrM/modified_baits
-    out: [baits_bed]
-
-  purecn_interval:
-    run: ../tools/purecn_intervals.cwl
-    in:
-      fasta: fasta
-      infile: determine_baitsfile/baits_bed
-      mappability: bigwig
-      genome: genome
-      mintargetwidth: mintargetwidth
-    out: [
-      bed,
-      interval
-    ]
-
   purecn_coverage:
     run: ../tools/purecn_coverage.cwl
     in:
       bam: bam
-      interval: purecn_interval/interval
+      interval: capture_interval
       threads: thread_num
     out: [
       coverage,
@@ -150,9 +106,8 @@ steps:
       sampleid: sampleid
       tumor: purecn_coverage/loess_txt
       raw_vcf: raw_vcf
-      intervals: purecn_interval/interval
+      intervals: capture_interval
       normaldb: normaldb
-      intervalweightfile: intervalweightfile
       genome: genome
       cores: thread_num
       seed: seed

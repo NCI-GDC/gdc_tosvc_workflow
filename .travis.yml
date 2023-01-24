@@ -1,0 +1,27 @@
+services:
+- docker
+install: make docker-login build
+stages:
+- name: test
+- name: publish-release
+  if: branch = main AND type != pull_request
+- name: publish-staging
+  if: branch != main AND type != pull_request
+jobs:
+  include:
+  - stage: test
+    name: Test
+    script:
+    - make validate
+  - stage: publish-staging
+    name: Publish staging image
+    script:
+    - make publish-staging
+  - stage: publish-release
+    name: Publish production image
+    script:
+    - make publish-release
+env:
+  global:
+  - secure: OgnuvZjHfgpm1ykunAFPTCT+gS2pP8AsDvNJqRai+rLp8Fv07KfQywYOyiNy14mcDj4tsBLIlED92q4SjR4uXMrmG8YfztEyyU3dgH6XS3bikQlGF2NAaLd0vvJVk7PPAGbnTeJ7GRsF+DdJ3dUjTFxtHo3AHv2wJjpbJMSLt8w++T/bDiSXmnlllaM7zJOgr+OZo98CQcG6j5ozeM93cg+VRZhmMhjknJSR1+u8L99zKadeP24CtAD/le6dkEa0mL2a3wLq/jmOGBojrIGhp0PL6El4IY9siKjciRHESWbf0D4CSwJMvA+CUDBY4aMiWDVr4IbeG5UwfpbynEv0EnbW+APy3BFUIfiYHZWp0rwIPPQRt6XR3ndXKRXLw/fHWC0+D3/xeFBQ4vcbt7gxgVcCyYh8xoR73IIfh7quR2j/d3he/9ey20qa3n31fW72cYbHcb5/eKh2S10IuxlzmpLK2cy6TL5OHOsnzEfJqzemR1R0191SbDxFAgRkwkjJbC8Ula6NDdGXDTBF/1/tJ5nCbDCL/jouwpJchkWiRJbJs57XS54zrecIMRCJY6Tmxze+sXYyAGkyJwlcXyR1fQsdgSq+XjrA5FWLAPLgRRaCd1kFRMnVZuc7M+lSsl5NaKXv+HjQY/5quyx/e5pnjdpOIgfPQ/dGkbPCtd0RlOE=
+  - secure: OuolVAXCu9BtfTMu0wEwsHFlMFokadaqpzYkw6mHddEUVOCa0atW4VHad+7nJ0vNiMPr93//y6YAEKCsEv15bbXV9pqIfvWQ2YHPLvqB6n9iuO2ebRBf1v1KHCeV+u1a1b3zAfInccAgTvJLtxX4Lte26WIkcUcOKuNTJKusx0xLhhqnb0DHw1tIcLHNnvuu+4yXpCocOlTXQGxeb1x2hoSaYs12GslgT74uJT4Jf5rY8aqCxewCNDC1BI/TMqWCrTs4v6iTQ5w3X2nTCTS3otXiwRsE2RJ/XNnucY2LOLjxDzHDO0UF59c7+R5/lT1wVsJ1KtQUvWU9nQ15q5UoFfk9cY3ZMpJYf2aUWUdkJ80oIi6AJKOqjL+2Yws69yXv3T2OprTqMadXTaSHA6S0n1KYw9e3cXqc7E6N4RB9nAsjtdUnxcnxPFOiKoVzZltWyZiP866hh1Lj0J0dSD1PkJV+mFo54NrAyMrUinmiJnAvg+0aE4lU2h4Ci1LaRYbU3UUepUdS8wf36WWjVJk+MJ5BOzA21zbF1WiYcqKd97aBFkNBlu5hGHaCpJPQFHZPs++Nhnv5YHMqHVhwSkcNiV4Q4L16LDCcVYnRJDswS6k5jL8S0BKvp3CIk6imjgi5GjXW0gWEd2KuezUDxDUV0s3uepKEh9o/suUGv/s5k5c=

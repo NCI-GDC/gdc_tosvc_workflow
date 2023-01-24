@@ -4,7 +4,7 @@ id: purecn
 requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:1.14.3
+    dockerPull: markusriester/purecn:2.2.0
 successCodes:
   - 0
   - 1
@@ -37,11 +37,6 @@ inputs:
     type: File
     inputBinding:
       prefix: --normaldb
-
-  intervalweightfile:
-    type: File?
-    inputBinding:
-      prefix: --intervalweightfile
 
   genome:
     type: string
@@ -79,13 +74,13 @@ inputs:
     type: boolean
     default: true
     inputBinding:
-      prefix: --outvcf
+      prefix: --out-vcf
 
   postoptimize:
     type: boolean
     default: true
     inputBinding:
-      prefix: --postoptimize
+      prefix: --post-optimize
 
   statsfile:
     type: File?
@@ -94,9 +89,15 @@ inputs:
 
   output_dir:
     type: string
-    default: .
+    default: "."
     inputBinding:
       prefix: --out
+
+  fun_segmentation:
+    type: string
+    default: PSCBS
+    inputBinding:
+      prefix: --fun-segmentation
 
 outputs:
   chromosomes_pdf:

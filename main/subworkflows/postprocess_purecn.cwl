@@ -25,8 +25,6 @@ inputs:
   purecn_local_optima_pdf: File
   purecn_pdf: File
   purecn_log: File
-  purecn_interval_interval: File
-  purecn_interval_bed: File
   purecn_coverage_coverage: File
   purecn_coverage_loess_png: File
   purecn_coverage_loess_qc_txt: File
@@ -108,8 +106,6 @@ steps:
           purecn_local_optima_pdf,
           purecn_pdf,
           purecn_log,
-          purecn_interval_interval,
-          purecn_interval_bed,
           purecn_coverage_coverage,
           purecn_coverage_loess_png,
           purecn_coverage_loess_qc_txt,

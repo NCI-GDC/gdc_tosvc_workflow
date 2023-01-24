@@ -34,26 +34,23 @@ inputs:
   fasta_name: string
   thread_num: long
   seed: long
-  exclude_chrM: int[]
   var_prob_thres:
     type: float
     default: 0.2
-  mintargetwidth: int?
   # Inputs
-  raw_vcf:
-    type: File
-    secondaryFiles: [.tbi]
   reference:
     type: File
     secondaryFiles: [.fai, ^.dict]
-  main_dict: File
   tumor_bam:
     type: File
     secondaryFiles: [^.bai]
-  bigwig: File?
-  capture_kit: File?
-  intervalweightfile: File?
+  raw_vcf:
+    type: File
+    secondaryFiles: [.tbi]
+  capture_interval: File?
   normaldb: File?
+  main_dict: File
+
 
 steps:
   get_prefix:
@@ -93,18 +90,14 @@ steps:
       fasta: reference
       bam: tumor_bam
       raw_vcf: raw_vcf
-      seed: seed
-      exclude_chrM: exclude_chrM
-      aliquotid: aliquot_id
-      fasta_version: fasta_version
-      filename_prefix: get_prefix/output
-      thread_num: thread_num
-      var_prob_thres: var_prob_thres
-      mintargetwidth: mintargetwidth
-      bigwig: bigwig
-      capture_kit: capture_kit
-      intervalweightfile: intervalweightfile
+      capture_interval: capture_interval
       normaldb: normaldb
+      fasta_version: fasta_version
+      aliquotid: aliquot_id
+      thread_num: thread_num
+      seed: seed
+      filename_prefix: get_prefix/output
+      var_prob_thres: var_prob_thres
     out: [ filtered_vcf, filtration_metric, dnacopy_seg, tar, output_suffix ]
 
   determine_filtration:

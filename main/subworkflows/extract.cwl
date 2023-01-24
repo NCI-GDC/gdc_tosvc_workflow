@@ -17,9 +17,7 @@ inputs:
   reference_fai_gdc_id: string
   reference_dict_gdc_id: string
   reference_main_dict_gdc_id: string
-  bigwig_gdc_id: string?
-  capture_kit_gdc_id: string?
-  intervalweightfile_gdc_id: string?
+  capture_interval_gdc_id: string?
   normaldb_gdc_id: string?
 
 steps:
@@ -71,23 +69,11 @@ steps:
       config_file: bioclient_config
       download_handle: reference_main_dict_gdc_id
     out: [ output ]
-  bigwig_download:
+  capture_interval_download:
     run: ../tools/bioclient_cond_download.cwl
     in:
       config_file: bioclient_config
-      download_handle: bigwig_gdc_id
-    out: [ output ]
-  capture_kit_download:
-    run: ../tools/bioclient_cond_download.cwl
-    in:
-      config_file: bioclient_config
-      download_handle: capture_kit_gdc_id
-    out: [ output ]
-  intervalweight_download:
-    run: ../tools/bioclient_cond_download.cwl
-    in:
-      config_file: bioclient_config
-      download_handle: intervalweightfile_gdc_id
+      download_handle: capture_interval_gdc_id
     out: [ output ]
   normaldb_download:
     run: ../tools/bioclient_cond_download.cwl
@@ -120,15 +106,9 @@ outputs:
   main_reference_dict:
     type: File
     outputSource: main_dict_download/output
-  bigwig:
+  capture_interval:
     type: File?
-    outputSource: bigwig_download/output
-  capture_kit:
-    type: File?
-    outputSource: capture_kit_download/output
-  intervalweightfile:
-    type: File?
-    outputSource: intervalweight_download/output
+    outputSource: capture_interval_download/output
   normaldb:
     type: File?
     outputSource: normaldb_download/output

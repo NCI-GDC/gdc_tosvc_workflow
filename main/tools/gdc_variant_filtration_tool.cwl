@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: gdc_variant_filtration_tool
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/variant-filtration-tool:384f593b3dfc43acfc31d02e75589d2e2545008c
+    dockerPull: docker.osdc.io/ncigdc/variant-filtration-tool:384f593b3dfc43acfc31d02e75589d2e2545008c
   - class: InlineJavascriptRequirement
 doc: |
     Reduce VCF to contigs present in header

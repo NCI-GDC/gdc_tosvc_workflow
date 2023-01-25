@@ -4,7 +4,7 @@ id: purecn_coverage
 requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn_docker:2.2.0
+    dockerPull: docker.osdc.io/ncigdc/purecn_docker:2.2.0
 doc: |
   purecn coverage
 

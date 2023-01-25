@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: remove_nonstandard_variants
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
+    dockerPull: docker.osdc.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
 doc: |

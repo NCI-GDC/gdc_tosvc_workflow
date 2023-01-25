@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: purecn_intervals
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:latest
+    dockerPull: docker.osdc.io/ncigdc/purecn:latest
 doc: |
   purecn intervals
 

@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: picard_sortvcf
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/picard:2.26.10-5c848e4
+    dockerPull: docker.osdc.io/ncigdc/picard:2.26.10-5c848e4
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     coresMin: 1

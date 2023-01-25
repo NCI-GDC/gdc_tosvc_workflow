@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: purecn_coverage
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/purecn:1.14.3
+    dockerPull: docker.osdc.io/ncigdc/purecn:1.14.3
 doc: |
   purecn coverage
 

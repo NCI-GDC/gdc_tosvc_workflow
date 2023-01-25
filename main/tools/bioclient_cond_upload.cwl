@@ -4,7 +4,7 @@ id: bioclient_cond_upload
 requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/bio-client:latest
+    dockerPull: docker.osdc.io/ncigdc/bio-client:latest
 doc: |
   bioclient conditional upload
 

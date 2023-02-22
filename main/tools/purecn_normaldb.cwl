@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: purecn_normaldb
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/purecn_docker:2.2.0
+    dockerPull: docker.osdc.io/ncigdc/purecn_docker:f0456fe84f64b058373ea386d6e860704ce88c4e
   - class: InitialWorkDirRequirement
     listing: |
       ${

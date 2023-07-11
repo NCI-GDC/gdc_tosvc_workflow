@@ -4,7 +4,6 @@ FROM ${REGISTRY}/ncigdc/bio-alpine:cwltool3 as builder
 ARG WORKFLOW
 
 COPY ./${WORKFLOW} /opt 
-COPY ./tools /tools
 
 WORKDIR /opt
 

@@ -7,6 +7,10 @@ requirements:
     dockerPull: docker.osdc.io/ncigdc/bio-client:latest
 doc: |
   bioclient conditional upload
+  - class: EnvVarRequirement
+    envDef:
+    - envName: "REQUESTS_CA_BUNDLE"
+      envValue: $(inputs.cert.path)
 
 inputs:
   config_file:
@@ -17,6 +21,11 @@ inputs:
     type: string?
   input_file:
     type: File?
+  cert:
+      type: File
+      default:
+        class: File
+        location: /etc/ssl/certs/ca-certificates.crt
 
 outputs:
   output_file_uuid:

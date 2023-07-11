@@ -1,9 +1,0 @@
-wigfile:
-  class: File
-  #path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.100.wig.1
-  path: /mnt/data/refs/GRCh38.d1.vd1.100.wig.1
-sizefile:
-  class: File
-  #path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.sizes
-  path: /mnt/data/refs/GRCh38.d1.vd1.sizes
-#outfile: GRCh38.d1.vd1.100.bigWig

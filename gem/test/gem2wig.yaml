@@ -1,7 +1,0 @@
-indexfile:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr1.index.gem
-mapfile:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.100.mappability
-#outfile: GRCh38.d1.vd1.100

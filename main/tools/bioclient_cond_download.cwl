@@ -1,20 +1,9 @@
-class: CommandLineTool
-cwlVersion: v1.0
-id: bioclient_cond_upload
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/bio-client:latest
-doc: |
-  bioclient conditional upload
-
-
 cwlVersion: v1.0
 class: CommandLineTool
 id: bio_client_download
 requirements:
   - class: DockerRequirement
-    dockerPull: "{{ docker_repo }}/bio-client:{{ bio_client }}"
+    dockerPull: "{{ docker_repository }}/bio-client:{{ bio_client }}"
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     coresMin: 1

@@ -1,8 +1,0 @@
-wig_file:
-  class: File
-  #path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.100.mappability
-  path: /mnt/tmp/mvcV7o/GRCh38.d1.vd1.index.gem.101.wig
-size_file:
-  class: File
-  #path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr1.index.gem
-  path: /mnt/tmp/mvcV7o/GRCh38.d1.vd1.index.gem.101.sizes

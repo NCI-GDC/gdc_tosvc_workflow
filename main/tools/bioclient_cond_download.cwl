@@ -1,18 +1,34 @@
-class: CommandLineTool
 cwlVersion: v1.0
-id: bioclient_cond_upload
+class: CommandLineTool
+id: bio_client_download
 requirements:
-  - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/bio-client:latest
-doc: |
-  bioclient conditional upload
+    dockerPull: "{{ docker_repository }}/bio-client:{{ bio_client }}"
+  - class: InlineJavascriptRequirement
+  - class: ResourceRequirement
+    coresMin: 1
+    coresMax: 1
+    ramMin: 2000
+    ramMax: 2000
+    tmpdirMin: $(Math.ceil (inputs.file_size / 1048576))
+    tmpdirMax: $(Math.ceil (inputs.file_size / 1048576))
+    outdirMin: $(Math.ceil (inputs.file_size / 1048576))
+    outdirMax: $(Math.ceil (inputs.file_size / 1048576))
+  - class: EnvVarRequirement
+    envDef:
+    - envName: "REQUESTS_CA_BUNDLE"
+      envValue: $(inputs.cert.path)
 
 inputs:
   config_file:
     type: File?
   download_handle:
     type: string?
+  cert:
+      type: File
+      default:
+        class: File
+        location: /etc/ssl/certs/ca-certificates.crt
 
 outputs:
   output:

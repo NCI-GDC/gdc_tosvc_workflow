@@ -6,7 +6,7 @@ fasta:
   location: /mnt/scratch/purecn_xgen/GRCh38.d1.vd1.fa
   secondaryFiles:
     - class: File
-      location: /mnt/scratch/purecn_xgen/GRCh38.d1.vd1.fa.fai      
+      location: /mnt/scratch/purecn_xgen/GRCh38.d1.vd1.fa.fai
 bams:
   - class: File
     location: /mnt/scratch/purecn_xgen/11748118-4168-4894-b7ff-b9106ec56614_wxs_gdc_realn.bam
@@ -66,7 +66,3 @@ bams:
 bigwig:
   class: File
   location: /mnt/scratch/purecn_xgen/GRCh38.d1.vd1.100.bigWig
-
-  
-
-  

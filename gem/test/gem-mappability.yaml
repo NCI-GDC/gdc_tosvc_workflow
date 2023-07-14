@@ -1,6 +1,0 @@
-indexfile:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/GRCh38.d1.vd1.chr22.index.gem
-readlen:
-  class: File
-  path: /mnt/data/DLBC37/PureCN_cwl/readlen.txt

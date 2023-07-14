@@ -32,6 +32,8 @@ inputs:
       items: int
   fasta_version: string
   fasta_name: string
+  chunks: long
+  wgs: boolean
   thread_num: long
   seed: long
   var_prob_thres:
@@ -98,6 +100,8 @@ steps:
       seed: seed
       filename_prefix: get_prefix/output
       var_prob_thres: var_prob_thres
+      chunks: chunks
+      wgs: wgs
     out: [ filtered_vcf, filtration_metric, dnacopy_seg, tar, output_suffix ]
 
   determine_filtration:

@@ -35,9 +35,22 @@ inputs:
 
   threads:
     type: long
-    default: 24
+    default: 8
     inputBinding:
       prefix: --cores
+
+  chunks:
+    type: long
+    default: 60
+    inputBinding:
+      prefix: --chunks
+
+  wgs:
+    type: boolean
+    default: false
+    doc: If specified, it will include parameter `--skip-gc-norm`.
+    inputBinding:
+      prefix: --skip-gc-norm
 
 outputs:
   coverage:

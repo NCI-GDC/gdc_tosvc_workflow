@@ -27,6 +27,8 @@ inputs:
   normaldb: File
 
   #parameters
+  chunks: long
+  wgs: boolean
   fasta_version: string
   aliquotid: string
   thread_num: long
@@ -66,6 +68,8 @@ steps:
       sampleid: aliquotid
       thread_num: thread_num
       seed: seed
+      wgs: wgs
+      chunks: chunks
     out: [
       chromosomes_pdf,
       csv,

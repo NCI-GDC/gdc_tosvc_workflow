@@ -50,6 +50,12 @@ inputs:
   fasta_version:
     type: string
     default: "hg38"
+  chunks:
+    type: long
+    default: 60
+  wgs:
+    type: boolean
+    default: false
   thread_num:
     type: long
     default: 8
@@ -109,6 +115,8 @@ steps:
       capture_interval: extract/capture_interval
       normaldb: extract/normaldb
       main_dict: extract/main_reference_dict
+      chunks: chunks
+      wgs: wgs
     out: [
       purecn_dnacopy_seg,
       purecn_filtration_metric,

@@ -20,6 +20,8 @@ inputs:
   sampleid: string
   thread_num: long
   seed: long
+  wgs: boolean
+  chunks: long
 
 outputs:
   chromosomes_pdf:
@@ -93,6 +95,8 @@ steps:
       bam: bam
       interval: capture_interval
       threads: thread_num
+      chunks: chunks
+      wgs: wgs
     out: [
       coverage,
       loess_png,

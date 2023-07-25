@@ -59,7 +59,7 @@ outputs:
       glob: "*coverage.txt.gz"
 
   loess_txt:
-    type: File
+    type: File?
     outputBinding:
       glob: "*coverage_loess.txt.gz"
 

@@ -26,9 +26,9 @@ inputs:
   purecn_pdf: File
   purecn_log: File
   purecn_coverage_coverage: File
-  purecn_coverage_loess_png: File
-  purecn_coverage_loess_qc_txt: File
-  purecn_coverage_loess_txt: File
+  purecn_coverage_loess_png: File?
+  purecn_coverage_loess_qc_txt: File?
+  purecn_coverage_loess_txt: File?
 
 outputs:
   out_vcf:

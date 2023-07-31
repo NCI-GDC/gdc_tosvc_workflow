@@ -74,18 +74,18 @@ outputs:
 
   coverage_coverage:
     type: File
-    outputSource: purecn_coverage/coverage
+    outputSource: determine_coverage_file/purecn_coverage
 
   coverage_loess_png:
-    type: File
+    type: File?
     outputSource: purecn_coverage/loess_png
 
   coverage_loess_qc_txt:
-    type: File
+    type: File?
     outputSource: purecn_coverage/loess_qc_txt
 
   coverage_loess_txt:
-    type: File
+    type: File?
     outputSource: purecn_coverage/loess_txt
 
 steps:

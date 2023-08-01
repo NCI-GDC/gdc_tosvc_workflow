@@ -32,7 +32,7 @@ inputs:
   input:
     type:
       type: array
-      items: File
+      items: ['null', File]
     inputBinding:
       position: 3
 

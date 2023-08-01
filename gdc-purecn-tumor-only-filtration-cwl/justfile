@@ -35,7 +35,8 @@ _jinja JSON:
 
 # Validates CWL workflow
 validate: _validate_entry
-	python3 -m cwltool --validate {{ENTRY_CWL}}
+  #/bin/bash
+  [[ `python3 -m cwltool --validate {{ENTRY_CWL}}` ]] && exit 0 || exit 1
 
 # Formats and prints all Dockers used in workflow
 get-dockers:

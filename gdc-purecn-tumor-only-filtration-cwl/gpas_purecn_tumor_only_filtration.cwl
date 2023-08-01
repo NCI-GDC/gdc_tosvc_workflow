@@ -11,7 +11,6 @@ doc: |
 
 inputs:
   # BIOCLIENT
-  bioclient_config: File
   bioclient_upload_bucket: string
   # INPUT
   tumor_bam_gdc_id: string

@@ -1,0 +1,12 @@
+{
+    "fasta": {"class": "File", "path": "/mnt/SCRATCH/purecn/reference/GRCh38.d1.vd1.fa"},
+    "genomel": "hg38",
+    "baits_bed_file": {"class": "File", "path": "/mnt/SCRATCH/purecn/xgen-exome-research-panel-probesbe255a1532796e2eaa53ff00001c1b3c.hg38.bed.gz"},
+    "bam_files": [
+        {"class": "File", "path": "/mnt/SCRATCH/purecn/548a8510-1214-499f-916e-f410fef67d5d_wxs_gdc_realn.bam"},
+        {"class": "File", "path": "/mnt/SCRATCH/purecn/be0b9a27-f568-4f45-8cc7-cc3f9da99d45_wxs_gdc_realn.bam"}
+    ],
+    "threads": 2,
+    "chunks": 60,
+    "mappability": {"class": "File", "path": "/mnt/SCRATCH/purecn/reference/GRCh38.d1.vd1.100.bigWig"}
+}

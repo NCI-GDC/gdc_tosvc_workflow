@@ -48,8 +48,8 @@ outputs:
       outputSource: run_purecn_intervalfile/interval
 
     normaldb:
-      type: Directory
-      outputSource: run_purecn_normaldb/normaldb
+      type: File
+      outputSource: extract_normaldb/rds_file
 
 steps:
   run_purecn_intervalfile:
@@ -78,7 +78,9 @@ steps:
       genome: genome
     out: [normaldb]
 
-
-
-
+  extract_normaldb:
+    run: ./find_rds.cwl
+    in:
+      dir: run_purecn_normaldb/normaldb
+    out: [rds_file]
 

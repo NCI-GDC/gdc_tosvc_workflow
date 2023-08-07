@@ -1,6 +1,0 @@
-files:
-  - class: File
-    location: /mnt/scratch/cache/04b1f1550dbeb60bbf5d968c559f1dc5/3ed592f4-13c2-4498-9266-65e43b0d9594_wxs_gdc_realn_coverage_loess.txt
-  - class: File
-    location: /mnt/scratch/cache/06159bdfd93aa694c2f50804ba41a0ea/a80a0a9f-0f13-44fe-a99a-674a37a6bd40_wxs_gdc_realn_coverage_loess.txt
-outname: test

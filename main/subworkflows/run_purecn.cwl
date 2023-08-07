@@ -74,18 +74,18 @@ outputs:
 
   coverage_coverage:
     type: File
-    outputSource: purecn_coverage/coverage
+    outputSource: determine_coverage_file/purecn_coverage
 
   coverage_loess_png:
-    type: File
+    type: File?
     outputSource: purecn_coverage/loess_png
 
   coverage_loess_qc_txt:
-    type: File
+    type: File?
     outputSource: purecn_coverage/loess_qc_txt
 
   coverage_loess_txt:
-    type: File
+    type: File?
     outputSource: purecn_coverage/loess_txt
 
 steps:
@@ -104,11 +104,18 @@ steps:
       loess_txt
     ]
 
+  determine_coverage_file:
+    run: ../tools/determine_coverage_file.cwl
+    in:
+      coverage: purecn_coverage/coverage
+      coverage_loess: purecn_coverage/loess_txt
+    out: [purecn_coverage]
+
   purecn:
     run: ../tools/purecn.cwl
     in:
       sampleid: sampleid
-      tumor: purecn_coverage/loess_txt
+      tumor: determine_coverage_file/purecn_coverage
       raw_vcf: raw_vcf
       intervals: capture_interval
       normaldb: normaldb

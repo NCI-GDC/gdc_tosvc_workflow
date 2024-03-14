@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: annot_fail_purecn_vcf
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc_tosvc_tools:ea2405fdcc260d1e617216824a903b16508774f1
+    dockerPull: docker.osdc.io/ncigdc/gdc_tosvc_tools:1.0.0-3-g04bf849
   - class: InlineJavascriptRequirement
 doc: |
   annotate fail purecn vcf

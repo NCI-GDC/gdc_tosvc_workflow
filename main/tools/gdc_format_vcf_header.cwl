@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: gdc_format_vcf_header
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc_tosvc_tools:1.0.0-3-g04bf849
+    dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-3-g04bf849
   - class: InlineJavascriptRequirement
 doc: |
   Format VCF header for GDC tumor-only variant calling pipeline
@@ -58,4 +58,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_vcf)
 
-baseCommand: [python, /gdc_tosvc_tools/format_vcf_header.py]
+baseCommand: [python, /gdc-tosvc-tools/format_vcf_header.py]

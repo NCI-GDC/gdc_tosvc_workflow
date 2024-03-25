@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: filter_purecn_outputs
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc_tosvc_tools:1.0.0-3-g04bf849
+    dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-3-g04bf849
   - class: InlineJavascriptRequirement
 doc: |
   filter purecn outputs
@@ -34,4 +34,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [python, /gdc_tosvc_tools/filter_purecn_outputs.py]
+baseCommand: [python, /gdc-tosvc-tools/filter_purecn_outputs.py]

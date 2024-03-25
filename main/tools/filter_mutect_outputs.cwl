@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: filter_mutect_outputs
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc_tosvc_tools:1.0.0-3-g04bf849
+    dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-3-g04bf849
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
 doc: |
@@ -25,4 +25,4 @@ arguments:
   - position: 0
     shellQuote: false
     valueFrom: >-
-      python /gdc_tosvc_tools/filter_mutect_outputs.py --input_vcf $(inputs.input.path) --output_vcf $(inputs.output_filename)
+      python /gdc-tosvc-tools/filter_mutect_outputs.py --input_vcf $(inputs.input.path) --output_vcf $(inputs.output_filename)

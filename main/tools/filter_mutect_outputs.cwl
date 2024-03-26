@@ -25,4 +25,4 @@ arguments:
   - position: 0
     shellQuote: false
     valueFrom: >-
-      python /gdc-tosvc-tools/filter_mutect_outputs.py --input_vcf $(inputs.input.path) --output_vcf $(inputs.output_filename)
+      filter_mutect_outputs --input_vcf $(inputs.input.path) --output_vcf $(inputs.output_filename)

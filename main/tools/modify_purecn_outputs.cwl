@@ -49,4 +49,4 @@ outputs:
     outputBinding:
       glob: $(inputs.modified_seg_file)
 
-baseCommand: [python, /gdc-tosvc-tools/modify_purecn_outputs.py]
+baseCommand: [modify_purecn_outputs]

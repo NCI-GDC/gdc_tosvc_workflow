@@ -33,4 +33,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [python, /gdc-tosvc-tools/annot_fail_purecn_vcf.py]
+baseCommand: [annot_fail_purecn_vcf]

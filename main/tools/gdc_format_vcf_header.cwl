@@ -58,4 +58,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_vcf)
 
-baseCommand: [python, /gdc-tosvc-tools/format_vcf_header.py]
+baseCommand: [format_vcf_header]

@@ -5,8 +5,6 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
     dockerPull: docker.osdc.io/ncigdc/bio-client:latest
-doc: |
-  bioclient conditional upload
   - class: EnvVarRequirement
     envDef:
     - envName: "REQUESTS_CA_BUNDLE"

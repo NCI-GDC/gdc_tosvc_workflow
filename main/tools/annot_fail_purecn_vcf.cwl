@@ -13,19 +13,19 @@ inputs:
     type: File
     inputBinding:
       position: 1
-      prefix: --purecn_log
+      prefix: --purecn-log
 
   vcf:
     type: File
     inputBinding:
       position: 1
-      prefix: --input_vcf
+      prefix: --input-vcf
 
   output_filename:
     type: string
     inputBinding:
       position: 2
-      prefix: --output_vcf
+      prefix: --output-vcf
 
 outputs:
   output:
@@ -33,4 +33,9 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [python, /gdc-tosvc-tools/annot_fail_purecn_vcf.py]
+baseCommand: []
+arguments:
+  - position: 0
+    valueFrom: "annot_fail_purecn_vcf"
+  - position: 99
+    valueFrom: "annot_fail_purecn_vcf"

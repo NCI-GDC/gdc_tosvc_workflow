@@ -20,7 +20,7 @@ inputs:
     default: 0.2
     inputBinding:
       position: 3
-      prefix: --prob_thres
+      prefix: --threshold
 
   output_filename:
     type: string
@@ -34,4 +34,9 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [python, /gdc-tosvc-tools/filter_purecn_outputs.py]
+baseCommand: []
+arguments:
+  - position: 0
+    valueFrom: "filter_purecn_outputs"
+  - position: 99
+    valueFrom: "filter_purecn_outputs"

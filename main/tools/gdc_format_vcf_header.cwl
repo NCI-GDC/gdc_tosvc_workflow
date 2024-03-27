@@ -58,4 +58,9 @@ outputs:
     outputBinding:
       glob: $(inputs.output_vcf)
 
-baseCommand: [format_vcf_header]
+baseCommand: []
+arguments:
+  - position: 0
+    valueFrom: "format_vcf_header"
+  - position: 99
+    valueFrom: "format_vcf_header"

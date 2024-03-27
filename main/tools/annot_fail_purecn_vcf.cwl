@@ -33,4 +33,9 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [annot_fail_purecn_vcf]
+baseCommand: []
+arguments:
+  - position: 0
+    valueFrom: "annot_fail_purecn_vcf"
+  - position: 99
+    valueFrom: "annot_fail_purecn_vcf"

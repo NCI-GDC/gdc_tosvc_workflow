@@ -25,4 +25,4 @@ arguments:
   - position: 0
     shellQuote: false
     valueFrom: >-
-      filter_mutect_outputs --input_vcf $(inputs.input.path) --output_vcf $(inputs.output_filename)
+      filter_mutect_outputs --input_vcf $(inputs.input.path) --output_vcf $(inputs.output_filename) filter_mutect_outputs

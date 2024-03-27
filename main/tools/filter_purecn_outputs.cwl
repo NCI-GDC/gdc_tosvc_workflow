@@ -34,4 +34,9 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [filter_purecn_outputs]
+baseCommand: []
+arguments:
+  - position: 0
+    valueFrom: "filter_purecn_outputs"
+  - position: 99
+    valueFrom: "filter_purecn_outputs"

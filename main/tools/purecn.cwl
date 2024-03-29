@@ -15,89 +15,48 @@ doc: |
 inputs:
   sampleid:
     type: string
-    inputBinding:
-      prefix: --sampleid
 
   tumor:
     type: File
-    inputBinding:
-      prefix: --tumor
 
   raw_vcf:
     type: File
-    inputBinding:
-      prefix: --vcf
 
   intervals:
     type: File
-    inputBinding:
-      prefix: --intervals
 
   normaldb:
     type: File
-    inputBinding:
-      prefix: --normaldb
 
   genome:
     type: string
     default: hg38
-    inputBinding:
-      prefix: --genome
 
   cores:
     type: long
-    inputBinding:
-      prefix: --cores
 
   seed:
     type: long
-    inputBinding:
-      prefix: --seed
 
   force:
     type: boolean
     default: true
-    inputBinding:
-      prefix: --force
-
-  normal:
-    type: File?
-    inputBinding:
-      prefix: --normal
-
-  normal_panel:
-    type: File?
-    inputBinding:
-      prefix: --normal_panel
 
   outvcf:
     type: boolean
     default: true
-    inputBinding:
-      prefix: --out-vcf
 
   postoptimize:
     type: boolean
     default: true
-    inputBinding:
-      prefix: --post-optimize
-
-  statsfile:
-    type: File?
-    inputBinding:
-      prefix: --statsfile
 
   output_dir:
     type: string
     default: "."
-    inputBinding:
-      prefix: --out
 
   fun_segmentation:
     type: string
     default: PSCBS
-    inputBinding:
-      prefix: --fun-segmentation
 
 outputs:
   chromosomes_pdf:
@@ -126,7 +85,7 @@ outputs:
       glob: $(inputs.sampleid + "_local_optima.pdf")
 
   log:
-    type: File?
+    type: File
     outputBinding:
       glob: $(inputs.sampleid + ".log")
 
@@ -160,4 +119,24 @@ outputs:
     outputBinding:
       glob: $(inputs.sampleid + ".vcf")
 
-baseCommand: [Rscript, /usr/local/lib/R/site-library/PureCN/extdata/PureCN.R]
+baseCommand: [bash, "-c"]
+
+arguments:
+  - position: 0
+    shellQuote: false
+    valueFrom: >-
+      Rscript
+      /usr/local/lib/R/site-library/PureCN/extdata/PureCN.R
+      --sampleid $(inputs.sampleid)
+      --tumor $(inputs.tumor.path)
+      --vcf $(inputs.raw_vcf.path)
+      --intervals $(inputs.intervals.path)
+      --normaldb $(inputs.normaldb.path)
+      --genome $(inputs.genome)
+      --cores $(inputs.cores)
+      --seed $(inputs.seed)
+      --force $(inputs.force)
+      --out-vcf $(inputs.outvcf)
+      --post-optimize $(inputs.postoptimize)
+      --out $(inputs.output_dir)
+      --fun-segmentation $(inputs.fun_segmentation) 2>&1 | tee $(inputs.sampleid).log

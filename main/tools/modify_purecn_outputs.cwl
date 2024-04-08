@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: modify_purecn_outputs
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-3-g04bf849
+    dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-7-g6416845
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
@@ -49,4 +49,9 @@ outputs:
     outputBinding:
       glob: $(inputs.modified_seg_file)
 
-baseCommand: [python, /gdc-tosvc-tools/modify_purecn_outputs.py]
+baseCommand: []
+arguments:
+  - position: 0
+    valueFrom: "modify_purecn_outputs"
+  - position: 99
+    valueFrom: "modify_purecn_outputs"

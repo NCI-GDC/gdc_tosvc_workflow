@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: filter_mutect_outputs
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-3-g04bf849
+    dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-7-g6416845
   - class: InlineJavascriptRequirement
 doc: |
   filter mutect outputs

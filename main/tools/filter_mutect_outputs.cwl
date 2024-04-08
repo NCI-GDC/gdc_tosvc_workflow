@@ -5,14 +5,21 @@ requirements:
   - class: DockerRequirement
     dockerPull: docker.osdc.io/ncigdc/gdc-tosvc-tools:1.0.0-7-g6416845
   - class: InlineJavascriptRequirement
-  - class: ShellCommandRequirement
 doc: |
   filter mutect outputs
 
 inputs:
-  input: File
+  input:
+    type: File
+    inputBinding:
+      position: 1
+      prefix: --input_vcf
 
-  output_filename: string
+  output_filename:
+    type: string
+    inputBinding:
+      position: 2
+      prefix: --output_vcf
 
 outputs:
   output:
@@ -23,6 +30,6 @@ outputs:
 baseCommand: []
 arguments:
   - position: 0
-    shellQuote: false
-    valueFrom: >-
-      filter_mutect_outputs --input_vcf $(inputs.input.path) --output_vcf $(inputs.output_filename) filter_mutect_outputs
+    valueFrom: "filter_mutect_outputs"
+  - position: 99
+    valueFrom: "filter_mutect_outputs"

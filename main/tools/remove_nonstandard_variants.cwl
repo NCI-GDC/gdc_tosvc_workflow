@@ -3,26 +3,38 @@ cwlVersion: v1.0
 id: remove_nonstandard_variants
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
+    dockerPull: "{{ docker_repository }}/variant-filtration-too:{{ variant_filtration_tool }}"
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
 doc: |
   remove nonstandard variants
 
 inputs:
-  input: File
+  input_vcf:
+    type: File
+    doc: Input VCF file (.vcf or .vcf.gz)
+    inputBinding:
+      position: 1
 
-  output_filename: string
+  output_vcf:
+    type: string
+    default: filtered.vcf.gz
+    doc: Output VCF filename
+    inputBinding:
+      position: 2
 
 outputs:
-  output:
+  filtered_vcf:
     type: File
+    doc: Filtered VCF output
     outputBinding:
-      glob: $(inputs.output_filename)
+      glob: $(inputs.output_vcf)
 
-baseCommand: []
-arguments:
-  - position: 0
-    shellQuote: false
-    valueFrom: >-
-      python /opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py $(inputs.input.path) $(inputs.output_filename)
+  filtered_vcf_index:
+    type: File?
+    doc: Tabix index (only if output is .gz)
+    outputBinding:
+      glob: $(inputs.output_vcf + ".tbi")
+
+baseCommand: [python3, /opt/variant-filtration-tool/filter_nonstandard_variants.py]
+

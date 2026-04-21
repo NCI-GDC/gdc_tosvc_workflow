@@ -4,7 +4,7 @@ id: purecn_normaldb
 
 requirements:
   DockerRequirement:
-    dockerPull: docker.osdc.io/ncigdc/purecn_docker:2.6.4
+    dockerPull: "{{ docker_repository }}/purecn_docker:{{ purecn-docker }}"
   ShellCommandRequirement: {}
   InlineJavascriptRequirement: {}
 

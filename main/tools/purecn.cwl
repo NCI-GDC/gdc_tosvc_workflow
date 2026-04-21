@@ -4,7 +4,7 @@ id: purecn
 requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/purecn_docker:2.6.4
+    dockerPull: "{{ docker_repository }}/purecn_docker:{{ purecn-docker }}"
 successCodes:
   - 0
   - 1

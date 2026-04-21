@@ -2,5 +2,9 @@
         "docker_repository": "docker.osdc.io/ncigdc",
         "docker_repo": "docker.osdc.io/ncigdc",
         "bio_client": "latest",
-	"bio_alpine": "base"
-}
+	"bio_alpine": "base",
+        "gdc_tosvc_tools": "1.0.0-7-g6416845",
+        "variant_filtration_tool": "v1.0.6",
+        "picard": "2.26.10-5c848e4",
+        "purecn-docker": "2.6.4"
+ }

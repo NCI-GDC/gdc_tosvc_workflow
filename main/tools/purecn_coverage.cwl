@@ -4,7 +4,7 @@ id: purecn_coverage
 requirements:
   - class: InlineJavascriptRequirement
   - class: DockerRequirement
-    dockerPull: "{{ docker_repository }}/purecn_docker:{{ purecn-docker }}"
+    dockerPull: "{{ docker_repository }}/purecn_docker:{{ purecn_docker }}"
 doc: |
   purecn coverage
 

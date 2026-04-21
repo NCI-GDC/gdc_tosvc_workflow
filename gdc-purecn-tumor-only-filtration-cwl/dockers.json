@@ -6,5 +6,5 @@
         "gdc_tosvc_tools": "1.0.0-7-g6416845",
         "variant_filtration_tool": "v1.0.6",
         "picard": "2.26.10-5c848e4",
-        "purecn-docker": "2.6.4"
+        "purecn_docker": "2.6.4"
  }

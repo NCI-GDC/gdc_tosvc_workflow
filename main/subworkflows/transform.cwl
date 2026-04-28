@@ -71,16 +71,16 @@ steps:
       input_vcf: raw_vcf
       output_filename:
         valueFrom: "std.vcf"
-    out: [ filtered_vcf ]
+    out: [ output_file ]
 
   filter_mutect_no_normaldb:
     run: ../tools/filter_mutect_outputs.cwl
     scatter: run_without_normaldb
     in:
       run_without_normaldb: run_without_normaldb
-      input: remove_nonstandard_variants/filtered_vcf
+      input: remove_nonstandard_variants/output_file
       output_filename:
-        source: remove_nonstandard_variants/filtered_vcf
+        source: remove_nonstandard_variants/output_file
         valueFrom: $(self.basename + ".filtered_mutect.vcf")
     out: [ output ]
 

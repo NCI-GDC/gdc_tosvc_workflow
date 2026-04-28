@@ -1,40 +1,39 @@
-class: CommandLineTool
 cwlVersion: v1.0
-id: remove_nonstandard_variants
+class: CommandLineTool
+id: filter_nonstandard_variants 
 requirements:
   - class: DockerRequirement
-    dockerPull: "{{ docker_repository }}/variant-filtration-tool:{{ variant_filtration_tool }}"
+    dockerPull: "{{ docker_repo }}/variant-filtration-tool:{{ variant_filtration_tool }}"
   - class: InlineJavascriptRequirement
-  - class: ShellCommandRequirement
+    expressionLib:
+      $import: ./util_lib.cwl
+  - class: ResourceRequirement
+    coresMin: 1
+    ramMin: 1000
+    tmpdirMin: $(file_size_multiplier(inputs.input_vcf, 1.2))
+    outdirMin: $(file_size_multiplier(inputs.input_vcf, 1.2))
+
 doc: |
-  remove nonstandard variants
+    Filters (REMOVES!) rows from VCF with non-standard alleles
 
 inputs:
   input_vcf:
     type: File
-    doc: Input VCF file (.vcf or .vcf.gz)
+    doc: input vcf file
     inputBinding:
-      position: 1
+      position: 0
 
-  output_vcf:
+  output_filename:
     type: string
-    default: filtered.vcf.gz
-    doc: Output VCF filename
+    doc: output basename of output file
     inputBinding:
-      position: 2
+        position: 1
 
 outputs:
-  filtered_vcf:
+  output_file:
     type: File
-    doc: Filtered VCF output
     outputBinding:
-      glob: $(inputs.output_vcf)
+      glob: $(inputs.output_filename)
+    doc: Filtered VCF file
 
-  filtered_vcf_index:
-    type: File?
-    doc: Tabix index (only if output is .gz)
-    outputBinding:
-      glob: $(inputs.output_vcf + ".tbi")
-
-baseCommand: [python3, /opt/variant-filtration-tool/filter_nonstandard_variants.py]
-
+baseCommand: [gdc_filtration_tools, filter-nonstandard-variants]

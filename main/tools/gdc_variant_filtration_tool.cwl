@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: gdc_variant_filtration_tool
 requirements:
   - class: DockerRequirement
-    dockerPull: "{{ docker_repository }}/variant-filtration-too:{{ variant_filtration_tool }}"
+    dockerPull: "{{ docker_repository }}/variant-filtration-tool:{{ variant_filtration_tool }}"
   - class: InlineJavascriptRequirement
 doc: |
     Reduce VCF to contigs present in header
@@ -27,4 +27,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_vcf)
 
-baseCommand: [python3, /opt/variant-filtration-tool/FilterContigs.py]
+baseCommand: [gdc_filtration_tools, filter-contigs]

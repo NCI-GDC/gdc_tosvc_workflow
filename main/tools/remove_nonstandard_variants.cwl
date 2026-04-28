@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: remove_nonstandard_variants
 requirements:
   - class: DockerRequirement
-    dockerPull: "{{ docker_repository }}/variant-filtration-too:{{ variant_filtration_tool }}"
+    dockerPull: "{{ docker_repository }}/variant-filtration-tool:{{ variant_filtration_tool }}"
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
 doc: |

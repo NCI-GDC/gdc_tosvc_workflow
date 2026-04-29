@@ -1,28 +1,39 @@
-class: CommandLineTool
 cwlVersion: v1.0
-id: remove_nonstandard_variants
+class: CommandLineTool
+id: filter_nonstandard_variants 
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/gdc-biasfilter-tool:3839a594cab6b8576e76124061cf222fb3719f20
+    dockerPull: "{{ docker_repo }}/variant-filtration-tool:{{ variant_filtration_tool }}"
   - class: InlineJavascriptRequirement
-  - class: ShellCommandRequirement
+    expressionLib:
+      $import: ./util_lib.cwl
+  - class: ResourceRequirement
+    coresMin: 1
+    ramMin: 1000
+    tmpdirMin: $(file_size_multiplier(inputs.input_vcf, 1.2))
+    outdirMin: $(file_size_multiplier(inputs.input_vcf, 1.2))
+
 doc: |
-  remove nonstandard variants
+    Filters (REMOVES!) rows from VCF with non-standard alleles
 
 inputs:
-  input: File
+  input_vcf:
+    type: File
+    doc: input vcf file
+    inputBinding:
+      position: 0
 
-  output_filename: string
+  output_filename:
+    type: string
+    doc: output basename of output file
+    inputBinding:
+        position: 1
 
 outputs:
-  output:
+  output_file:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
+    doc: Filtered VCF file
 
-baseCommand: []
-arguments:
-  - position: 0
-    shellQuote: false
-    valueFrom: >-
-      python /opt/gdc-biasfilter-tool/RemoveNonStandardVariants.py $(inputs.input.path) $(inputs.output_filename)
+baseCommand: [gdc_filtration_tools, filter-nonstandard-variants]

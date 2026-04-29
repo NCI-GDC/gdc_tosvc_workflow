@@ -5,7 +5,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: ShellCommandRequirement
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/purecn_docker:2.6.4
+    dockerPull: "{{ docker_repository }}/purecn_docker:{{ purecn_docker }}"
 doc: |
   purecn intervals
 

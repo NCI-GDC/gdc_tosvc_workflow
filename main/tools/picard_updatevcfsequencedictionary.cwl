@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: picard_updatevcfsequencedictionary
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/picard:2.26.10-5c848e4
+    dockerPull: "{{ docker_repository }}/picard:{{ picard }}"
   - class: InlineJavascriptRequirement
 doc: |
   picard UpdateVcfSequenceDictionary
